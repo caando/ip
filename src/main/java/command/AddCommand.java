@@ -11,7 +11,7 @@ public class AddCommand implements Command {
         this.taskDescription = taskDescription;
     }
 
-    public static AddCommand parse(String command) {
+    public static Command parse(String command) {
         return new AddCommand(command.trim());
     }
 

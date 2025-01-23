@@ -13,6 +13,11 @@ public class AddDeadlineCommand implements Command {
         this.by = by;
     }
 
+    public static Command parse(String[] parts) {
+        String[] deadlineParts = parts[1].split("/by", 2);
+        return new AddDeadlineCommand(deadlineParts[0].trim(), deadlineParts[1].trim());
+    }
+
     @Override
     public void execute(TaskList taskList) {
         Deadline deadline = new Deadline(taskDescription, by);

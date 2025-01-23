@@ -15,6 +15,12 @@ public class AddEventCommand implements Command {
         this.to = to;
     }
 
+    public static Command parse(String[] parts) {
+        String[] eventParts = parts[1].split("/from", 2);
+        String[] toParts = eventParts[1].split("/to", 2);
+        return new AddEventCommand(eventParts[0].trim(), toParts[0].trim(), toParts[1].trim());
+    }
+
     @Override
     public void execute(TaskList taskList) {
         Event event = new Event(taskDescription, from, to);

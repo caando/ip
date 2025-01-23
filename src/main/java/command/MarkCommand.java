@@ -11,12 +11,13 @@ public class MarkCommand implements Command {
         this.taskIndex = taskIndex;
     }
 
-    public static MarkCommand parse(String[] parts) {
+    public static Command parse(String[] parts) {
         try {
             String[] args = parts[1].split(" "); // Split the command argument
             int taskIndex = Integer.parseInt(args[0].trim());
             return new MarkCommand(taskIndex);
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            System.out.println("Invalid task number. Please provide a valid task index.");
             return null; // Handle invalid input
         }
     }

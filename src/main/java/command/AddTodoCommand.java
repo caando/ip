@@ -11,6 +11,10 @@ public class AddTodoCommand implements Command {
         this.taskDescription = taskDescription;
     }
 
+    public static Command parse(String[] parts) {
+        return new AddTodoCommand(parts[1]);
+    }
+
     @Override
     public void execute(TaskList taskList) {
         Todo todo = new Todo(taskDescription);

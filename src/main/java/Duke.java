@@ -50,19 +50,12 @@ public class Duke {
         String command = parts[0].toLowerCase();
 
         return switch (command) {
-        case "list" -> new ListCommand();
+        case "list" -> ListCommand.parse(parts);
         case "mark" -> MarkCommand.parse(parts);
         case "unmark" -> UnmarkCommand.parse(parts);
-        case "todo" -> new AddTodoCommand(parts[1]);
-        case "deadline" -> {
-            String[] deadlineParts = parts[1].split("/by", 2);
-            yield new AddDeadlineCommand(deadlineParts[0].trim(), deadlineParts[1].trim());
-        }
-        case "event" -> {
-            String[] eventParts = parts[1].split("/from", 2);
-            String[] toParts = eventParts[1].split("/to", 2);
-            yield new AddEventCommand(eventParts[0].trim(), toParts[0].trim(), toParts[1].trim());
-        }
+        case "todo" -> AddTodoCommand.parse(parts);
+        case "deadline" -> AddDeadlineCommand.parse(parts);
+        case "event" -> AddEventCommand.parse(parts);
         default -> AddCommand.parse(input);
         };
     }

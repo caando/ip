@@ -11,7 +11,7 @@ public class UnmarkCommand implements Command {
         this.taskIndex = taskIndex;
     }
 
-    public static UnmarkCommand parse(String[] parts) {
+    public static Command parse(String[] parts) {
         try {
             String[] args = parts[1].split(" "); // Split the command argument
             int taskIndex = Integer.parseInt(args[0].trim());
