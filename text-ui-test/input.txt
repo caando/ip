@@ -9,4 +9,9 @@ deadline do homework /by no idea :-p
 list
 event mysterious meeting
 deadline mysterious deadline
+delete 1
+list
+mark 2
+unmark 2
+delete 10
 bye
