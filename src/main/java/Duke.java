@@ -1,6 +1,9 @@
 import java.util.Scanner;
 
 import command.AddCommand;
+import command.AddDeadlineCommand;
+import command.AddEventCommand;
+import command.AddTodoCommand;
 import command.Command;
 import command.ListCommand;
 import command.MarkCommand;
@@ -50,6 +53,16 @@ public class Duke {
         case "list" -> new ListCommand();
         case "mark" -> MarkCommand.parse(parts);
         case "unmark" -> UnmarkCommand.parse(parts);
+        case "todo" -> new AddTodoCommand(parts[1]);
+        case "deadline" -> {
+            String[] deadlineParts = parts[1].split("/by", 2);
+            yield new AddDeadlineCommand(deadlineParts[0].trim(), deadlineParts[1].trim());
+        }
+        case "event" -> {
+            String[] eventParts = parts[1].split("/from", 2);
+            String[] toParts = eventParts[1].split("/to", 2);
+            yield new AddEventCommand(eventParts[0].trim(), toParts[0].trim(), toParts[1].trim());
+        }
         default -> AddCommand.parse(input);
         };
     }
