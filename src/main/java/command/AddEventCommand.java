@@ -1,5 +1,6 @@
 package command;
 
+import duke.DukeException;
 import task.Event;
 import task.TaskList;
 
@@ -18,11 +19,11 @@ public class AddEventCommand implements Command {
     public static Command parse(String[] parts) {
         String[] eventParts = parts[1].split("/from", 2);
         if (eventParts.length < 2) {
-            return new InvalidCommand("     OOPS!!! The duration of the event is invalid.");
+            return new InvalidCommand(new DukeException("     OOPS!!! The duration of the event is invalid."));
         }
         String[] toParts = eventParts[1].split("/to", 2);
         if (toParts.length < 2) {
-            return new InvalidCommand("     OOPS!!! The duration of the event is invalid.");
+            return new InvalidCommand(new DukeException("     OOPS!!! The duration of the event is invalid."));
         }
         return new AddEventCommand(eventParts[0].trim(), toParts[0].trim(), toParts[1].trim());
     }

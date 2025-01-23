@@ -1,18 +1,19 @@
 package command;
 
+import duke.DukeException;
 import task.TaskList;
 
 public class InvalidCommand implements Command {
 
-    private final String message;
+    private final DukeException exception;
 
-    public InvalidCommand(String message) {
-        this.message = message;
+    public InvalidCommand(DukeException exception) {
+        this.exception = exception;
     }
 
     @Override
     public void execute(TaskList taskList) {
-        System.out.println(message);
+        System.out.println(exception.getMessage());
         System.out.println("    ____________________________________________________________");
     }
 }

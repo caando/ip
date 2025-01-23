@@ -1,5 +1,6 @@
 package command;
 
+import duke.DukeException;
 import task.Task;
 import task.TaskList;
 
@@ -17,7 +18,7 @@ public class UnmarkCommand implements Command {
             int taskIndex = Integer.parseInt(args[0].trim());
             return new UnmarkCommand(taskIndex);
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-            return new InvalidCommand("     OOPS!!! Invalid task number. Please provide a valid task index.");
+            return new InvalidCommand(new DukeException("     OOPS!!! Invalid task number. Please provide a valid task index."));
         }
     }
 
