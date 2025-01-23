@@ -8,6 +8,7 @@ import command.InvalidCommand;
 import command.ListCommand;
 import command.MarkCommand;
 import command.UnmarkCommand;
+import command.DeleteCommand;
 import duke.DukeException;
 import task.TaskList;
 
@@ -57,6 +58,7 @@ public class Duke {
         case "todo" -> AddTodoCommand.parse(parts);
         case "deadline" -> AddDeadlineCommand.parse(parts);
         case "event" -> AddEventCommand.parse(parts);
+        case "delete" -> DeleteCommand.parse(parts);
         default -> new InvalidCommand(new DukeException("     OOPS!!! I'm sorry, but I don't know what that means :-("));
         };
     }
