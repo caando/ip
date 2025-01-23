@@ -31,7 +31,8 @@ public class MarkCommand implements Command {
             System.out.println("       " + task);
             System.out.println("    ____________________________________________________________");
         } else {
-            System.out.println("    Invalid task index.");
+            DukeException error = new DukeException("     OOPS!!! Invalid task number. Please provide a valid task index.");
+            System.out.println(error.getMessage());
             System.out.println("    ____________________________________________________________");
         }
     }
