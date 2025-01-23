@@ -1,3 +1,8 @@
+/**
+ * The Duke class represents a java simple application that will
+ * progressively gain more features through the course of the ip
+ * project.
+ */
 public class Duke {
     public static void main(String[] args) {
         String logo = " ____        _        \n"
