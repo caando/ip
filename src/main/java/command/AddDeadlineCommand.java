@@ -14,7 +14,13 @@ public class AddDeadlineCommand implements Command {
     }
 
     public static Command parse(String[] parts) {
+        if (parts.length < 2) {
+            return new InvalidCommand("     OOPS!!! The given deadline is invalid.");
+        }
         String[] deadlineParts = parts[1].split("/by", 2);
+        if (deadlineParts.length < 2) {
+            return new InvalidCommand("     OOPS!!! The given deadline is invalid.");
+        }
         return new AddDeadlineCommand(deadlineParts[0].trim(), deadlineParts[1].trim());
     }
 

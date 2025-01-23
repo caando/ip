@@ -17,7 +17,7 @@ public class UnmarkCommand implements Command {
             int taskIndex = Integer.parseInt(args[0].trim());
             return new UnmarkCommand(taskIndex);
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-            return null; // Handle invalid input
+            return new InvalidCommand("     OOPS!!! Invalid task number. Please provide a valid task index.");
         }
     }
 

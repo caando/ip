@@ -12,6 +12,9 @@ public class AddTodoCommand implements Command {
     }
 
     public static Command parse(String[] parts) {
+        if (parts.length < 2) {
+            return new InvalidCommand("     OOPS!!! The description of a todo cannot be empty.");
+        }
         return new AddTodoCommand(parts[1]);
     }
 

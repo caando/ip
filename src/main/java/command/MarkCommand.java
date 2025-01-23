@@ -17,8 +17,7 @@ public class MarkCommand implements Command {
             int taskIndex = Integer.parseInt(args[0].trim());
             return new MarkCommand(taskIndex);
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-            System.out.println("Invalid task number. Please provide a valid task index.");
-            return null; // Handle invalid input
+            return new InvalidCommand("     OOPS!!! Invalid task number. Please provide a valid task index.");
         }
     }
 

@@ -1,10 +1,10 @@
 import java.util.Scanner;
 
-import command.AddCommand;
 import command.AddDeadlineCommand;
 import command.AddEventCommand;
 import command.AddTodoCommand;
 import command.Command;
+import command.InvalidCommand;
 import command.ListCommand;
 import command.MarkCommand;
 import command.UnmarkCommand;
@@ -56,7 +56,7 @@ public class Duke {
         case "todo" -> AddTodoCommand.parse(parts);
         case "deadline" -> AddDeadlineCommand.parse(parts);
         case "event" -> AddEventCommand.parse(parts);
-        default -> AddCommand.parse(input);
+        default -> new InvalidCommand("     OOPS!!! I'm sorry, but I don't know what that means :-(");
         };
     }
 
