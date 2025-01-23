@@ -4,11 +4,12 @@ import command.AddDeadlineCommand;
 import command.AddEventCommand;
 import command.AddTodoCommand;
 import command.Command;
+import command.CommandType;
+import command.DeleteCommand;
 import command.InvalidCommand;
 import command.ListCommand;
 import command.MarkCommand;
 import command.UnmarkCommand;
-import command.DeleteCommand;
 import duke.DukeException;
 import task.TaskList;
 
@@ -49,17 +50,26 @@ public class Duke {
 
     private static Command parseCommand(String input) {
         String[] parts = input.split(" ", 2);
-        String command = parts[0].toLowerCase();
+        String command = parts[0].toUpperCase();
 
-        return switch (command) {
-        case "list" -> ListCommand.parse(parts);
-        case "mark" -> MarkCommand.parse(parts);
-        case "unmark" -> UnmarkCommand.parse(parts);
-        case "todo" -> AddTodoCommand.parse(parts);
-        case "deadline" -> AddDeadlineCommand.parse(parts);
-        case "event" -> AddEventCommand.parse(parts);
-        case "delete" -> DeleteCommand.parse(parts);
-        default -> new InvalidCommand(new DukeException("     OOPS!!! I'm sorry, but I don't know what that means :-("));
+        CommandType commandType;
+
+        try {
+            commandType = CommandType.valueOf(command); // Use enum to match the command
+        } catch (IllegalArgumentException e) {
+            // If the command is invalid, set it to ADD as default
+            commandType = CommandType.INVALID;
+        }
+
+        return switch (commandType) {
+        case DEADLINE -> AddDeadlineCommand.parse(parts);
+        case DELETE -> DeleteCommand.parse(parts);
+        case EVENT -> AddEventCommand.parse(parts);
+        case LIST -> ListCommand.parse(parts);
+        case MARK -> MarkCommand.parse(parts);
+        case TODO -> AddTodoCommand.parse(parts);
+        case UNMARK -> UnmarkCommand.parse(parts);
+        case INVALID -> new InvalidCommand(new DukeException("     OOPS!!! I'm sorry, but I don't know what that means :-("));
         };
     }
 
