@@ -10,8 +10,8 @@ public class TaskList {
         this.tasks = new ArrayList<>();
     }
 
-    public void add(String taskDescription) {
-        tasks.add(new Task(taskDescription));
+    public void add(Task task) {
+        tasks.add(task);
     }
 
     public void list(TaskListConsumer consumer) {

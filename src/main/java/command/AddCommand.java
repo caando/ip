@@ -1,5 +1,6 @@
 package command;
 
+import task.Task;
 import task.TaskList;
 
 public class AddCommand implements Command {
@@ -16,7 +17,7 @@ public class AddCommand implements Command {
 
     @Override
     public void execute(TaskList taskList) {
-        taskList.add(taskDescription);
+        taskList.add(new Task(taskDescription));
         System.out.println("     added: " + taskDescription);
         System.out.println("    ____________________________________________________________");
     }
