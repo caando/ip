@@ -1,6 +1,6 @@
 package command;
 
-import duke.DukeException;
+import exception.DukeException;
 import task.TaskList;
 
 public class InvalidCommand implements Command {

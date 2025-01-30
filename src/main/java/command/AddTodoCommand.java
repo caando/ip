@@ -1,6 +1,6 @@
 package command;
 
-import duke.DukeException;
+import exception.DukeException;
 import task.TaskList;
 import task.Todo;
 
@@ -22,7 +22,7 @@ public class AddTodoCommand implements Command {
     @Override
     public void execute(TaskList taskList) {
         Todo todo = new Todo(taskDescription);
-        taskList.add(todo);  // Add to the task list
+        taskList.add(todo); // Add to the task list
         System.out.println("     Got it. I've added this task:");
         System.out.println("       " + todo);
         System.out.println("     Now you have " + taskList.size() + " tasks in the list.");

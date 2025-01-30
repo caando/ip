@@ -1,6 +1,6 @@
 package command;
 
-import duke.DukeException;
+import exception.DukeException;
 import task.Task;
 import task.TaskList;
 
@@ -26,7 +26,7 @@ public class DeleteCommand implements Command {
         // Get the task to be removed
         Task task = taskList.get(index);
         taskList.remove(index); // Remove the task from the list
-        
+
         // Output the result
         System.out.println("     Noted. I've removed this task:");
         System.out.println("       " + task);
@@ -39,7 +39,7 @@ public class DeleteCommand implements Command {
         if (parts.length < 2) {
             return new InvalidCommand(new DukeException("     OOPS!!! The 'delete' command requires a task number."));
         }
-        
+
         try {
             int index = Integer.parseInt(parts[1]) - 1; // Convert to 0-based index
             return new DeleteCommand(index);
