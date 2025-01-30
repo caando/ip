@@ -12,8 +12,18 @@ public class Event extends Task {
     }
 
     @Override
+    public String getTaskIcon() {
+        return "E";
+    }
+
+    @Override
+    public String toPsvString() {
+        return String.format("%s | %s | %s | %s | %s", getTaskIcon(), getStatusIcon(), this.description, this.from, this.to);
+    }
+
+    @Override
     public String toString() {
-        return String.format("[E][%s] %s (from: %s to: %s)", getStatusIcon(), description, from, to);
+        return String.format("[%s][%s] %s (from: %s to: %s)", getTaskIcon(), getStatusIcon(), description, from, to);
     }
 }
 

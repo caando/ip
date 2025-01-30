@@ -7,8 +7,13 @@ public class Todo extends Task {
     }
 
     @Override
+    public String getTaskIcon() {
+        return "T";
+    }
+
+    @Override
     public String toString() {
-        return String.format("[T][%s] %s", getStatusIcon(), description);
+        return String.format("[%s][%s] %s", getTaskIcon(), getStatusIcon(), description);
     }
 }
 

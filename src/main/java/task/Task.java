@@ -22,6 +22,12 @@ public abstract class Task {
         isDone = false;
     }
 
+    public String toPsvString() {
+        return String.format("%s | %s | %s", getTaskIcon(), getStatusIcon(), this.description);
+    }
+
+    public abstract String getTaskIcon();
+
     @Override
     public abstract String toString();
 }

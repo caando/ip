@@ -10,8 +10,18 @@ public class Deadline extends Task {
     }
 
     @Override
+    public String getTaskIcon() {
+        return "D";
+    }
+
+    @Override
+    public String toPsvString() {
+        return String.format("%s | %s | %s | %s", getTaskIcon(), getStatusIcon(), this.description, this.by);
+    }
+
+    @Override
     public String toString() {
-        return String.format("[D][%s] %s (by: %s)", getStatusIcon(), description, by);
+        return String.format("[%s][%s] %s (by: %s)", getTaskIcon(), getStatusIcon(), description, by);
     }
 }
 

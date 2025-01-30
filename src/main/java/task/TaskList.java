@@ -36,4 +36,13 @@ public class TaskList {
     public interface TaskListConsumer {
         void accept(int index, Task task);
     }
+
+    public String toPsvString() {
+        StringBuilder output = new StringBuilder();
+        this.list((index, task) -> {
+            output.append(task.toPsvString());
+            output.append('\n');
+        });
+        return output.toString();
+    }
 }
