@@ -1,4 +1,5 @@
 package task;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,12 +38,14 @@ public class TaskList {
         void accept(int index, Task task);
     }
 
-    public String toPsvString() {
-        StringBuilder output = new StringBuilder();
+    public void writePsvString(java.io.Writer writer) {
         this.list((index, task) -> {
-            output.append(task.toPsvString());
-            output.append('\n');
+            try {
+                writer.write(task.toPsvString());
+                writer.write('\n');
+            } catch (IOException e) {
+                System.err.println("Error writing task to PSV: " + e.getMessage());
+            }
         });
-        return output.toString();
     }
 }
