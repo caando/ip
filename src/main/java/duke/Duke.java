@@ -1,5 +1,9 @@
 package duke;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 import command.AddDeadlineCommand;
@@ -34,7 +38,7 @@ public class Duke {
         System.out.println("    " + LINE_SEPARATOR);
     }
 
-    private static void processCommands(TaskList taskList) {
+    private static void processCommands(TaskList taskList, File saveFile) {
         try (Scanner scanner = new Scanner(System.in)) {
             while (true) {
                 String input = scanner.nextLine().trim();
@@ -46,6 +50,19 @@ public class Duke {
 
                 Command command = parseCommand(input);
                 command.execute(taskList);
+
+                try {
+                    if (!saveFile.exists()) {
+                        saveFile.getParentFile().mkdirs();
+                        saveFile.createNewFile();
+                    }
+
+                    BufferedWriter writer = new BufferedWriter(new FileWriter(saveFile));
+                    taskList.writePsvString(writer);
+                    writer.flush();
+                } catch (IOException e) {
+                    System.err.println("Error writing tasklist to PSV: " + e.getMessage());
+                }
             }
         }
     }
@@ -79,7 +96,8 @@ public class Duke {
         start();
         greet();
         TaskList taskList = new TaskList();
-        processCommands(taskList);
+        File saveFile = new File("./data/duke.txt");
+        processCommands(taskList, saveFile);
         bye();
     }
 }
