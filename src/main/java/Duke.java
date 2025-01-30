@@ -10,7 +10,7 @@ import command.InvalidCommand;
 import command.ListCommand;
 import command.MarkCommand;
 import command.UnmarkCommand;
-import duke.DukeException;
+import exception.DukeException;
 import task.TaskList;
 
 public class Duke {
