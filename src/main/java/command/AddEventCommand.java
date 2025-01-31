@@ -1,5 +1,8 @@
 package command;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+
 import exception.DukeException;
 import task.Event;
 import task.TaskList;
@@ -7,10 +10,10 @@ import task.TaskList;
 public class AddEventCommand implements Command {
 
     private final String taskDescription;
-    private final String from;
-    private final String to;
+    private final LocalDate from;
+    private final LocalDate to;
 
-    public AddEventCommand(String taskDescription, String from, String to) {
+    public AddEventCommand(String taskDescription, LocalDate from, LocalDate to) {
         this.taskDescription = taskDescription;
         this.from = from;
         this.to = to;
@@ -25,7 +28,14 @@ public class AddEventCommand implements Command {
         if (toParts.length < 2) {
             return new InvalidCommand(new DukeException("     OOPS!!! The duration of the event is invalid."));
         }
-        return new AddEventCommand(eventParts[0].trim(), toParts[0].trim(), toParts[1].trim());
+        try {
+            LocalDate from = LocalDate.parse(toParts[0].trim());
+            LocalDate to = LocalDate.parse(toParts[1].trim());
+            return new AddEventCommand(eventParts[0].trim(), from, to);
+        } catch (DateTimeParseException e) {
+            return new InvalidCommand(new DukeException(String.format(
+                    "     OOPS!!! Unable to parse [%s] or [%s] to date", toParts[0] , toParts[1])));
+        }
     }
 
     @Override

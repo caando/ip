@@ -1,5 +1,8 @@
 package command;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+
 import exception.DukeException;
 import task.Deadline;
 import task.TaskList;
@@ -7,9 +10,9 @@ import task.TaskList;
 public class AddDeadlineCommand implements Command {
 
     private final String taskDescription;
-    private final String by;
+    private final LocalDate by;
 
-    public AddDeadlineCommand(String taskDescription, String by) {
+    public AddDeadlineCommand(String taskDescription, LocalDate by) {
         this.taskDescription = taskDescription;
         this.by = by;
     }
@@ -22,7 +25,13 @@ public class AddDeadlineCommand implements Command {
         if (deadlineParts.length < 2) {
             return new InvalidCommand(new DukeException("     OOPS!!! The given deadline is invalid."));
         }
-        return new AddDeadlineCommand(deadlineParts[0].trim(), deadlineParts[1].trim());
+        try {
+            LocalDate by = LocalDate.parse(deadlineParts[1].trim());
+            return new AddDeadlineCommand(deadlineParts[0].trim(), by);
+        } catch (DateTimeParseException e) {
+            return new InvalidCommand(new DukeException(String.format(
+                    "     OOPS!!! Unable to parse [%s] to date", deadlineParts[1])));
+        }
     }
 
     @Override
@@ -35,4 +44,3 @@ public class AddDeadlineCommand implements Command {
         System.out.println("    ____________________________________________________________");
     }
 }
-
