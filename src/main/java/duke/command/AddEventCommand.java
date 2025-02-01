@@ -12,22 +12,39 @@ import duke.task.Event;
 import duke.task.TaskContainer;
 import duke.ui.Ui;
 
+/**
+ * Represents a command to add an event task.
+ * This command parses user input, creates an {@code Event} task, and adds it to the task container.
+ */
 public class AddEventCommand implements Command {
 
     private final String taskDescription;
     private final LocalDate from;
     private final LocalDate to;
 
+    /**
+     * Creates an {@code AddEventCommand} with the specified task description and time period.
+     *
+     * @param taskDescription the description of the task
+     * @param from the starting date of the event
+     * @param to the ending date of the event
+     */
     public AddEventCommand(String taskDescription, LocalDate from, LocalDate to) {
         this.taskDescription = taskDescription;
         this.from = from;
         this.to = to;
     }
 
+    /**
+     * Parses the input string to create an {@code AddEventCommand}.
+     * The input must follow the format: {@code "event <description> /from <start_date> /to <end_date>"}.
+     *
+     * @param input the user input string
+     * @return the parsed {@code AddEventCommand} instance
+     * @throws ParseCommandException if the input is invalid or cannot be parsed
+     */
     public static Command parse(String input) throws ParseCommandException {
-        // Captures `event XXX \from YYY \to ZZZ`
         String regex = "event\\s+(.+)\\s+/from\\s+(.+)\\s+/to\\s+(.+)";
-
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);
 
@@ -41,11 +58,11 @@ public class AddEventCommand implements Command {
             }
 
             if (fromDateString.isEmpty()) {
-                throw new ParseCommandException("Event command requires [\from] argument.");
+                throw new ParseCommandException("Event command requires [/from] argument.");
             }
 
             if (toDateString.isEmpty()) {
-                throw new ParseCommandException("Event command requires [\to] argument.");
+                throw new ParseCommandException("Event command requires [/to] argument.");
             }
 
             LocalDate fromDate;
@@ -65,10 +82,17 @@ public class AddEventCommand implements Command {
             return new AddEventCommand(description, fromDate, toDate);
         } else {
             throw new ParseCommandException(String.format("Unable to parse [%s] to event command", input));
-
         }
     }
 
+    /**
+     * Executes the {@code AddEventCommand} by creating a new {@code Event} task,
+     * adding it to the task list, and displaying the result to the user.
+     *
+     * @param taskList the task container to which the task is added
+     * @param storage the storage used for persisting tasks
+     * @param ui the user interface for displaying outputs
+     */
     @Override
     public void execute(TaskContainer taskList, Storage storage, Ui ui) {
         Event event = new Event(taskDescription, from, to);
