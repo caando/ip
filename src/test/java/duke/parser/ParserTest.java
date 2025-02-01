@@ -1,6 +1,6 @@
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+package duke.parser;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import duke.command.AddDeadlineCommand;
@@ -13,7 +13,6 @@ import duke.command.ListCommand;
 import duke.command.MarkCommand;
 import duke.command.UnmarkCommand;
 import duke.exception.ParseCommandException;
-import duke.parser.Parser;
 
 public class ParserTest {
 
@@ -26,7 +25,7 @@ public class ParserTest {
         Command result = Parser.parseCommand(input);
 
         // Assert
-        assertTrue(result instanceof AddTodoCommand);
+        Assertions.assertTrue(result instanceof AddTodoCommand);
     }
 
     @Test
@@ -38,7 +37,7 @@ public class ParserTest {
         Command result = Parser.parseCommand(input);
 
         // Assert
-        assertTrue(result instanceof AddDeadlineCommand);
+        Assertions.assertTrue(result instanceof AddDeadlineCommand);
     }
 
     @Test
@@ -50,7 +49,7 @@ public class ParserTest {
         Command result = Parser.parseCommand(input);
 
         // Assert
-        assertTrue(result instanceof AddEventCommand);
+        Assertions.assertTrue(result instanceof AddEventCommand);
     }
 
     @Test
@@ -62,7 +61,7 @@ public class ParserTest {
         Command result = Parser.parseCommand(input);
 
         // Assert
-        assertTrue(result instanceof ListCommand);
+        Assertions.assertTrue(result instanceof ListCommand);
     }
 
     @Test
@@ -74,7 +73,7 @@ public class ParserTest {
         Command result = Parser.parseCommand(input);
 
         // Assert
-        assertTrue(result instanceof DeleteCommand);
+        Assertions.assertTrue(result instanceof DeleteCommand);
     }
 
     @Test
@@ -86,7 +85,7 @@ public class ParserTest {
         Command result = Parser.parseCommand(input);
 
         // Assert
-        assertTrue(result instanceof MarkCommand);
+        Assertions.assertTrue(result instanceof MarkCommand);
     }
 
     @Test
@@ -98,7 +97,7 @@ public class ParserTest {
         Command result = Parser.parseCommand(input);
 
         // Assert
-        assertTrue(result instanceof UnmarkCommand);
+        Assertions.assertTrue(result instanceof UnmarkCommand);
     }
 
     @Test
@@ -110,7 +109,7 @@ public class ParserTest {
         Command result = Parser.parseCommand(input);
 
         // Assert
-        assertTrue(result instanceof ByeCommand);
+        Assertions.assertTrue(result instanceof ByeCommand);
     }
 
     @Test
@@ -119,9 +118,8 @@ public class ParserTest {
         String input = "unknowncommand something";
 
         // Act & Assert
-        ParseCommandException exception = assertThrows(ParseCommandException.class, () -> {
-            Parser.parseCommand(input);
-        });
-        assertEquals("Unknown command [unknowncommand]", exception.getMessage());
+        ParseCommandException exception = Assertions.assertThrows(
+            ParseCommandException.class, () -> Parser.parseCommand(input));
+        Assertions.assertEquals("Unknown command [unknowncommand]", exception.getMessage());
     }
 }

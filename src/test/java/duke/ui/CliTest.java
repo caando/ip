@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -34,7 +34,7 @@ public class CliTest {
         String input = cli.getInput();
 
         // Assert
-        assertEquals("Test input", input);
+        Assertions.assertEquals("Test input", input);
     }
 
     @Test
@@ -43,12 +43,11 @@ public class CliTest {
         cli.showOutput(Arrays.asList("Line 1", "Line 2", "Line 3"));
 
         // Assert
-        String expectedOutput = 
-            "    Line 1\n" +
-            "    Line 2\n" +
-            "    Line 3\n" +
-            "   _____________________________________________________________________________\n";
-        assertEquals(expectedOutput, byteArrayOutputStream.toString());
+        String expectedOutput = "    Line 1\n"
+                + "    Line 2\n"
+                + "    Line 3\n"
+                + "   _____________________________________________________________________________\n";
+        Assertions.assertEquals(expectedOutput, byteArrayOutputStream.toString());
     }
 
     @Test
@@ -57,11 +56,10 @@ public class CliTest {
         cli.showOutput("Line 1", "Line 2");
 
         // Assert
-        String expectedOutput = 
-            "    Line 1\n" +
-            "    Line 2\n" +
-            "   _____________________________________________________________________________\n";
-        assertEquals(expectedOutput, byteArrayOutputStream.toString());
+        String expectedOutput = "    Line 1\n"
+                + "    Line 2\n"
+                + "   _____________________________________________________________________________\n";
+        Assertions.assertEquals(expectedOutput, byteArrayOutputStream.toString());
     }
 
     @Test
@@ -70,11 +68,10 @@ public class CliTest {
         cli.showError(Arrays.asList("Error 1", "Error 2"));
 
         // Assert
-        String expectedOutput = 
-            "    OOPS!!! Error 1\n" +
-            "    OOPS!!! Error 2\n" +
-            "   _____________________________________________________________________________\n";
-        assertEquals(expectedOutput, byteArrayOutputStream.toString());
+        String expectedOutput = "    OOPS!!! Error 1\n"
+                + "    OOPS!!! Error 2\n"
+                + "   _____________________________________________________________________________\n";
+        Assertions.assertEquals(expectedOutput, byteArrayOutputStream.toString());
     }
 
     @Test
@@ -83,11 +80,10 @@ public class CliTest {
         cli.showError("Error 1", "Error 2");
 
         // Assert
-        String expectedOutput = 
-            "    OOPS!!! Error 1\n" +
-            "    OOPS!!! Error 2\n" +
-            "   _____________________________________________________________________________\n";
-        assertEquals(expectedOutput, byteArrayOutputStream.toString());
+        String expectedOutput = "    OOPS!!! Error 1\n"
+                + "    OOPS!!! Error 2\n"
+                + "   _____________________________________________________________________________\n";
+        Assertions.assertEquals(expectedOutput, byteArrayOutputStream.toString());
     }
 
     @Test
@@ -96,12 +92,11 @@ public class CliTest {
         cli.start();
 
         // Assert
-        String expectedOutput = 
-            "   _____________________________________________________________________________\n" +
-            "    Hello! I'm Mr Meeseeks\n" +
-            "    What can I do for you?\n" +
-            "   _____________________________________________________________________________\n";
-        assertEquals(expectedOutput, byteArrayOutputStream.toString());
+        String expectedOutput = "   _____________________________________________________________________________\n"
+                + "    Hello! I'm Mr Meeseeks\n"
+                + "    What can I do for you?\n"
+                + "   _____________________________________________________________________________\n";
+        Assertions.assertEquals(expectedOutput, byteArrayOutputStream.toString());
     }
 
     @Test
@@ -110,9 +105,8 @@ public class CliTest {
         cli.close();
 
         // Assert
-        String expectedOutput = 
-            "    Bye. Hope to see you again soon!\n" +
-            "   _____________________________________________________________________________\n";
-        assertEquals(expectedOutput, byteArrayOutputStream.toString());
+        String expectedOutput = "    Bye. Hope to see you again soon!\n"
+                + "   _____________________________________________________________________________\n";
+        Assertions.assertEquals(expectedOutput, byteArrayOutputStream.toString());
     }
 }

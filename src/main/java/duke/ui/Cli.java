@@ -113,7 +113,7 @@ public class Cli implements Ui {
      * Displays a greeting message to the user when the program starts.
      * The greeting provides a welcome message and asks the user for input.
      */
-    @Override 
+    @Override
     public void start() {
         showLineSeparator();
         showLine("Hello! I'm Mr Meeseeks");
