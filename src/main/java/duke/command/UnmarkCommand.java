@@ -1,14 +1,14 @@
-package command;
+package duke.command;
 
-import exception.DukeException;
-import task.Task;
-import task.TaskList;
+import duke.exception.DukeException;
+import duke.task.Task;
+import duke.task.TaskList;
 
-public class MarkCommand implements Command {
+public class UnmarkCommand implements Command {
 
     private final int taskIndex;
 
-    private MarkCommand(int taskIndex) {
+    private UnmarkCommand(int taskIndex) {
         this.taskIndex = taskIndex;
     }
 
@@ -16,9 +16,10 @@ public class MarkCommand implements Command {
         try {
             String[] args = parts[1].split(" "); // Split the command argument
             int taskIndex = Integer.parseInt(args[0].trim());
-            return new MarkCommand(taskIndex);
+            return new UnmarkCommand(taskIndex);
         } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-            return new InvalidCommand(new DukeException("     OOPS!!! Invalid task number. Please provide a valid task index."));
+            return new InvalidCommand(new DukeException(
+                    "     OOPS!!! Invalid task number. Please provide a valid task index."));
         }
     }
 
@@ -26,12 +27,13 @@ public class MarkCommand implements Command {
     public void execute(TaskList taskList) {
         if (taskIndex >= 1 && taskIndex <= taskList.size()) {
             Task task = taskList.get(taskIndex - 1);
-            task.markAsDone();
-            System.out.println("     Nice! I've marked this task as done:");
+            task.markAsNotDone();
+            System.out.println("     OK, I've marked this task as not done yet:");
             System.out.println("       " + task);
             System.out.println("    ____________________________________________________________");
         } else {
-            DukeException error = new DukeException("     OOPS!!! Invalid task number. Please provide a valid task index.");
+            DukeException error = new DukeException(
+                    "     OOPS!!! Invalid task number. Please provide a valid task index.");
             System.out.println(error.getMessage());
             System.out.println("    ____________________________________________________________");
         }

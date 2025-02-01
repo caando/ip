@@ -1,11 +1,11 @@
-package command;
+package duke.command;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
-import exception.DukeException;
-import task.Event;
-import task.TaskList;
+import duke.exception.DukeException;
+import duke.task.Event;
+import duke.task.TaskList;
 
 public class AddEventCommand implements Command {
 
