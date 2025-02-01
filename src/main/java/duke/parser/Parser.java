@@ -6,6 +6,7 @@ import duke.command.AddTodoCommand;
 import duke.command.ByeCommand;
 import duke.command.Command;
 import duke.command.DeleteCommand;
+import duke.command.FindCommand;
 import duke.command.ListCommand;
 import duke.command.MarkCommand;
 import duke.command.UnmarkCommand;
@@ -43,6 +44,7 @@ public class Parser {
         case DEADLINE -> AddDeadlineCommand.parse(input);
         case DELETE -> DeleteCommand.parse(input);
         case EVENT -> AddEventCommand.parse(input);
+        case FIND -> FindCommand.parse(input);
         case LIST -> ListCommand.parse(input);
         case MARK -> MarkCommand.parse(input);
         case TODO -> AddTodoCommand.parse(input);

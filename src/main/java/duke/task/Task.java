@@ -62,6 +62,13 @@ public abstract class Task {
     }
 
     /**
+     * Gets the description of the task.
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
      * Sets the completion status of the task based on the given status icon.
      * Valid status icons are:
      * <ul>

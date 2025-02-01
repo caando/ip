@@ -8,6 +8,7 @@ todo
 deadline do homework /by no idea :-p
 list
 event mysterious meeting
+find book
 deadline mysterious deadline
 delete 1
 list
