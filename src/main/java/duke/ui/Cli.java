@@ -1,5 +1,7 @@
 package duke.ui;
 
+import java.io.InputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,24 +19,22 @@ import java.util.Scanner;
 public class Cli implements Ui {
 
     private final Scanner scanner;
+    private final PrintStream printStream;
 
     /**
      * Constructs a new instance of the CLI, initializes the scanner for input,
      * and displays a welcome message to the user.
      */
-    public Cli() {
-        scanner = new Scanner(System.in);
-        showLineSeparator();
-        showLine("Hello! I'm Mr Meeseeks");
-        showLine("What can I do for you?");
-        showLineSeparator();
+    public Cli(InputStream inputStream, PrintStream printStream) {
+        scanner = new Scanner(inputStream);
+        this.printStream = printStream;
     }
 
     /**
      * Displays a separator line for visual clarity in the terminal output.
      */
     private void showLineSeparator() {
-        System.out.println("   _____________________________________________________________________________");
+        printStream.println("   _____________________________________________________________________________");
     }
 
     /**
@@ -43,7 +43,7 @@ public class Cli implements Ui {
      * @param line The text to be displayed.
      */
     private void showLine(String line) {
-        System.out.println(String.format("    %s", line));
+        printStream.println(String.format("    %s", line));
     }
 
     /**
@@ -107,6 +107,18 @@ public class Cli implements Ui {
     @Override
     public void showError(String... lines) {
         showError(new ArrayList<>(Arrays.asList(lines)));
+    }
+
+    /**
+     * Displays a greeting message to the user when the program starts.
+     * The greeting provides a welcome message and asks the user for input.
+     */
+    @Override 
+    public void start() {
+        showLineSeparator();
+        showLine("Hello! I'm Mr Meeseeks");
+        showLine("What can I do for you?");
+        showLineSeparator();
     }
 
     /**
