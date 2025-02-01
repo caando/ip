@@ -60,6 +60,15 @@ public class DeleteCommand implements Command {
     }
 
     /**
+     * Returns the index of the task.
+     *
+     * @return the task idnex
+     */
+    public int getTaskIndex() {
+        return taskIndex;
+    }
+
+    /**
      * Executes the delete command by removing the task from the task list,
      * updating storage, and displaying the relevant output to the user.
      *

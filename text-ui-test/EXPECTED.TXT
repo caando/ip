@@ -35,7 +35,7 @@
     6. [E][_] project meeting (from: Dec 1 2024 to: Dec 2 2024)
    _____________________________________________________________________________
    _____________________________________________________________________________
-    OOPS!!! Unable to parse [todo] to todo command
+    OOPS!!! Unable to parse [todo] to todo command.
    _____________________________________________________________________________
    _____________________________________________________________________________
     OOPS!!! Unable to parse [no idea :-p] as date for deadline command.
@@ -49,10 +49,10 @@
     6. [E][_] project meeting (from: Dec 1 2024 to: Dec 2 2024)
    _____________________________________________________________________________
    _____________________________________________________________________________
-    OOPS!!! Unable to parse [event mysterious meeting] to event command
+    OOPS!!! Unable to parse [event mysterious meeting] to event command.
    _____________________________________________________________________________
    _____________________________________________________________________________
-    OOPS!!! Unable to parse [deadline mysterious deadline] to deadline command
+    OOPS!!! Unable to parse [deadline mysterious deadline] to deadline command.
    _____________________________________________________________________________
    _____________________________________________________________________________
     Noted. I've removed this task:

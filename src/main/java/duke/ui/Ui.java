@@ -46,6 +46,14 @@ public interface Ui {
     public void showError(String... lines);
 
     /**
+     * Starts the user interface.
+     *
+     * This method initializes any necessary resources and prepares the UI
+     * for interaction with the user.
+     */
+    public void start();
+
+    /**
      * Closes the user interface and displays a goodbye message.
      */
     public void close();

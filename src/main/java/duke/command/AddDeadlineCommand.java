@@ -66,8 +66,26 @@ public class AddDeadlineCommand implements Command {
                         "Unable to parse [%s] as date for deadline command.", dateString));
             }
         } else {
-            throw new ParseCommandException(String.format("Unable to parse [%s] to deadline command", input));
+            throw new ParseCommandException(String.format("Unable to parse [%s] to deadline command.", input));
         }
+    }
+
+    /**
+     * Returns the description of the task.
+     *
+     * @return the task description
+     */
+    public String getTaskDescription() {
+        return taskDescription;
+    }
+
+    /**
+     * Returns the deadline date of the task.
+     *
+     * @return the deadline date
+     */
+    public LocalDate getDate() {
+        return date;
     }
 
     /**

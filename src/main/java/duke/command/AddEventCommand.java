@@ -13,8 +13,8 @@ import duke.task.TaskContainer;
 import duke.ui.Ui;
 
 /**
- * Represents a command to add an event task.
- * This command parses user input, creates an {@code Event} task, and adds it to the task container.
+ * Represents a command to add an event task. This command parses user input,
+ * creates an {@code Event} task, and adds it to the task container.
  */
 public class AddEventCommand implements Command {
 
@@ -23,7 +23,8 @@ public class AddEventCommand implements Command {
     private final LocalDate to;
 
     /**
-     * Creates an {@code AddEventCommand} with the specified task description and time period.
+     * Creates an {@code AddEventCommand} with the specified task description
+     * and time period.
      *
      * @param taskDescription the description of the task
      * @param from the starting date of the event
@@ -36,8 +37,9 @@ public class AddEventCommand implements Command {
     }
 
     /**
-     * Parses the input string to create an {@code AddEventCommand}.
-     * The input must follow the format: {@code "event <description> /from <start_date> /to <end_date>"}.
+     * Parses the input string to create an {@code AddEventCommand}. The input
+     * must follow the format:
+     * {@code "event <description> /from <start_date> /to <end_date>"}.
      *
      * @param input the user input string
      * @return the parsed {@code AddEventCommand} instance
@@ -69,25 +71,52 @@ public class AddEventCommand implements Command {
             try {
                 fromDate = Utils.parseDate(fromDateString);
             } catch (DateTimeParseException e) {
-                throw new ParseCommandException(String.format("Unable to parse [%s] to date", fromDateString));
+                throw new ParseCommandException(String.format("Unable to parse [%s] to date.", fromDateString));
             }
 
             LocalDate toDate;
             try {
                 toDate = Utils.parseDate(toDateString);
             } catch (DateTimeParseException e) {
-                throw new ParseCommandException(String.format("Unable to parse [%s] to date", toDateString));
+                throw new ParseCommandException(String.format("Unable to parse [%s] to date.", toDateString));
             }
 
             return new AddEventCommand(description, fromDate, toDate);
         } else {
-            throw new ParseCommandException(String.format("Unable to parse [%s] to event command", input));
+            throw new ParseCommandException(String.format("Unable to parse [%s] to event command.", input));
         }
     }
 
     /**
-     * Executes the {@code AddEventCommand} by creating a new {@code Event} task,
-     * adding it to the task list, and displaying the result to the user.
+     * Returns the description of the task.
+     *
+     * @return the task description
+     */
+    public String getTaskDescription() {
+        return taskDescription;
+    }
+
+    /**
+     * Returns the starting date of the event.
+     *
+     * @return the starting date
+     */
+    public LocalDate getFrom() {
+        return from;
+    }
+
+    /**
+     * Returns the ending date of the event.
+     *
+     * @return the ending date
+     */
+    public LocalDate getTo() {
+        return to;
+    }
+
+    /**
+     * Executes the {@code AddEventCommand} by creating a new {@code Event}
+     * task, adding it to the task list, and displaying the result to the user.
      *
      * @param taskList the task container to which the task is added
      * @param storage the storage used for persisting tasks
