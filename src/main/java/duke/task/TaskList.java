@@ -2,7 +2,9 @@ package duke.task;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TaskList implements TaskContainer{
+import duke.exception.TaskNotFoundException;
+
+public class TaskList implements TaskContainer {
 
     private final List<Task> tasks;
 
@@ -23,13 +25,21 @@ public class TaskList implements TaskContainer{
     }
 
     @Override
-    public Task get(int index) {
+    public Task get(int index) throws TaskNotFoundException {
+        if (index < 0 || index >= tasks.size()) {
+            throw new TaskNotFoundException(String.format(
+                    "Index [%d] out of range [%d]", index, tasks.size()));
+        }
         return tasks.get(index);
     }
 
     @Override
-    public void remove(int index) {
-        tasks.remove(index);
+    public Task remove(int index) throws TaskNotFoundException {
+        if (index < 0 || index >= tasks.size()) {
+            throw new TaskNotFoundException(String.format(
+                    "Index [%d] out of range [%d]", index, tasks.size()));
+        }
+        return tasks.remove(index);
     }
 
     @Override

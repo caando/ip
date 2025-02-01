@@ -1,5 +1,7 @@
 package duke.task;
 
+import duke.exception.TaskNotFoundException;
+
 public interface TaskContainer {
 
     @FunctionalInterface
@@ -11,9 +13,9 @@ public interface TaskContainer {
 
     public void list(TaskConsumer consumer);
 
-    public Task get(int index);
+    public Task get(int index) throws TaskNotFoundException;
 
-    public void remove(int index);
+    public Task remove(int index) throws TaskNotFoundException;
 
     public int size();
 }

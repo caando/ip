@@ -10,7 +10,13 @@ public class Todo extends Task {
     }
 
     public static Task fromPsvString(String input) throws ParseTaskException {
-        String[] parts = input.split("\\|", 4);
+        String[] parts = input.split("\\|", 3);
+
+        if (parts.length != 3) {
+            throw new ParseTaskException(String.format(
+                    "Todo PSV string [%s] have invalid number of columns", input));
+        }
+
         String statusIconString = parts[1].trim();
         String description = parts[2].trim();
 

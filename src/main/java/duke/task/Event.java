@@ -1,9 +1,9 @@
 package duke.task;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+import duke.Utils;
 import duke.exception.InvalidStatusIconException;
 import duke.exception.ParseTaskException;
 
@@ -19,15 +19,21 @@ public class Event extends Task {
     }
 
     public static Task fromPsvString(String input) throws ParseTaskException {
-        String[] parts = input.split("\\|", 4);
+        String[] parts = input.split("\\|", 5);
+
+        if (parts.length != 5) {
+            throw new ParseTaskException(String.format(
+                    "Event PSV string [%s] have invalid number of columns", input));
+        }
+
         String statusIconString = parts[1].trim();
         String description = parts[2].trim();
         String fromTimeString = parts[3].trim();
-        String toTimeString = parts[3].trim();
+        String toTimeString = parts[4].trim();
 
         LocalDate fromTime;
         try {
-            fromTime = LocalDate.parse(fromTimeString);
+            fromTime = Utils.parseDate(fromTimeString);
         } catch (DateTimeParseException e) {
             throw new ParseTaskException(String.format(
                     "Unable to parse event time [%s]", fromTimeString));
@@ -35,7 +41,7 @@ public class Event extends Task {
 
         LocalDate toTime;
         try {
-            toTime = LocalDate.parse(fromTimeString);
+            toTime = Utils.parseDate(fromTimeString);
         } catch (DateTimeParseException e) {
             throw new ParseTaskException(String.format(
                     "Unable to parse event time [%s]", toTimeString));
@@ -60,16 +66,14 @@ public class Event extends Task {
 
     @Override
     public String toPsvString() {
-        return String.format("%s | %s | %s | %s | %s", getTaskIcon(), getStatusIcon(), 
-                this.description, this.from.format(DateTimeFormatter.ofPattern("MMM d yyy")),
-                        this.to.format(DateTimeFormatter.ofPattern("MMM d yyy")));
+        return String.format("%s | %s | %s | %s | %s", getTaskIcon(), getStatusIcon(),
+                this.description, Utils.dateToString(this.from), Utils.dateToString(this.to));
     }
 
     @Override
     public String toString() {
-        return String.format("[%s][%s] %s (from: %s to: %s)", getTaskIcon(), getStatusIcon(), 
-                this.description, this.from.format(DateTimeFormatter.ofPattern("MMM d yyy")),
-                        this.to.format(DateTimeFormatter.ofPattern("MMM d yyy")));
+        return String.format("[%s][%s] %s (from: %s to: %s)", getTaskIcon(), getStatusIcon(),
+                this.description, Utils.dateToString(this.from), Utils.dateToString(this.to));
     }
 }
 

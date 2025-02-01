@@ -6,13 +6,13 @@ import duke.exception.ParseTaskException;
 public abstract class Task {
 
     public enum Type {
-        D,  // Deadline
-        E,  // Event
-        T   // Todo
+        D, // Deadline
+        E, // Event
+        T // Todo
     }
 
     public static final String DONE_ICON = "X";
-    public static final String NOT_DONE_ICON = " ";
+    public static final String NOT_DONE_ICON = "_";
 
     protected String description;
     protected boolean isDone;
@@ -38,7 +38,8 @@ public abstract class Task {
         switch (statusIcon) {
         case NOT_DONE_ICON -> markAsNotDone();
         case DONE_ICON -> markAsNotDone();
-        default -> throw new InvalidStatusIconException(String.format("Invalid status icon [%s]", statusIcon), statusIcon);
+        default -> throw new InvalidStatusIconException(
+                String.format("Invalid status icon [%s]", statusIcon), statusIcon);
         }
     }
 
