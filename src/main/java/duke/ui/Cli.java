@@ -6,31 +6,29 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Cli implements Ui {
-    private static final String LINE_SEPARATOR = "____________________________________________________________";
+
+    private final Scanner scanner;
 
     public Cli() {
-        showLine(LINE_SEPARATOR);
+        scanner = new Scanner(System.in);
+        showLineSeparator();
         showLine("Hello! I'm Mr Meeseeks");
         showLine("What can I do for you?");
-        showLine(LINE_SEPARATOR);
+        showLineSeparator();
+    }
+
+    private void showLineSeparator() {
+        System.out.println("   _____________________________________________________________________________");
     }
 
     private void showLine(String line) {
         System.out.println(String.format("    %s", line));
     }
 
-    public void close() {
-        showLine("Bye. Hope to see you again soon!");
-        showLine(LINE_SEPARATOR);
-    }
-
     @Override
     public String getInput() {
-        String input;
-        try (Scanner scanner = new Scanner(System.in)) {
-            input = scanner.nextLine().trim();
-        }
-        showLine(LINE_SEPARATOR);
+        String input = scanner.nextLine().trim();
+        showLineSeparator();
         return input;
     }
 
@@ -39,15 +37,7 @@ public class Cli implements Ui {
         for (String line : lines) {
             showLine(line);
         }
-        showLine(LINE_SEPARATOR);
-    }
-
-    @Override
-    public void showError(List<String> lines) {
-        for (String line : lines) {
-            showLine(String.format("OOPS!!! %s", line));
-        }
-        showLine(LINE_SEPARATOR);
+        showLineSeparator();
     }
 
     @Override
@@ -56,7 +46,21 @@ public class Cli implements Ui {
     }
 
     @Override
+    public void showError(List<String> lines) {
+        for (String line : lines) {
+            showLine(String.format("OOPS!!! %s", line));
+        }
+        showLineSeparator();
+    }
+
+    @Override
     public void showError(String... lines) {
         showError(new ArrayList<>(Arrays.asList(lines)));
+    }
+
+    @Override
+    public void close() {
+        showLine("Bye. Hope to see you again soon!");
+        showLineSeparator();
     }
 }

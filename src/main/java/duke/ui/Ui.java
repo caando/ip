@@ -8,10 +8,12 @@ public interface Ui {
 
     public void showOutput(List<String> lines);
 
-    public void showError(List<String> lines);
-
     public void showOutput(String... lines);
 
+    public void showError(List<String> lines);
+
     public void showError(String... lines);
+
+    public void close();
 
 }
