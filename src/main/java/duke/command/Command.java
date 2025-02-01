@@ -1,7 +1,21 @@
 package duke.command;
 
-import duke.task.TaskList;
+import duke.storage.Storage;
+import duke.task.TaskContainer;
+import duke.ui.Ui;
 
 public interface Command {
-    void execute(TaskList taskList);
+
+    public enum Type {
+        BYE,
+        DEADLINE,
+        DELETE,
+        EVENT,
+        LIST,
+        MARK,
+        TODO,
+        UNMARK
+    }
+
+    public void execute(TaskContainer taskList, Storage storage, Ui ui);
 }

@@ -1,8 +1,13 @@
 package duke.command;
 
-import duke.exception.DukeException;
-import duke.task.TaskList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import duke.exception.ParseCommandException;
+import duke.storage.Storage;
+import duke.task.TaskContainer;
 import duke.task.Todo;
+import duke.ui.Ui;
 
 public class AddTodoCommand implements Command {
 
@@ -12,21 +17,30 @@ public class AddTodoCommand implements Command {
         this.taskDescription = taskDescription;
     }
 
-    public static Command parse(String[] parts) {
-        if (parts.length < 2) {
-            return new InvalidCommand(new DukeException("     OOPS!!! The description of a todo cannot be empty."));
+    public static Command parse(String input) throws ParseCommandException {
+        // Captures `todo XXX`
+        String regex = "todo\\s+(.+)";
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(input);
+
+        if (matcher.matches()) {
+            String description = matcher.group(1).trim();
+            if (description.isEmpty()) {
+                throw new ParseCommandException("Todo command requires a description.");
+            }
+            return new AddTodoCommand(description);
+        } else {
+            throw new ParseCommandException(String.format("Unable to parse [%s] to todo command", input));
         }
-        return new AddTodoCommand(parts[1]);
     }
 
     @Override
-    public void execute(TaskList taskList) {
+    public void execute(TaskContainer taskList, Storage storage, Ui ui) {
         Todo todo = new Todo(taskDescription);
-        taskList.add(todo); // Add to the task list
-        System.out.println("     Got it. I've added this task:");
-        System.out.println("       " + todo);
-        System.out.println("     Now you have " + taskList.size() + " tasks in the list.");
-        System.out.println("    ____________________________________________________________");
+        taskList.add(todo);
+        ui.showOutput("Got it. I've added this task:", todo.toString(),
+                "Now you have " + taskList.size() + " tasks in the list.");
     }
 }
 

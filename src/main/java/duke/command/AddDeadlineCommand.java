@@ -2,45 +2,62 @@ package duke.command;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import duke.exception.DukeException;
+import duke.Utils;
+import duke.exception.ParseCommandException;
+import duke.storage.Storage;
 import duke.task.Deadline;
-import duke.task.TaskList;
+import duke.task.TaskContainer;
+import duke.ui.Ui;
 
 public class AddDeadlineCommand implements Command {
 
     private final String taskDescription;
-    private final LocalDate by;
+    private final LocalDate date;
 
-    public AddDeadlineCommand(String taskDescription, LocalDate by) {
+    public AddDeadlineCommand(String taskDescription, LocalDate date) {
         this.taskDescription = taskDescription;
-        this.by = by;
+        this.date = date;
     }
 
-    public static Command parse(String[] parts) {
-        if (parts.length < 2) {
-            return new InvalidCommand(new DukeException("     OOPS!!! The given deadline is invalid."));
-        }
-        String[] deadlineParts = parts[1].split("/by", 2);
-        if (deadlineParts.length < 2) {
-            return new InvalidCommand(new DukeException("     OOPS!!! The given deadline is invalid."));
-        }
-        try {
-            LocalDate by = LocalDate.parse(deadlineParts[1].trim());
-            return new AddDeadlineCommand(deadlineParts[0].trim(), by);
-        } catch (DateTimeParseException e) {
-            return new InvalidCommand(new DukeException(String.format(
-                    "     OOPS!!! Unable to parse [%s] to date", deadlineParts[1])));
+    public static Command parse(String input) throws ParseCommandException {
+        // Captures `deadline XXX \by YYY`
+        String regex = "deadline\\s+(.+)\\s+/by\\s+(.+)";
+
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(input);
+
+        if (matcher.matches()) {
+            String description = matcher.group(1).trim();
+            String dateString = matcher.group(2).trim();
+
+            if (description.isEmpty()) {
+                throw new ParseCommandException("Deadline command requires a description.");
+            }
+
+            if (dateString.isEmpty()) {
+                throw new ParseCommandException("Deadline command requires [\by] argument.");
+            }
+
+            try {
+                LocalDate date = Utils.parseDate(dateString);
+                return new AddDeadlineCommand(description, date);
+            } catch (DateTimeParseException e) {
+                throw new ParseCommandException(String.format(
+                        "Unable to parse [%s] as date for deadline command.", dateString));
+            }
+        } else {
+            throw new ParseCommandException(String.format("Unable to parse [%s] to deadline command", input));
         }
     }
 
     @Override
-    public void execute(TaskList taskList) {
-        Deadline deadline = new Deadline(taskDescription, by);
-        taskList.add(deadline); // Add to the task list
-        System.out.println("     Got it. I've added this task:");
-        System.out.println("       " + deadline);
-        System.out.println("     Now you have " + taskList.size() + " tasks in the list.");
-        System.out.println("    ____________________________________________________________");
+    public void execute(TaskContainer taskList, Storage storage, Ui ui) {
+        Deadline deadline = new Deadline(taskDescription, date);
+        taskList.add(deadline);
+        ui.showOutput("Got it. I've added this task:", deadline.toString(),
+                "Now you have " + taskList.size() + " tasks in the list.");
     }
 }
