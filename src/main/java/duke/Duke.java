@@ -33,7 +33,8 @@ public class Duke {
     public static void main(String[] args) {
         Storage storage = new FileStorage("./data/duke.txt");
         TaskList tasks = new TaskList();
-        Ui ui = new Cli();
+        Ui ui = new Cli(System.in, System.out);
+        ui.start();
 
         try {
             storage.load(tasks, ui);
