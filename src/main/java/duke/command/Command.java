@@ -26,6 +26,9 @@ public interface Command {
         /** Command to add an event task. */
         EVENT,
 
+        /** Command to find task description. */
+        FIND,
+
         /** Command to list all tasks. */
         LIST,
 
