@@ -12,6 +12,15 @@ then
     rm ACTUAL.TXT
 fi
 
+# delete saved data from previous run
+if [ -e "./data" ]
+then
+    rm -r data
+fi
+
+# copy initial data to state
+cp -r data-initial data
+
 # compile the code into the bin folder, terminates if error occurred
 if ! javac -cp ../src/main/java -Xlint:none -d ../bin ../src/main/java/*/*.java
 then

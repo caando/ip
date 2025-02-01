@@ -1,8 +1,8 @@
 hi
 todo borrow book
 list
-deadline return /by 2019-12-01
-event project meeting /from 2019-12-01 /to 2019-12-02
+deadline return book /by 2024-12-01
+event project meeting /from 2024-12-01 /to 2024-12-02
 list
 todo
 deadline do homework /by no idea :-p
