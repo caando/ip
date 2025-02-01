@@ -71,7 +71,7 @@ public class FileStorage implements Storage {
             }
         } catch (IOException e) {
             throw new ReadStorageException(String.format(
-                    "Error reading tasklist from file [%s] " + e.getMessage()));
+                    "Error reading tasklist from file [%s] ", e.getMessage()));
         }
     }
 }

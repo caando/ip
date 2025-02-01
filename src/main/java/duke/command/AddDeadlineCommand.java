@@ -12,20 +12,37 @@ import duke.task.Deadline;
 import duke.task.TaskContainer;
 import duke.ui.Ui;
 
+/**
+ * Represents a command to add a deadline task.
+ * This command is responsible for parsing the input, 
+ * creating a {@code Deadline} task, and adding it to the task container.
+ */
 public class AddDeadlineCommand implements Command {
 
     private final String taskDescription;
     private final LocalDate date;
 
+    /**
+     * Creates an {@code AddDeadlineCommand} with the specified task description and date.
+     *
+     * @param taskDescription the description of the task
+     * @param date the deadline date for the task
+     */
     public AddDeadlineCommand(String taskDescription, LocalDate date) {
         this.taskDescription = taskDescription;
         this.date = date;
     }
 
+    /**
+     * Parses the input string to create an {@code AddDeadlineCommand}.
+     * The input must follow the format: {@code "deadline <description> /by <date>"}.
+     *
+     * @param input the user input string
+     * @return the parsed {@code AddDeadlineCommand} instance
+     * @throws ParseCommandException if the input is invalid or cannot be parsed
+     */
     public static Command parse(String input) throws ParseCommandException {
-        // Captures `deadline XXX \by YYY`
         String regex = "deadline\\s+(.+)\\s+/by\\s+(.+)";
-
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);
 
@@ -38,7 +55,7 @@ public class AddDeadlineCommand implements Command {
             }
 
             if (dateString.isEmpty()) {
-                throw new ParseCommandException("Deadline command requires [\by] argument.");
+                throw new ParseCommandException("Deadline command requires [/by] argument.");
             }
 
             try {
@@ -53,6 +70,14 @@ public class AddDeadlineCommand implements Command {
         }
     }
 
+    /**
+     * Executes the {@code AddDeadlineCommand} by creating a new {@code Deadline} task,
+     * adding it to the task list, and displaying the result to the user.
+     *
+     * @param taskList the task container to which the task is added
+     * @param storage the storage used for persisting tasks
+     * @param ui the user interface for displaying outputs
+     */
     @Override
     public void execute(TaskContainer taskList, Storage storage, Ui ui) {
         Deadline deadline = new Deadline(taskDescription, date);
