@@ -41,7 +41,7 @@ public class AddDeadlineCommandTest {
 
         // Assert
         Assertions.assertEquals(
-                "Unable to parse [deadline /by 2025-02-01] to deadline command", exception.getMessage());
+                "Unable to parse [deadline /by 2025-02-01] to deadline command.", exception.getMessage());
     }
 
     @Test
@@ -56,7 +56,7 @@ public class AddDeadlineCommandTest {
 
         // Assert
         Assertions.assertEquals(
-                "Unable to parse [deadline Finish homework /by] to deadline command", exception.getMessage());
+                "Unable to parse [deadline Finish homework /by] to deadline command.", exception.getMessage());
     }
 
     @Test

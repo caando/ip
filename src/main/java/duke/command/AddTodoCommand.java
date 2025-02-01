@@ -46,8 +46,17 @@ public class AddTodoCommand implements Command {
             }
             return new AddTodoCommand(description);
         } else {
-            throw new ParseCommandException(String.format("Unable to parse [%s] to todo command", input));
+            throw new ParseCommandException(String.format("Unable to parse [%s] to todo command.", input));
         }
+    }
+
+    /**
+     * Returns the description of the task.
+     *
+     * @return the task description
+     */
+    public String getTaskDescription() {
+        return taskDescription;
     }
 
     /**

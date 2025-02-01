@@ -44,7 +44,8 @@ public class AddEventCommandTest {
         });
 
         // Assert
-        Assertions.assertEquals("Event command requires a description.", exception.getMessage());
+        Assertions.assertEquals("Unable to parse [event /from 2025-02-01 /to 2025-02-03] to event command.",
+                exception.getMessage());
     }
 
     @Test
@@ -58,7 +59,7 @@ public class AddEventCommandTest {
         });
 
         // Assert
-        Assertions.assertEquals("Unable to parse [event /from 2025-02-01 /to 2025-02-03] to event command.",
+        Assertions.assertEquals("Unable to parse [event Meeting /from /to 2025-02-03] to event command.",
                 exception.getMessage());
     }
 

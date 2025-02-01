@@ -66,24 +66,8 @@ public class AddDeadlineCommand implements Command {
                         "Unable to parse [%s] as date for deadline command.", dateString));
             }
         } else {
-            throw new ParseCommandException(String.format("Unable to parse [%s] to deadline command", input));
+            throw new ParseCommandException(String.format("Unable to parse [%s] to deadline command.", input));
         }
-    }
-
-    /**
-     * Executes the {@code AddDeadlineCommand} by creating a new {@code Deadline} task,
-     * adding it to the task list, and displaying the result to the user.
-     *
-     * @param taskList the task container to which the task is added
-     * @param storage the storage used for persisting tasks
-     * @param ui the user interface for displaying outputs
-     */
-    @Override
-    public void execute(TaskContainer taskList, Storage storage, Ui ui) {
-        Deadline deadline = new Deadline(taskDescription, date);
-        taskList.add(deadline);
-        ui.showOutput("Got it. I've added this task:", deadline.toString(),
-                "Now you have " + taskList.size() + " tasks in the list.");
     }
 
     /**
@@ -102,5 +86,21 @@ public class AddDeadlineCommand implements Command {
      */
     public LocalDate getDate() {
         return date;
+    }
+
+    /**
+     * Executes the {@code AddDeadlineCommand} by creating a new {@code Deadline} task,
+     * adding it to the task list, and displaying the result to the user.
+     *
+     * @param taskList the task container to which the task is added
+     * @param storage the storage used for persisting tasks
+     * @param ui the user interface for displaying outputs
+     */
+    @Override
+    public void execute(TaskContainer taskList, Storage storage, Ui ui) {
+        Deadline deadline = new Deadline(taskDescription, date);
+        taskList.add(deadline);
+        ui.showOutput("Got it. I've added this task:", deadline.toString(),
+                "Now you have " + taskList.size() + " tasks in the list.");
     }
 }

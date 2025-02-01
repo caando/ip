@@ -71,36 +71,20 @@ public class AddEventCommand implements Command {
             try {
                 fromDate = Utils.parseDate(fromDateString);
             } catch (DateTimeParseException e) {
-                throw new ParseCommandException(String.format("Unable to parse [%s] to date", fromDateString));
+                throw new ParseCommandException(String.format("Unable to parse [%s] to date.", fromDateString));
             }
 
             LocalDate toDate;
             try {
                 toDate = Utils.parseDate(toDateString);
             } catch (DateTimeParseException e) {
-                throw new ParseCommandException(String.format("Unable to parse [%s] to date", toDateString));
+                throw new ParseCommandException(String.format("Unable to parse [%s] to date.", toDateString));
             }
 
             return new AddEventCommand(description, fromDate, toDate);
         } else {
-            throw new ParseCommandException(String.format("Unable to parse [%s] to event command", input));
+            throw new ParseCommandException(String.format("Unable to parse [%s] to event command.", input));
         }
-    }
-
-    /**
-     * Executes the {@code AddEventCommand} by creating a new {@code Event}
-     * task, adding it to the task list, and displaying the result to the user.
-     *
-     * @param taskList the task container to which the task is added
-     * @param storage the storage used for persisting tasks
-     * @param ui the user interface for displaying outputs
-     */
-    @Override
-    public void execute(TaskContainer taskList, Storage storage, Ui ui) {
-        Event event = new Event(taskDescription, from, to);
-        taskList.add(event);
-        ui.showOutput("Got it. I've added this task:", event.toString(),
-                "Now you have " + taskList.size() + " tasks in the list.");
     }
 
     /**
@@ -128,5 +112,21 @@ public class AddEventCommand implements Command {
      */
     public LocalDate getTo() {
         return to;
+    }
+
+    /**
+     * Executes the {@code AddEventCommand} by creating a new {@code Event}
+     * task, adding it to the task list, and displaying the result to the user.
+     *
+     * @param taskList the task container to which the task is added
+     * @param storage the storage used for persisting tasks
+     * @param ui the user interface for displaying outputs
+     */
+    @Override
+    public void execute(TaskContainer taskList, Storage storage, Ui ui) {
+        Event event = new Event(taskDescription, from, to);
+        taskList.add(event);
+        ui.showOutput("Got it. I've added this task:", event.toString(),
+                "Now you have " + taskList.size() + " tasks in the list.");
     }
 }
