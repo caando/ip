@@ -13,7 +13,7 @@ import duke.ui.Ui;
 
 /**
  * Represents a command to mark a task as not done.
- * The command takes the task index, retrieves the task from the container, 
+ * The command takes the task index, retrieves the task from the container,
  * and marks it as not done.
  */
 public class UnmarkCommand implements Command {
@@ -22,7 +22,7 @@ public class UnmarkCommand implements Command {
 
     /**
      * Constructs an {@code UnmarkCommand} with the specified task index.
-     * 
+     *
      * @param taskIndex the index of the task to be marked as not done
      */
     private UnmarkCommand(int taskIndex) {
@@ -31,9 +31,9 @@ public class UnmarkCommand implements Command {
 
     /**
      * Parses the user input to create a new {@code UnmarkCommand}.
-     * The input should contain the `unmark` keyword followed by a positive integer index, 
+     * The input should contain the `unmark` keyword followed by a positive integer index,
      * representing the task to mark as not done.
-     * 
+     *
      * @param input the user input string
      * @return a new instance of {@code UnmarkCommand} with the task index
      * @throws ParseCommandException if the input is invalid or the task index is not a positive integer
@@ -64,10 +64,10 @@ public class UnmarkCommand implements Command {
     }
 
     /**
-     * Executes the unmark command by retrieving the task from the task container 
+     * Executes the unmark command by retrieving the task from the task container
      * using the specified index and marking it as not done.
      * The task is then saved, and appropriate messages are shown via the user interface.
-     * 
+     *
      * @param tasks the task container containing all tasks
      * @param storage the storage handler for saving tasks (not used in this command directly)
      * @param ui the user interface to display the success or error message

@@ -14,7 +14,7 @@ import duke.ui.Ui;
 
 /**
  * Represents a command to add a deadline task.
- * This command is responsible for parsing the input, 
+ * This command is responsible for parsing the input,
  * creating a {@code Deadline} task, and adding it to the task container.
  */
 public class AddDeadlineCommand implements Command {

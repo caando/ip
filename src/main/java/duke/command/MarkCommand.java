@@ -21,7 +21,7 @@ public class MarkCommand implements Command {
 
     /**
      * Constructs a {@code MarkCommand} with the specified task index.
-     * 
+     *
      * @param taskIndex the index of the task to be marked as done
      */
     private MarkCommand(int taskIndex) {
@@ -30,9 +30,9 @@ public class MarkCommand implements Command {
 
     /**
      * Parses the user input to create a new {@code MarkCommand}.
-     * The input should contain the `mark` keyword followed by a positive integer index, 
+     * The input should contain the `mark` keyword followed by a positive integer index,
      * representing the task to mark as done.
-     * 
+     *
      * @param input the user input string
      * @return a new instance of {@code MarkCommand} with the task index
      * @throws ParseCommandException if the input is invalid or the task index is not a positive integer
@@ -64,10 +64,10 @@ public class MarkCommand implements Command {
     }
 
     /**
-     * Executes the mark command by retrieving the task from the task container 
+     * Executes the mark command by retrieving the task from the task container
      * using the specified index and marking it as done.
      * The task is then saved, and appropriate messages are shown via the user interface.
-     * 
+     *
      * @param tasks the task container containing all tasks
      * @param storage the storage handler for saving tasks (not used in this command directly)
      * @param ui the user interface to display the success or error message
