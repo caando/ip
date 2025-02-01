@@ -17,12 +17,12 @@ import duke.ui.Ui;
  * the {@code TaskContainer}, and displays the tasks that match the keyword.
  */
 public class FindCommand implements Command {
-    
+
     private final String keyword;
 
     /**
      * Constructs a {@code FindCommand} with the specified keyword.
-     * 
+     *
      * @param keyword The keyword to search for in task descriptions.
      */
     public FindCommand(String keyword) {
@@ -32,10 +32,10 @@ public class FindCommand implements Command {
     /**
      * Parses the input string to create a {@code FindCommand} instance.
      * <p>
-     * This method extracts the keyword from the input string and creates a {@code FindCommand} 
-     * if the input is in the correct format. If the input does not match the expected format, 
+     * This method extracts the keyword from the input string and creates a {@code FindCommand}
+     * if the input is in the correct format. If the input does not match the expected format,
      * a {@code ParseCommandException} is thrown.
-     * 
+     *
      * @param input The input string to parse.
      * @return A new {@code FindCommand} instance with the parsed keyword.
      * @throws ParseCommandException If the input is invalid or cannot be parsed.
@@ -61,7 +61,7 @@ public class FindCommand implements Command {
      * <p>
      * This method iterates through all tasks in the provided {@code TaskContainer}, filters the tasks
      * that contain the keyword in their description, and displays them using the provided {@code Ui}.
-     * 
+     *
      * @param tasks The {@code TaskContainer} containing all the tasks to search.
      * @param storage The {@code Storage} instance used to access the task data (not used in this method).
      * @param ui The {@code Ui} instance used to display the filtered tasks.
