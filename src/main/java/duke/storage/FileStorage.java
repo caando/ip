@@ -12,19 +12,19 @@ import duke.exception.ParseTaskException;
 import duke.exception.ReadStorageException;
 import duke.exception.WriteStorageException;
 import duke.task.Task;
-import duke.task.TaskList;
+import duke.task.TaskContainer;
 import duke.ui.Ui;
 
 public class FileStorage implements Storage {
 
     private final File file;
-    
+
     public FileStorage(String filename) {
         file = new File(filename);
     }
 
     @Override
-    public void save(TaskList taskList, Ui ui) throws WriteStorageException {
+    public void save(TaskContainer tasks, Ui ui) throws WriteStorageException {
         try {
             if (!file.exists()) {
                 file.getParentFile().mkdirs();
@@ -34,7 +34,7 @@ public class FileStorage implements Storage {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 
             ArrayList<String> errors = new ArrayList<>();
-            taskList.list((index, task) -> {
+            tasks.list((index, task) -> {
                 try {
                     writer.write(task.toPsvString());
                     writer.write('\n');
@@ -44,7 +44,9 @@ public class FileStorage implements Storage {
             });
             writer.flush();
             writer.close();
-            ui.showError(errors);
+            if (!errors.isEmpty()) {
+                ui.showError(errors);
+            }
         } catch (IOException e) {
             throw new WriteStorageException(String.format(
                     "Error writing tasklist to file [%s] " + e.getMessage()));
@@ -52,24 +54,24 @@ public class FileStorage implements Storage {
     }
 
     @Override
-    public TaskList load(Ui ui) throws ReadStorageException {
-        TaskList taskList = new TaskList();
+    public void load(TaskContainer taskContainer, Ui ui) throws ReadStorageException {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             ArrayList<String> errors = new ArrayList<>();
             while ((line = reader.readLine()) != null) {
                 try {
                     Task task = Task.fromPsvString(line);
-                    taskList.add(task);
+                    taskContainer.add(task);
                 } catch (ParseTaskException e) {
                     errors.add(e.getMessage());
                 }
             }
-            ui.showError(errors);
+            if (!errors.isEmpty()) {
+                ui.showError(errors);
+            }
         } catch (IOException e) {
             throw new ReadStorageException(String.format(
                     "Error reading tasklist from file [%s] " + e.getMessage()));
         }
-        return taskList;
     }
 }

@@ -2,12 +2,12 @@ package duke.storage;
 
 import duke.exception.ReadStorageException;
 import duke.exception.WriteStorageException;
-import duke.task.TaskList;
+import duke.task.TaskContainer;
 import duke.ui.Ui;
 
 public interface Storage {
 
-    public void save(TaskList taskList, Ui ui) throws WriteStorageException;
+    public void save(TaskContainer taskList, Ui ui) throws WriteStorageException;
 
-    public TaskList load(Ui ui) throws ReadStorageException;
+    public void load(TaskContainer taskContainer, Ui ui) throws ReadStorageException;
 }
