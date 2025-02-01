@@ -7,17 +7,38 @@ import duke.Utils;
 import duke.exception.InvalidStatusIconException;
 import duke.exception.ParseTaskException;
 
+/**
+ * Represents an Event task in the task management system.
+ * An Event task has a description, a start time, and an end time.
+ * The task can be parsed from a string representation in PSV (Pipe-Separated Values) format
+ * and can also be converted to such a format.
+ */
 public class Event extends Task {
 
     private final LocalDate from;
     private final LocalDate to;
 
+    /**
+     * Constructs a new Event task with the specified description, start time, and end time.
+     *
+     * @param description The description of the event.
+     * @param from The start time of the event.
+     * @param to The end time of the event.
+     */
     public Event(String description, LocalDate from, LocalDate to) {
         super(description);
         this.from = from;
         this.to = to;
     }
 
+    /**
+     * Creates an Event task from a PSV string.
+     * The PSV string is expected to have the format: "TaskType | StatusIcon | Description | FromTime | ToTime".
+     *
+     * @param input The PSV string representing the event task.
+     * @return An Event task created from the provided PSV string.
+     * @throws ParseTaskException If the input string is not in the expected format or contains invalid data.
+     */
     public static Task fromPsvString(String input) throws ParseTaskException {
         String[] parts = input.split("\\|", 5);
 
@@ -59,22 +80,39 @@ public class Event extends Task {
         return event;
     }
 
+    /**
+     * Returns the icon representing the task type.
+     * For Event tasks, the icon is always "E".
+     *
+     * @return The task type icon as a string.
+     */
     @Override
     public String getTaskIcon() {
         return Task.Type.E.name();
     }
 
+    /**
+     * Converts this Event task to a PSV string.
+     * The format of the PSV string is: "TaskType | StatusIcon | Description | FromTime | ToTime".
+     *
+     * @return A PSV string representing this Event task.
+     */
     @Override
     public String toPsvString() {
         return String.format("%s | %s | %s | %s | %s", getTaskIcon(), getStatusIcon(),
                 this.description, Utils.dateToString(this.from), Utils.dateToString(this.to));
     }
 
+    /**
+     * Returns a string representation of the Event task.
+     * The string representation includes the task type icon, the status icon, the description,
+     * the start time, and the end time of the event.
+     *
+     * @return A string representation of the Event task.
+     */
     @Override
     public String toString() {
         return String.format("[%s][%s] %s (from: %s to: %s)", getTaskIcon(), getStatusIcon(),
                 this.description, Utils.dateToString(this.from), Utils.dateToString(this.to));
     }
 }
-
-
