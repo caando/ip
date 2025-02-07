@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import duke.Utils;
 import duke.exception.ParseCommandException;
+import duke.exception.WriteStorageException;
 import duke.storage.Storage;
 import duke.task.Event;
 import duke.task.TaskContainer;
@@ -118,15 +119,21 @@ public class AddEventCommand implements Command {
      * Executes the {@code AddEventCommand} by creating a new {@code Event}
      * task, adding it to the task list, and displaying the result to the user.
      *
-     * @param taskList the task container to which the task is added
+     * @param tasks the task container to which the task is added
      * @param storage the storage used for persisting tasks
      * @param ui the user interface for displaying outputs
      */
     @Override
-    public void execute(TaskContainer taskList, Storage storage, Ui ui) {
+    public void execute(TaskContainer tasks, Storage storage, Ui ui) {
         Event event = new Event(taskDescription, from, to);
-        taskList.add(event);
+        tasks.add(event);
         ui.showOutput("Got it. I've added this task:", event.toString(),
-                "Now you have " + taskList.size() + " tasks in the list.");
+                "Now you have " + tasks.size() + " tasks in the list.");
+
+        try {
+            storage.save(tasks, ui);
+        } catch (WriteStorageException e) {
+            ui.showError(e.getMessage());
+        }
     }
 }
