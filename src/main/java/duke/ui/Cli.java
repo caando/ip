@@ -20,6 +20,8 @@ public class Cli implements Ui {
 
     private final Scanner scanner;
     private final PrintStream printStream;
+    private boolean isOpen;
+
 
     /**
      * Constructs a new instance of the CLI, initializes the scanner for input,
@@ -28,6 +30,7 @@ public class Cli implements Ui {
     public Cli(InputStream inputStream, PrintStream printStream) {
         scanner = new Scanner(inputStream);
         this.printStream = printStream;
+        isOpen = true;
     }
 
     /**
@@ -52,7 +55,6 @@ public class Cli implements Ui {
      *
      * @return The trimmed input string from the user.
      */
-    @Override
     public String getInput() {
         String input = scanner.nextLine().trim();
         showLineSeparator();
@@ -128,5 +130,10 @@ public class Cli implements Ui {
     public void close() {
         showLine("Bye. Hope to see you again soon!");
         showLineSeparator();
+        isOpen = false;
+    }
+
+    public boolean isOpen() {
+        return isOpen;
     }
 }

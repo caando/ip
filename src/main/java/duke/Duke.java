@@ -1,12 +1,12 @@
 package duke;
 
-import duke.command.ByeCommand;
 import duke.command.Command;
 import duke.exception.ParseCommandException;
 import duke.exception.ReadStorageException;
 import duke.parser.Parser;
 import duke.storage.FileStorage;
 import duke.storage.Storage;
+import duke.task.TaskContainer;
 import duke.task.TaskList;
 import duke.ui.Cli;
 import duke.ui.Ui;
@@ -20,8 +20,49 @@ import duke.ui.Ui;
  */
 public class Duke {
 
+    private final Storage storage;
+    private final TaskContainer tasks;
+    private final Ui ui;
+
     /**
-     * The main method that runs the Duke application.
+     * Constructs a new instance of Duke with the specified storage, task list, and user interface.
+     *
+     * @param storage The storage component to use for loading and saving tasks.
+     * @param tasks The task list component to manage tasks.
+     * @param ui The user interface component to interact with the user.
+     */
+    public Duke(Ui ui) {
+        this.storage = new FileStorage("./data/duke.txt");
+        this.tasks = new TaskList();
+        this.ui = ui;
+
+        ui.start();
+        try {
+            storage.load(tasks, ui);
+        } catch (ReadStorageException e) {
+            ui.showError(e.getMessage());
+        }
+    }
+
+    /**
+     * Processes the user input by parsing the command and executing it.
+     * <p>
+     * This method parses the user input into a command, then executes the command with the task list, storage,
+     * and user interface components. If the command is a "bye" command, the user interface is closed.
+     *
+     * @param input The user input to process.
+     */
+    public void process(String input) {
+        try {
+            Command command = Parser.parseCommand(input);
+            command.execute(tasks, storage, ui);
+        } catch (ParseCommandException e) {
+            ui.showError(e.getMessage());
+        }
+    }
+
+    /**
+     * Runs the Duke application with a simple command line UI.
      * <p>
      * It sets up the necessary components such as the storage, task list, and user interface. It attempts
      * to load existing tasks from storage, and then enters a loop where user input is continually parsed and
@@ -30,31 +71,13 @@ public class Duke {
      *
      * @param args Command-line arguments (not used).
      */
-    public static void main(String[] args) {
-        Storage storage = new FileStorage("./data/duke.txt");
-        TaskList tasks = new TaskList();
-        Ui ui = new Cli(System.in, System.out);
-        ui.start();
+    public static void main(String[] args) {    
+        Cli ui = new Cli(System.in, System.out);
 
-        try {
-            storage.load(tasks, ui);
-        } catch (ReadStorageException e) {
-            ui.showError(e.getMessage());
-        }
+        Duke duke = new Duke(ui);
 
-        while (true) {
-            String input = ui.getInput();
-            try {
-                Command command = Parser.parseCommand(input);
-                command.execute(tasks, storage, ui);
-
-                if (command instanceof ByeCommand) {
-                    break;
-                }
-            } catch (ParseCommandException e) {
-                ui.showError(e.getMessage());
-            }
-
+        while (ui.isOpen()) {
+            duke.process(ui.getInput());
         }
     }
 }

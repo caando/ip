@@ -11,13 +11,6 @@ import java.util.List;
 public interface Ui {
 
     /**
-     * Retrieves a line of input from the user.
-     *
-     * @return The input string provided by the user.
-     */
-    public String getInput();
-
-    /**
      * Displays a list of strings as output to the user.
      *
      * @param lines The list of strings to be displayed.
