@@ -37,10 +37,7 @@ public class GuiAdaptor implements Ui {
     @Override
     public void showOutput(List<String> lines) {
         mainWindow.showDukeMessage(lines.stream().collect(
-                StringBuilder::new,
-                (sb, line) -> sb.append(line).append("\n"),
-                StringBuilder::append
-        ).toString());
+                StringBuilder::new, (sb, line) -> sb.append(line).append("\n"), StringBuilder::append).toString());
     }
 
     /**
@@ -61,10 +58,7 @@ public class GuiAdaptor implements Ui {
     @Override
     public void showError(List<String> lines) {
         mainWindow.showDukeMessage("OOPS!!!\n" + lines.stream().collect(
-                StringBuilder::new,
-                (sb, line) -> sb.append(line).append("\n"),
-                StringBuilder::append
-        ).toString());
+                StringBuilder::new, (sb, line) -> sb.append(line).append("\n"), StringBuilder::append).toString());
     }
 
     /**
