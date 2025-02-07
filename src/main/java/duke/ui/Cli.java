@@ -128,9 +128,16 @@ public class Cli implements Ui {
      */
     @Override
     public void close() {
-        showLine("Bye. Hope to see you again soon!");
-        showLineSeparator();
-        isOpen = false;
+        if (isOpen) {
+            showLine("Bye. Hope to see you again soon!");
+            showLineSeparator();
+            isOpen = false;
+            try {
+                scanner.close();
+            } catch (IllegalStateException e) {
+                showError(String.format("Error closing scanner [%s], something is wrong.", e.getMessage()));
+            }
+        }
     }
 
     public boolean isOpen() {

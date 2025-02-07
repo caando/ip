@@ -18,6 +18,9 @@ import duke.ui.Ui;
  */
 public class FindCommand implements Command {
 
+    // Captures `find XXX` where XXX is a string
+    static final String COMMAND_REGEX = "find\\s+(.+)";
+
     private final String keyword;
 
     /**
@@ -41,8 +44,7 @@ public class FindCommand implements Command {
      * @throws ParseCommandException If the input is invalid or cannot be parsed.
      */
     public static Command parse(String input) throws ParseCommandException {
-        String regex = "find\\s+(.+)";
-        Pattern pattern = Pattern.compile(regex);
+        Pattern pattern = Pattern.compile(COMMAND_REGEX);
         Matcher matcher = pattern.matcher(input);
 
         if (matcher.matches()) {

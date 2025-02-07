@@ -4,6 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import duke.exception.ParseCommandException;
+import duke.exception.WriteStorageException;
 import duke.storage.Storage;
 import duke.task.TaskContainer;
 import duke.task.Todo;
@@ -14,6 +15,9 @@ import duke.ui.Ui;
  * This command parses user input, creates a {@code Todo} task, and adds it to the task container.
  */
 public class AddTodoCommand implements Command {
+
+    // Captures `todo XXX` where XXX is a string
+    static final String COMMAND_REGEX = "todo\\s+(.+)";
 
     private final String taskDescription;
 
@@ -35,8 +39,7 @@ public class AddTodoCommand implements Command {
      * @throws ParseCommandException if the input is invalid or cannot be parsed
      */
     public static Command parse(String input) throws ParseCommandException {
-        String regex = "todo\\s+(.+)";
-        Pattern pattern = Pattern.compile(regex);
+        Pattern pattern = Pattern.compile(COMMAND_REGEX);
         Matcher matcher = pattern.matcher(input);
 
         if (matcher.matches()) {
@@ -63,15 +66,21 @@ public class AddTodoCommand implements Command {
      * Executes the {@code AddTodoCommand} by creating a new {@code Todo} task,
      * adding it to the task list, and displaying the result to the user.
      *
-     * @param taskList the task container to which the task is added
+     * @param tasks the task container to which the task is added
      * @param storage the storage used for persisting tasks
      * @param ui the user interface for displaying outputs
      */
     @Override
-    public void execute(TaskContainer taskList, Storage storage, Ui ui) {
+    public void execute(TaskContainer tasks, Storage storage, Ui ui) {
         Todo todo = new Todo(taskDescription);
-        taskList.add(todo);
+        tasks.add(todo);
         ui.showOutput("Got it. I've added this task:", todo.toString(),
-                "Now you have " + taskList.size() + " tasks in the list.");
+                "Now you have " + tasks.size() + " tasks in the list.");
+
+        try {
+            storage.save(tasks, ui);
+        } catch (WriteStorageException e) {
+            ui.showError(e.getMessage());
+        }
     }
 }

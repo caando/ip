@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import duke.Utils;
 import duke.exception.ParseCommandException;
+import duke.exception.WriteStorageException;
 import duke.storage.Storage;
 import duke.task.Deadline;
 import duke.task.TaskContainer;
@@ -18,6 +19,9 @@ import duke.ui.Ui;
  * creating a {@code Deadline} task, and adding it to the task container.
  */
 public class AddDeadlineCommand implements Command {
+
+    // Captures `deadline XXX /by YYY` where XXX and YYY are strings
+    static final String COMMAND_REGEX = "deadline\\s+(.+)\\s+/by\\s+(.+)";
 
     private final String taskDescription;
     private final LocalDate date;
@@ -42,8 +46,7 @@ public class AddDeadlineCommand implements Command {
      * @throws ParseCommandException if the input is invalid or cannot be parsed
      */
     public static Command parse(String input) throws ParseCommandException {
-        String regex = "deadline\\s+(.+)\\s+/by\\s+(.+)";
-        Pattern pattern = Pattern.compile(regex);
+        Pattern pattern = Pattern.compile(COMMAND_REGEX);
         Matcher matcher = pattern.matcher(input);
 
         if (matcher.matches()) {
@@ -92,15 +95,21 @@ public class AddDeadlineCommand implements Command {
      * Executes the {@code AddDeadlineCommand} by creating a new {@code Deadline} task,
      * adding it to the task list, and displaying the result to the user.
      *
-     * @param taskList the task container to which the task is added
+     * @param tasks the task container to which the task is added
      * @param storage the storage used for persisting tasks
      * @param ui the user interface for displaying outputs
      */
     @Override
-    public void execute(TaskContainer taskList, Storage storage, Ui ui) {
+    public void execute(TaskContainer tasks, Storage storage, Ui ui) {
         Deadline deadline = new Deadline(taskDescription, date);
-        taskList.add(deadline);
+        tasks.add(deadline);
         ui.showOutput("Got it. I've added this task:", deadline.toString(),
-                "Now you have " + taskList.size() + " tasks in the list.");
+                "Now you have " + tasks.size() + " tasks in the list.");
+
+        try {
+            storage.save(tasks, ui);
+        } catch (WriteStorageException e) {
+            ui.showError(e.getMessage());
+        }
     }
 }

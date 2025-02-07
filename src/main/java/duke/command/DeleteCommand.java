@@ -17,6 +17,9 @@ import duke.ui.Ui;
  */
 public class DeleteCommand implements Command {
 
+    // Captures `delete XXX` where XXX is a positive integer
+    static final String COMMAND_REGEX = "delete\\s+(\\d+)";
+
     /** The index of the task to be deleted (1-based). */
     private final int taskIndex;
 
@@ -38,8 +41,7 @@ public class DeleteCommand implements Command {
      * @throws ParseCommandException if the input does not match the expected pattern or the index is invalid
      */
     public static Command parse(String input) throws ParseCommandException {
-        String regex = "delete\\s+(\\d+)";
-        Pattern pattern = Pattern.compile(regex);
+        Pattern pattern = Pattern.compile(COMMAND_REGEX);
         Matcher matcher = pattern.matcher(input);
 
         if (matcher.matches()) {
