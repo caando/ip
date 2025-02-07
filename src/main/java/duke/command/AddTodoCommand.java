@@ -16,6 +16,9 @@ import duke.ui.Ui;
  */
 public class AddTodoCommand implements Command {
 
+    // Captures `todo XXX` where XXX is a string
+    static final String COMMAND_REGEX = "todo\\s+(.+)";
+
     private final String taskDescription;
 
     /**
@@ -36,8 +39,7 @@ public class AddTodoCommand implements Command {
      * @throws ParseCommandException if the input is invalid or cannot be parsed
      */
     public static Command parse(String input) throws ParseCommandException {
-        String regex = "todo\\s+(.+)";
-        Pattern pattern = Pattern.compile(regex);
+        Pattern pattern = Pattern.compile(COMMAND_REGEX);
         Matcher matcher = pattern.matcher(input);
 
         if (matcher.matches()) {

@@ -20,6 +20,9 @@ import duke.ui.Ui;
  */
 public class AddDeadlineCommand implements Command {
 
+    // Captures `deadline XXX /by YYY` where XXX and YYY are strings
+    static final String COMMAND_REGEX = "deadline\\s+(.+)\\s+/by\\s+(.+)";
+
     private final String taskDescription;
     private final LocalDate date;
 
@@ -43,8 +46,7 @@ public class AddDeadlineCommand implements Command {
      * @throws ParseCommandException if the input is invalid or cannot be parsed
      */
     public static Command parse(String input) throws ParseCommandException {
-        String regex = "deadline\\s+(.+)\\s+/by\\s+(.+)";
-        Pattern pattern = Pattern.compile(regex);
+        Pattern pattern = Pattern.compile(COMMAND_REGEX);
         Matcher matcher = pattern.matcher(input);
 
         if (matcher.matches()) {

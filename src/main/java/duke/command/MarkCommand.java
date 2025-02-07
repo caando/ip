@@ -17,6 +17,9 @@ import duke.ui.Ui;
  */
 public class MarkCommand implements Command {
 
+    // Captures `mark XXX` where XXX is a positive integer
+    static final String COMMAND_REGEX = "mark\\s+(\\d+)";
+
     private final int taskIndex;
 
     /**
@@ -38,10 +41,7 @@ public class MarkCommand implements Command {
      * @throws ParseCommandException if the input is invalid or the task index is not a positive integer
      */
     public static Command parse(String input) throws ParseCommandException {
-        // Captures `mark XXX` where XXX is a positive integer
-        String regex = "mark\\s+(\\d+)";
-
-        Pattern pattern = Pattern.compile(regex);
+        Pattern pattern = Pattern.compile(COMMAND_REGEX);
         Matcher matcher = pattern.matcher(input);
 
         if (matcher.matches()) {

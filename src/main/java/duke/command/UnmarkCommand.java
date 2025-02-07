@@ -18,6 +18,9 @@ import duke.ui.Ui;
  */
 public class UnmarkCommand implements Command {
 
+    // Captures `unmark XXX` where XXX is a positive integer
+    static final String COMMAND_REGEX = "unmark\\s+(\\d+)";
+
     private final int taskIndex;
 
     /**
@@ -39,9 +42,7 @@ public class UnmarkCommand implements Command {
      * @throws ParseCommandException if the input is invalid or the task index is not a positive integer
      */
     public static Command parse(String input) throws ParseCommandException {
-        // Captures `unmark XXX` where XXX is a positive integer
-        String regex = "unmark\\s+(\\d+)";
-        Pattern pattern = Pattern.compile(regex);
+        Pattern pattern = Pattern.compile(COMMAND_REGEX);
         Matcher matcher = pattern.matcher(input);
 
         if (matcher.matches()) {

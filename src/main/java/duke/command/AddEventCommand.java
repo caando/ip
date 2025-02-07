@@ -19,6 +19,9 @@ import duke.ui.Ui;
  */
 public class AddEventCommand implements Command {
 
+    // Captures `event XXX /from YYY /to ZZZ` where XXX, YYY and ZZZ are strings
+    static final String COMMAND_REGEX = "event\\s+(.+)\\s+/from\\s+(.+)\\s+/to\\s+(.+)";
+
     private final String taskDescription;
     private final LocalDate from;
     private final LocalDate to;
@@ -47,8 +50,7 @@ public class AddEventCommand implements Command {
      * @throws ParseCommandException if the input is invalid or cannot be parsed
      */
     public static Command parse(String input) throws ParseCommandException {
-        String regex = "event\\s+(.+)\\s+/from\\s+(.+)\\s+/to\\s+(.+)";
-        Pattern pattern = Pattern.compile(regex);
+        Pattern pattern = Pattern.compile(COMMAND_REGEX);
         Matcher matcher = pattern.matcher(input);
 
         if (matcher.matches()) {
