@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Rectangle?>
 
 <fx:root alignment="TOP_RIGHT"
          maxHeight="1.7976931348623157E308"
@@ -12,11 +13,26 @@
          type="javafx.scene.layout.HBox"
          xmlns="http://javafx.com/javafx/17"
          xmlns:fx="http://javafx.com/fxml/1">
+  
   <children>
-    <Label fx:id="dialog" text="Label" wrapText="true" minHeight="-Infinity"/>
-    <ImageView fx:id="displayPicture" fitHeight="99.0" fitWidth="99.0" pickOnBounds="true" preserveRatio="true" />
+    <!-- Dialog Box Content -->
+    <Label fx:id="dialog" 
+           wrapText="true" 
+           style="-fx-background-color: #E8F0FE; -fx-text-fill: #333333; -fx-background-radius: 12; -fx-padding: 10;"
+           minHeight="-Infinity" 
+           maxWidth="300.0" />
+
+    <!-- Profile Picture Rounded -->
+    <ImageView fx:id="displayPicture" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+      <clip>
+        <Rectangle width="45" height="45" arcWidth="20" arcHeight="20" />
+      </clip>
+    </ImageView>
   </children>
+
   <padding>
-    <Insets bottom="15.0" left="5.0" right="5.0" top="15.0" />
+    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
   </padding>
+
+  <spacing>10</spacing>
 </fx:root>
