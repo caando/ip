@@ -3,6 +3,7 @@ package duke.command;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import duke.State;
 import duke.exception.ParseCommandException;
 import duke.exception.TaskNotFoundException;
 import duke.exception.WriteStorageException;
@@ -73,13 +74,19 @@ public class DeleteCommand implements Command {
     /**
      * Executes the delete command by removing the task from the task list,
      * updating storage, and displaying the relevant output to the user.
+     * If the specified task does not exist, an error message is shown.
      *
-     * @param tasks the task container from which the task will be removed
-     * @param storage the storage handler to persist the updated task list
-     * @param ui the user interface to display output and error messages
+     * @param state The current application state containing tasks, storage, and UI.
+     *
+     * @return A new {@link State} object reflecting the updated task list
+     *         and retaining the previous state information.
      */
     @Override
-    public void execute(TaskContainer tasks, Storage storage, Ui ui) {
+    public State execute(State state) {
+        TaskContainer tasks = state.getTasks().copy();
+        Storage storage = state.getStorage();
+        Ui ui = state.getUi();
+
         try {
             Task task = tasks.remove(taskIndex - 1);
             ui.showOutput("Noted. I've removed this task:", task.toString(),
@@ -94,5 +101,7 @@ public class DeleteCommand implements Command {
         } catch (WriteStorageException e) {
             ui.showError(e.getMessage());
         }
+
+        return new State(tasks, storage, ui, state);
     }
 }

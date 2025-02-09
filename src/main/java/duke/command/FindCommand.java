@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import duke.State;
 import duke.exception.ParseCommandException;
-import duke.storage.Storage;
 import duke.task.Task;
 import duke.task.TaskContainer;
 import duke.ui.Ui;
@@ -64,12 +64,15 @@ public class FindCommand implements Command {
      * This method iterates through all tasks in the provided {@code TaskContainer}, filters the tasks
      * that contain the keyword in their description, and displays them using the provided {@code Ui}.
      *
-     * @param tasks The {@code TaskContainer} containing all the tasks to search.
-     * @param storage The {@code Storage} instance used to access the task data (not used in this method).
-     * @param ui The {@code Ui} instance used to display the filtered tasks.
+     * @param state The current application state containing tasks, storage, and UI.
+     *
+     * @return The same {@link State} object, as no modifications are made.
      */
     @Override
-    public void execute(TaskContainer tasks, Storage storage, Ui ui) {
+    public State execute(State state) {
+        TaskContainer tasks = state.getTasks().copy();
+        Ui ui = state.getUi();
+
         ArrayList<Task> filteredTasks = new ArrayList<>();
         tasks.list((index, task) -> {
             if (task.getDescription().contains(keyword)) {
@@ -83,5 +86,7 @@ public class FindCommand implements Command {
             output.add(String.format("%d. %s", i + 1, task.toString()));
         }
         ui.showOutput(output);
+
+        return state;
     }
 }

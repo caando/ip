@@ -3,6 +3,7 @@ package duke.command;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import duke.State;
 import duke.exception.ParseCommandException;
 import duke.exception.WriteStorageException;
 import duke.storage.Storage;
@@ -66,12 +67,20 @@ public class AddTodoCommand implements Command {
      * Executes the {@code AddTodoCommand} by creating a new {@code Todo} task,
      * adding it to the task list, and displaying the result to the user.
      *
-     * @param tasks the task container to which the task is added
-     * @param storage the storage used for persisting tasks
-     * @param ui the user interface for displaying outputs
+     * @param state The current application state containing tasks, storage, and UI.
+     *
+     * @return A new {@link State} object reflecting the updated task list
+     *         and retaining the previous state information.
      */
     @Override
-    public void execute(TaskContainer tasks, Storage storage, Ui ui) {
+    public State execute(State state) {
+        TaskContainer tasks = state.getTasks().copy();
+        Storage storage = state.getStorage();
+        Ui ui = state.getUi();
+
+        assert ui != null : "UI cannot be null";
+        assert tasks != null : "Task container cannot be null";
+
         Todo todo = new Todo(taskDescription);
         tasks.add(todo);
         ui.showOutput("Got it. I've added this task:", todo.toString(),
@@ -82,5 +91,7 @@ public class AddTodoCommand implements Command {
         } catch (WriteStorageException e) {
             ui.showError(e.getMessage());
         }
+
+        return new State(tasks, storage, ui, state);
     }
 }

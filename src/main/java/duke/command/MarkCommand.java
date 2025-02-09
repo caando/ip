@@ -3,6 +3,7 @@ package duke.command;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import duke.State;
 import duke.exception.ParseCommandException;
 import duke.exception.TaskNotFoundException;
 import duke.exception.WriteStorageException;
@@ -68,12 +69,17 @@ public class MarkCommand implements Command {
      * using the specified index and marking it as done.
      * The task is then saved, and appropriate messages are shown via the user interface.
      *
-     * @param tasks the task container containing all tasks
-     * @param storage the storage handler for saving tasks (not used in this command directly)
-     * @param ui the user interface to display the success or error message
+     * @param state The current application state containing tasks, storage, and UI.
+     *
+     * @return A new {@link State} object reflecting the updated task list
+     *         and retaining the previous state information.
      */
     @Override
-    public void execute(TaskContainer tasks, Storage storage, Ui ui) {
+    public State execute(State state) {
+        TaskContainer tasks = state.getTasks().copy();
+        Storage storage = state.getStorage();
+        Ui ui = state.getUi();
+
         try {
             Task task = tasks.get(taskIndex - 1);
             task.markAsDone();
@@ -87,5 +93,7 @@ public class MarkCommand implements Command {
         } catch (WriteStorageException e) {
             ui.showError(e.getMessage());
         }
+
+        return new State(tasks, storage, ui, state);
     }
 }

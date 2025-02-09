@@ -1,8 +1,6 @@
 package duke.command;
 
-import duke.storage.Storage;
-import duke.task.TaskContainer;
-import duke.ui.Ui;
+import duke.State;
 
 /**
  * Represents a command to exit the application.
@@ -23,14 +21,15 @@ public class ByeCommand implements Command {
 
     /**
      * Executes the {@code ByeCommand} by closing the user interface.
-     * No changes are made to the task list or storage.
+     * This command does not modify the task list or storage.
      *
-     * @param tasks the task container (not used in this command)
-     * @param storage the storage handler (not used in this command)
-     * @param ui the user interface, which will be closed
+     * @param state The current application state containing tasks, storage, and UI.
+     *
+     * @return The same {@link State} object, as no modifications are made.
      */
     @Override
-    public void execute(TaskContainer tasks, Storage storage, Ui ui) {
-        ui.close();
+    public State execute(State state) {
+        state.getUi().close();
+        return state;
     }
 }
