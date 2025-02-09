@@ -47,7 +47,8 @@ public class CliTest {
                 + "    Line 2\n"
                 + "    Line 3\n"
                 + "   _____________________________________________________________________________\n";
-        Assertions.assertEquals(expectedOutput, byteArrayOutputStream.toString());
+        String normalizedExpected = expectedOutput.replace("\n", System.lineSeparator());
+        Assertions.assertEquals(normalizedExpected, byteArrayOutputStream.toString());
     }
 
     @Test
@@ -59,7 +60,8 @@ public class CliTest {
         String expectedOutput = "    Line 1\n"
                 + "    Line 2\n"
                 + "   _____________________________________________________________________________\n";
-        Assertions.assertEquals(expectedOutput, byteArrayOutputStream.toString());
+        String normalizedExpected = expectedOutput.replace("\n", System.lineSeparator());
+        Assertions.assertEquals(normalizedExpected, byteArrayOutputStream.toString());
     }
 
     @Test
@@ -71,7 +73,8 @@ public class CliTest {
         String expectedOutput = "    OOPS!!! Error 1\n"
                 + "    OOPS!!! Error 2\n"
                 + "   _____________________________________________________________________________\n";
-        Assertions.assertEquals(expectedOutput, byteArrayOutputStream.toString());
+        String normalizedExpected = expectedOutput.replace("\n", System.lineSeparator());
+        Assertions.assertEquals(normalizedExpected, byteArrayOutputStream.toString());
     }
 
     @Test
@@ -83,7 +86,8 @@ public class CliTest {
         String expectedOutput = "    OOPS!!! Error 1\n"
                 + "    OOPS!!! Error 2\n"
                 + "   _____________________________________________________________________________\n";
-        Assertions.assertEquals(expectedOutput, byteArrayOutputStream.toString());
+        String normalizedExpected = expectedOutput.replace("\n", System.lineSeparator());
+        Assertions.assertEquals(normalizedExpected, byteArrayOutputStream.toString());
     }
 
     @Test
@@ -96,7 +100,8 @@ public class CliTest {
                 + "    Hello! I'm Mr Meeseeks\n"
                 + "    What can I do for you?\n"
                 + "   _____________________________________________________________________________\n";
-        Assertions.assertEquals(expectedOutput, byteArrayOutputStream.toString());
+        String normalizedExpected = expectedOutput.replace("\n", System.lineSeparator());
+        Assertions.assertEquals(normalizedExpected, byteArrayOutputStream.toString());
     }
 
     @Test
@@ -107,6 +112,7 @@ public class CliTest {
         // Assert
         String expectedOutput = "    Bye. Hope to see you again soon!\n"
                 + "   _____________________________________________________________________________\n";
-        Assertions.assertEquals(expectedOutput, byteArrayOutputStream.toString());
+        String normalizedExpected = expectedOutput.replace("\n", System.lineSeparator());
+        Assertions.assertEquals(normalizedExpected, byteArrayOutputStream.toString());
     }
 }
