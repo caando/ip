@@ -74,6 +74,9 @@ public class MarkCommand implements Command {
      */
     @Override
     public void execute(TaskContainer tasks, Storage storage, Ui ui) {
+        assert tasks != null : "Tasks must not be null";
+        assert ui != null : "Ui must not be null";
+
         try {
             Task task = tasks.get(taskIndex - 1);
             task.markAsDone();

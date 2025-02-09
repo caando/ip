@@ -31,6 +31,8 @@ public class ByeCommand implements Command {
      */
     @Override
     public void execute(TaskContainer tasks, Storage storage, Ui ui) {
+        assert ui != null : "Ui must not be null";
+
         ui.close();
     }
 }

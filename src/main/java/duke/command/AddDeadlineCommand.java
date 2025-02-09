@@ -33,6 +33,9 @@ public class AddDeadlineCommand implements Command {
      * @param date the deadline date for the task
      */
     public AddDeadlineCommand(String taskDescription, LocalDate date) {
+        assert taskDescription != null : "Task description must not be null";
+        assert date != null : "Date must not be null";
+
         this.taskDescription = taskDescription;
         this.date = date;
     }
@@ -101,6 +104,10 @@ public class AddDeadlineCommand implements Command {
      */
     @Override
     public void execute(TaskContainer tasks, Storage storage, Ui ui) {
+        assert tasks != null : "Tasks must not be null";
+        assert storage != null : "Storage must not be null";
+        assert ui != null : "Ui must not be null";
+
         Deadline deadline = new Deadline(taskDescription, date);
         tasks.add(deadline);
         ui.showOutput("Got it. I've added this task:", deadline.toString(),

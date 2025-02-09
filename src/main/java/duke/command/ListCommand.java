@@ -33,6 +33,9 @@ public class ListCommand implements Command {
      */
     @Override
     public void execute(TaskContainer tasks, Storage storage, Ui ui) {
+        assert tasks != null : "Tasks must not be null";
+        assert ui != null : "Ui must not be null";
+
         ArrayList<String> output = new ArrayList<>();
         tasks.list((index, task) -> {
             output.add(String.format("%d. %s", index + 1, task.toString()));

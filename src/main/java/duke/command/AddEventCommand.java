@@ -35,6 +35,10 @@ public class AddEventCommand implements Command {
      * @param to the ending date of the event
      */
     public AddEventCommand(String taskDescription, LocalDate from, LocalDate to) {
+        assert taskDescription != null : "Task description must not be null";
+        assert from != null : "From date must not be null";
+        assert to != null : "To date must not be null";
+
         this.taskDescription = taskDescription;
         this.from = from;
         this.to = to;
@@ -127,6 +131,10 @@ public class AddEventCommand implements Command {
      */
     @Override
     public void execute(TaskContainer tasks, Storage storage, Ui ui) {
+        assert tasks != null : "Tasks must not be null";
+        assert storage != null : "Storage must not be null";
+        assert ui != null : "Ui must not be null";
+
         Event event = new Event(taskDescription, from, to);
         tasks.add(event);
         ui.showOutput("Got it. I've added this task:", event.toString(),

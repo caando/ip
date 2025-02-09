@@ -80,11 +80,18 @@ public class DeleteCommand implements Command {
      */
     @Override
     public void execute(TaskContainer tasks, Storage storage, Ui ui) {
+        assert tasks != null : "Tasks must not be null";
+        assert storage != null : "Storage must not be null";
+        assert ui != null : "Ui must not be null";
+
         try {
+            int previousSize = tasks.size();
             Task task = tasks.remove(taskIndex - 1);
+            int currentSize = tasks.size();
+            assert currentSize == previousSize - 1 : "Task should have been removed from the list.";
+
             ui.showOutput("Noted. I've removed this task:", task.toString(),
                     "Now you have " + tasks.size() + " tasks in the list.");
-            task.markAsNotDone();
         } catch (TaskNotFoundException e) {
             ui.showError(e.getMessage());
         }
