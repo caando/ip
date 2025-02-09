@@ -15,7 +15,9 @@ REM copy initial data to state
 xcopy /e /i "data-initial" "data"
 
 REM compile the code into the bin folder
-javac  -cp ..\src\main\java -Xlint:none -d ..\bin ..\src\main\java\**\*.java
+for /r ..\src\main\java %%f in (*.java) do (
+    javac -cp ..\src\main\java -Xlint:none -d ..\bin "%%f"
+)
 IF ERRORLEVEL 1 (
     echo ********** BUILD FAILURE **********
     exit /b 1
