@@ -1,8 +1,11 @@
 package duke.command;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import duke.State;
+import duke.exception.TaskNotFoundException;
 import duke.task.TaskContainer;
 import duke.ui.Ui;
 
@@ -21,6 +24,9 @@ public class ListCommand implements Command {
      * @return a new instance of {@code ListCommand}
      */
     public static Command parse(String input) {
+        assert input != null : "input must not be null";
+        assert input.startsWith("list") : "Input must start with 'list'";
+
         return new ListCommand();
     }
 
@@ -37,10 +43,17 @@ public class ListCommand implements Command {
         TaskContainer tasks = state.getTasks().copy();
         Ui ui = state.getUi();
 
-        ArrayList<String> output = new ArrayList<>();
-        tasks.list((index, task) -> {
-            output.add(String.format("%d. %s", index + 1, task.toString()));
-        });
+        assert tasks != null : "Tasks must not be null";
+        assert ui != null : "Ui must not be null";
+
+        List<String> output = IntStream.range(0, tasks.size())
+                .mapToObj(i -> {
+                    try {
+                        return String.format("%d. %s", i + 1, tasks.get(i).toString());
+                    } catch (TaskNotFoundException e) {
+                        return String.format("%d. [Error: %s]", i + 1, e.getMessage());
+                    }
+                }).collect(Collectors.toList());
         ui.showOutput(output);
 
         return state;

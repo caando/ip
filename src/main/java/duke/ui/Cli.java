@@ -128,18 +128,23 @@ public class Cli implements Ui {
      */
     @Override
     public void close() {
-        if (isOpen) {
-            showLine("Bye. Hope to see you again soon!");
-            showLineSeparator();
-            isOpen = false;
-            try {
-                scanner.close();
-            } catch (IllegalStateException e) {
-                showError(String.format("Error closing scanner [%s], something is wrong.", e.getMessage()));
-            }
+        assert isOpen() : "Cli is not open";
+
+        showLine("Bye. Hope to see you again soon!");
+        showLineSeparator();
+        isOpen = false;
+        try {
+            scanner.close();
+        } catch (IllegalStateException e) {
+            showError(String.format("Error closing scanner [%s], something is wrong.", e.getMessage()));
         }
     }
 
+    /**
+     * Checks if the CLI is open and ready to receive input.
+     *
+     * @return true if the CLI is open, false otherwise.
+     */
     public boolean isOpen() {
         return isOpen;
     }

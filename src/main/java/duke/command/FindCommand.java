@@ -1,8 +1,12 @@
 package duke.command;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.StreamSupport;
 
 import duke.State;
 import duke.exception.ParseCommandException;
@@ -29,6 +33,8 @@ public class FindCommand implements Command {
      * @param keyword The keyword to search for in task descriptions.
      */
     public FindCommand(String keyword) {
+        assert keyword != null : "Keyword must not be null";
+
         this.keyword = keyword;
     }
 
@@ -44,6 +50,9 @@ public class FindCommand implements Command {
      * @throws ParseCommandException If the input is invalid or cannot be parsed.
      */
     public static Command parse(String input) throws ParseCommandException {
+        assert input != null : "input must not be null";
+        assert input.startsWith("find") : "Input must start with 'find'";
+
         Pattern pattern = Pattern.compile(COMMAND_REGEX);
         Matcher matcher = pattern.matcher(input);
 
@@ -73,18 +82,19 @@ public class FindCommand implements Command {
         TaskContainer tasks = state.getTasks().copy();
         Ui ui = state.getUi();
 
-        ArrayList<Task> filteredTasks = new ArrayList<>();
-        tasks.list((index, task) -> {
-            if (task.getDescription().contains(keyword)) {
-                filteredTasks.add(task);
-            }
-        });
+        assert tasks != null : "Tasks must not be null";
+        assert ui != null : "Ui must not be null";
+
+        List<Task> filteredTasks = StreamSupport.stream(tasks.spliterator(), false).filter(
+            task -> task.getDescription().contains(keyword)
+        ).collect(Collectors.toList());
+
         ArrayList<String> output = new ArrayList<>();
         output.add("Here are the matching tasks in your list:");
-        for (int i = 0; i < filteredTasks.size(); i++) {
-            Task task = filteredTasks.get(i);
-            output.add(String.format("%d. %s", i + 1, task.toString()));
-        }
+
+        output.addAll(IntStream.range(0, filteredTasks.size())
+                .mapToObj(i -> String.format("%d. %s", i + 1, filteredTasks.get(i).toString()))
+                .collect(Collectors.toList()));
         ui.showOutput(output);
 
         return state;

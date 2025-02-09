@@ -39,6 +39,10 @@ public class AddEventCommand implements Command {
      * @param to the ending date of the event
      */
     public AddEventCommand(String taskDescription, LocalDate from, LocalDate to, String rawInput) {
+        assert taskDescription != null : "Task description must not be null";
+        assert from != null : "From date must not be null";
+        assert to != null : "To date must not be null";
+
         this.taskDescription = taskDescription;
         this.from = from;
         this.to = to;
@@ -55,6 +59,8 @@ public class AddEventCommand implements Command {
      * @throws ParseCommandException if the input is invalid or cannot be parsed
      */
     public static Command parse(String input) throws ParseCommandException {
+        assert input != null : "input must not be null";
+
         Pattern pattern = Pattern.compile(COMMAND_REGEX);
         Matcher matcher = pattern.matcher(input);
 
@@ -136,6 +142,9 @@ public class AddEventCommand implements Command {
         TaskContainer tasks = state.getTasks().copy();
         Storage storage = state.getStorage();
         Ui ui = state.getUi();
+        assert tasks != null : "Tasks must not be null";
+        assert storage != null : "Storage must not be null";
+        assert ui != null : "Ui must not be null";
 
         Event event = new Event(taskDescription, from, to);
         tasks.add(event);

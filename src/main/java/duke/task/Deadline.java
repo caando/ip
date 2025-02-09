@@ -37,6 +37,9 @@ public class Deadline extends Task {
      * @throws ParseTaskException If the input string is not in the expected format or contains invalid data.
      */
     public static Task fromPsvString(String input) throws ParseTaskException {
+        assert input != null : "input must not be null";
+        assert input.startsWith(input) : "Deadline PSV string must start with 'D'";
+
         String[] parts = input.split("\\|", 4);
 
         if (parts.length != 4) {

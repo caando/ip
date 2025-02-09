@@ -30,6 +30,9 @@ public class Parser {
      * @throws ParseCommandException If the input does not match a known command type.
      */
     public static Command parseCommand(String input) throws ParseCommandException {
+        assert input != null : "Input must not be null";
+        assert input.length() > 0 : "Input string should not be empty";
+
         String[] parts = input.split("\\s+");
         String command = parts[0].toUpperCase();
 

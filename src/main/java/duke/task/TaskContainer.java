@@ -6,7 +6,7 @@ import duke.exception.TaskNotFoundException;
  * Represents a container for storing and managing tasks.
  * Provides methods to add, list, retrieve, remove, and get the size of tasks in the container.
  */
-public interface TaskContainer {
+public interface TaskContainer extends Iterable<Task> {
 
     /**
      * A functional interface used for accepting a task and its index in the task list.

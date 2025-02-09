@@ -1,6 +1,7 @@
 package duke.task;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import duke.exception.TaskNotFoundException;
@@ -98,5 +99,19 @@ public class TaskList implements TaskContainer {
         }
         assert copy.size() == tasks.size();
         return copy;
+    }
+
+    /**
+     * Returns an iterator over the tasks in this task list.
+     * <p>
+     * The iterator provides sequential access to the tasks, starting from the first task
+     * to the last task in the list.
+     * </p>
+     *
+     * @return An {@link Iterator} over the tasks in this task list.
+     */
+    @Override
+    public Iterator<Task> iterator() {
+        return tasks.iterator();
     }
 }

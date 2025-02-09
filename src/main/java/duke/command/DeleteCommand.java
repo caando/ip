@@ -46,6 +46,8 @@ public class DeleteCommand implements Command {
      * @throws ParseCommandException if the input does not match the expected pattern or the index is invalid
      */
     public static Command parse(String input) throws ParseCommandException {
+        assert input != null : "input must not be null";
+
         Pattern pattern = Pattern.compile(COMMAND_REGEX);
         Matcher matcher = pattern.matcher(input);
 
@@ -91,11 +93,18 @@ public class DeleteCommand implements Command {
         Storage storage = state.getStorage();
         Ui ui = state.getUi();
 
+        assert tasks != null : "Tasks must not be null";
+        assert storage != null : "Storage must not be null";
+        assert ui != null : "Ui must not be null";
+
         try {
+            int previousSize = tasks.size();
             Task task = tasks.remove(taskIndex - 1);
+            int currentSize = tasks.size();
+            assert currentSize == previousSize - 1 : "Task should have been removed from the list.";
+
             ui.showOutput("Noted. I've removed this task:", task.toString(),
                     "Now you have " + tasks.size() + " tasks in the list.");
-            task.markAsNotDone();
         } catch (TaskNotFoundException e) {
             ui.showError(e.getMessage());
         }

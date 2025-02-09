@@ -46,6 +46,8 @@ public class MarkCommand implements Command {
      * @throws ParseCommandException if the input is invalid or the task index is not a positive integer
      */
     public static Command parse(String input) throws ParseCommandException {
+        assert input != null : "input must not be null";
+
         Pattern pattern = Pattern.compile(COMMAND_REGEX);
         Matcher matcher = pattern.matcher(input);
 
@@ -83,6 +85,9 @@ public class MarkCommand implements Command {
         TaskContainer tasks = state.getTasks().copy();
         Storage storage = state.getStorage();
         Ui ui = state.getUi();
+
+        assert tasks != null : "Tasks must not be null";
+        assert ui != null : "Ui must not be null";
 
         try {
             Task task = tasks.get(taskIndex - 1);
