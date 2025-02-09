@@ -20,6 +20,9 @@ public class ListCommand implements Command {
      * @return a new instance of {@code ListCommand}
      */
     public static Command parse(String input) {
+        assert input != null : "input must not be null";
+        assert input.startsWith("list") : "Input must start with 'list'";
+
         return new ListCommand();
     }
 
@@ -33,6 +36,9 @@ public class ListCommand implements Command {
      */
     @Override
     public void execute(TaskContainer tasks, Storage storage, Ui ui) {
+        assert tasks != null : "Tasks must not be null";
+        assert ui != null : "Ui must not be null";
+
         ArrayList<String> output = new ArrayList<>();
         tasks.list((index, task) -> {
             output.add(String.format("%d. %s", index + 1, task.toString()));

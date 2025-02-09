@@ -29,6 +29,8 @@ public class FindCommand implements Command {
      * @param keyword The keyword to search for in task descriptions.
      */
     public FindCommand(String keyword) {
+        assert keyword != null : "Keyword must not be null";
+
         this.keyword = keyword;
     }
 
@@ -44,6 +46,9 @@ public class FindCommand implements Command {
      * @throws ParseCommandException If the input is invalid or cannot be parsed.
      */
     public static Command parse(String input) throws ParseCommandException {
+        assert input != null : "input must not be null";
+        assert input.startsWith("find") : "Input must start with 'find'";
+
         Pattern pattern = Pattern.compile(COMMAND_REGEX);
         Matcher matcher = pattern.matcher(input);
 
@@ -70,6 +75,9 @@ public class FindCommand implements Command {
      */
     @Override
     public void execute(TaskContainer tasks, Storage storage, Ui ui) {
+        assert tasks != null : "Tasks must not be null";
+        assert ui != null : "Ui must not be null";
+
         ArrayList<Task> filteredTasks = new ArrayList<>();
         tasks.list((index, task) -> {
             if (task.getDescription().contains(keyword)) {

@@ -107,6 +107,8 @@ public abstract class Task {
      * @throws ParseTaskException If the PSV string is not in the expected format or cannot be parsed.
      */
     public static Task fromPsvString(String input) throws ParseTaskException {
+        assert input != null : "input must not be null";
+
         String[] parts = input.split("\\|", 2);
 
         Task.Type taskType;

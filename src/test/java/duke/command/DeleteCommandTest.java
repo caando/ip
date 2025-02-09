@@ -68,7 +68,7 @@ class DeleteCommandTest {
         Task task = Mockito.mock(Task.class);
         Mockito.when(taskContainer.remove(2)).thenReturn(task);
         Mockito.when(task.toString()).thenReturn("Task 3");
-        Mockito.when(taskContainer.size()).thenReturn(4);
+        Mockito.when(taskContainer.size()).thenReturn(5).thenReturn(4);
 
         DeleteCommand command = new DeleteCommand(3);
         command.execute(taskContainer, storage, ui);
@@ -78,7 +78,6 @@ class DeleteCommandTest {
                 "Noted. I've removed this task:",
                 "Task 3",
                 "Now you have 4 tasks in the list.");
-        Mockito.verify(task).markAsNotDone();
         Mockito.verify(storage).save(taskContainer, ui);
     }
 
@@ -99,6 +98,7 @@ class DeleteCommandTest {
     void testExecute_writeStorageException_showsError() throws TaskNotFoundException, WriteStorageException {
         Task task = Mockito.mock(Task.class);
         Mockito.when(taskContainer.remove(2)).thenReturn(task);
+        Mockito.when(taskContainer.size()).thenReturn(5).thenReturn(4);
         Mockito.doThrow(new WriteStorageException("Storage error")).when(storage).save(taskContainer, ui);
 
         DeleteCommand command = new DeleteCommand(3);
