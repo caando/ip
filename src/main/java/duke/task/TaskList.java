@@ -85,4 +85,18 @@ public class TaskList implements TaskContainer {
         return tasks.size();
     }
 
+    /**
+     * Creates a copy of the task list.
+     *
+     * @return A new TaskList containing the same tasks as this task list.
+     */
+    @Override
+    public TaskContainer copy() {
+        TaskList copy = new TaskList();
+        for (Task task : tasks) {
+            copy.add(task);
+        }
+        assert copy.size() == tasks.size();
+        return copy;
+    }
 }
