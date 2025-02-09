@@ -46,6 +46,9 @@ public class FindCommand implements Command {
      * @throws ParseCommandException If the input is invalid or cannot be parsed.
      */
     public static Command parse(String input) throws ParseCommandException {
+        assert input != null : "input must not be null";
+        assert input.startsWith("find") : "Input must start with 'find'";
+
         Pattern pattern = Pattern.compile(COMMAND_REGEX);
         Matcher matcher = pattern.matcher(input);
 

@@ -20,6 +20,9 @@ public class ListCommand implements Command {
      * @return a new instance of {@code ListCommand}
      */
     public static Command parse(String input) {
+        assert input != null : "input must not be null";
+        assert input.startsWith("list") : "Input must start with 'list'";
+
         return new ListCommand();
     }
 

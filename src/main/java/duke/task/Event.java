@@ -40,6 +40,9 @@ public class Event extends Task {
      * @throws ParseTaskException If the input string is not in the expected format or contains invalid data.
      */
     public static Task fromPsvString(String input) throws ParseTaskException {
+        assert input != null : "input must not be null";
+        assert input.startsWith(input) : "Event PSV string must start with 'E'";
+
         String[] parts = input.split("\\|", 5);
 
         if (parts.length != 5) {

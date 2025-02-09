@@ -42,6 +42,8 @@ public class UnmarkCommand implements Command {
      * @throws ParseCommandException if the input is invalid or the task index is not a positive integer
      */
     public static Command parse(String input) throws ParseCommandException {
+        assert input != null : "input must not be null";
+
         Pattern pattern = Pattern.compile(COMMAND_REGEX);
         Matcher matcher = pattern.matcher(input);
 
