@@ -9,6 +9,7 @@ import duke.command.DeleteCommand;
 import duke.command.FindCommand;
 import duke.command.ListCommand;
 import duke.command.MarkCommand;
+import duke.command.UndoCommand;
 import duke.command.UnmarkCommand;
 import duke.exception.ParseCommandException;
 
@@ -48,6 +49,7 @@ public class Parser {
         case LIST -> ListCommand.parse(input);
         case MARK -> MarkCommand.parse(input);
         case TODO -> AddTodoCommand.parse(input);
+        case UNDO -> UndoCommand.parse(input);
         case UNMARK -> UnmarkCommand.parse(input);
         case BYE -> ByeCommand.parse(input);
         };

@@ -36,6 +36,9 @@ public interface Command {
         /** Command to add a todo task. */
         TODO,
 
+        /** Command to undo the previous mutable command. */
+        UNDO,
+
         /** Command to unmark a completed task. */
         UNMARK
     }
