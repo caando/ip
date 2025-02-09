@@ -28,7 +28,7 @@ public class Duke {
      * @param ui The user interface component to interact with the user.
      */
     public Duke(Ui ui) {
-        this.state = new State(new TaskList(), new FileStorage("./data/duke.txt"), ui, null);
+        this.state = new State(new TaskList(), new FileStorage("./data/duke.txt"), ui, null, null);
 
         ui.start();
         try {

@@ -27,15 +27,19 @@ public class AddDeadlineCommand implements Command {
     private final String taskDescription;
     private final LocalDate date;
 
+    /** The raw input string from the user. */
+    private final String rawInput;
+
     /**
      * Creates an {@code AddDeadlineCommand} with the specified task description and date.
      *
      * @param taskDescription the description of the task
      * @param date the deadline date for the task
      */
-    public AddDeadlineCommand(String taskDescription, LocalDate date) {
+    public AddDeadlineCommand(String taskDescription, LocalDate date, String rawInput) {
         this.taskDescription = taskDescription;
         this.date = date;
+        this.rawInput = rawInput;
     }
 
     /**
@@ -64,7 +68,7 @@ public class AddDeadlineCommand implements Command {
 
             try {
                 LocalDate date = Utils.parseDate(dateString);
-                return new AddDeadlineCommand(description, date);
+                return new AddDeadlineCommand(description, date, input);
             } catch (DateTimeParseException e) {
                 throw new ParseCommandException(String.format(
                         "Unable to parse [%s] as date for deadline command.", dateString));
@@ -118,6 +122,6 @@ public class AddDeadlineCommand implements Command {
             ui.showError(e.getMessage());
         }
 
-        return new State(tasks, storage, ui, state);
+        return new State(tasks, storage, ui, state, this.rawInput);
     }
 }

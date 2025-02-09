@@ -22,13 +22,17 @@ public class AddTodoCommand implements Command {
 
     private final String taskDescription;
 
+    /** The raw input string from the user. */
+    private final String rawInput;
+
     /**
      * Creates an {@code AddTodoCommand} with the specified task description.
      *
      * @param taskDescription the description of the task
      */
-    public AddTodoCommand(String taskDescription) {
+    public AddTodoCommand(String taskDescription, String rawInput) {
         this.taskDescription = taskDescription;
+        this.rawInput = rawInput;
     }
 
     /**
@@ -48,7 +52,7 @@ public class AddTodoCommand implements Command {
             if (description.isEmpty()) {
                 throw new ParseCommandException("Todo command requires a description.");
             }
-            return new AddTodoCommand(description);
+            return new AddTodoCommand(description, input);
         } else {
             throw new ParseCommandException(String.format("Unable to parse [%s] to todo command.", input));
         }
@@ -92,6 +96,6 @@ public class AddTodoCommand implements Command {
             ui.showError(e.getMessage());
         }
 
-        return new State(tasks, storage, ui, state);
+        return new State(tasks, storage, ui, state, this.rawInput);
     }
 }

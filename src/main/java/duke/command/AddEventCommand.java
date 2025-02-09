@@ -27,6 +27,9 @@ public class AddEventCommand implements Command {
     private final LocalDate from;
     private final LocalDate to;
 
+    /** The raw input string from the user. */
+    private final String rawInput;
+
     /**
      * Creates an {@code AddEventCommand} with the specified task description
      * and time period.
@@ -35,10 +38,11 @@ public class AddEventCommand implements Command {
      * @param from the starting date of the event
      * @param to the ending date of the event
      */
-    public AddEventCommand(String taskDescription, LocalDate from, LocalDate to) {
+    public AddEventCommand(String taskDescription, LocalDate from, LocalDate to, String rawInput) {
         this.taskDescription = taskDescription;
         this.from = from;
         this.to = to;
+        this.rawInput = rawInput;
     }
 
     /**
@@ -85,7 +89,7 @@ public class AddEventCommand implements Command {
                 throw new ParseCommandException(String.format("Unable to parse [%s] to date.", toDateString));
             }
 
-            return new AddEventCommand(description, fromDate, toDate);
+            return new AddEventCommand(description, fromDate, toDate, input);
         } else {
             throw new ParseCommandException(String.format("Unable to parse [%s] to event command.", input));
         }
@@ -144,6 +148,6 @@ public class AddEventCommand implements Command {
             ui.showError(e.getMessage());
         }
 
-        return new State(tasks, storage, ui, state);
+        return new State(tasks, storage, ui, state, this.rawInput);
     }
 }

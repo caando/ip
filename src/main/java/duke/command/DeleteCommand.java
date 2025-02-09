@@ -24,13 +24,17 @@ public class DeleteCommand implements Command {
     /** The index of the task to be deleted (1-based). */
     private final int taskIndex;
 
+    /** The raw input string from the user. */
+    private final String rawInput;
+
     /**
      * Constructs a {@code DeleteCommand} with the specified task index.
      *
      * @param taskIndex the 1-based index of the task to delete
      */
-    public DeleteCommand(int taskIndex) {
+    public DeleteCommand(int taskIndex, String rawInput) {
         this.taskIndex = taskIndex;
+        this.rawInput = rawInput;
     }
 
     /**
@@ -53,7 +57,7 @@ public class DeleteCommand implements Command {
                     throw new ParseCommandException(String.format(
                             "Delete index [%d] should be a positive integer", index));
                 }
-                return new DeleteCommand(index);
+                return new DeleteCommand(index, input);
             } catch (NumberFormatException e) {
                 throw new ParseCommandException(String.format("Unable to parse [%s] as integer.", indexString));
             }
@@ -102,6 +106,6 @@ public class DeleteCommand implements Command {
             ui.showError(e.getMessage());
         }
 
-        return new State(tasks, storage, ui, state);
+        return new State(tasks, storage, ui, state, this.rawInput);
     }
 }

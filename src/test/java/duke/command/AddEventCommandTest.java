@@ -103,7 +103,7 @@ public class AddEventCommandTest {
         TaskContainer taskContainer = Mockito.mock(TaskContainer.class);
         Storage storage = Mockito.mock(Storage.class);
         Ui ui = Mockito.mock(Ui.class);
-        State state = new State(taskContainer, storage, ui, null);
+        State state = new State(taskContainer, storage, ui, null, null);
         Mockito.when(taskContainer.copy()).thenReturn(taskContainer);
 
         // Act

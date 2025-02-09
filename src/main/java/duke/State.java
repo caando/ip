@@ -14,6 +14,7 @@ public class State {
     private final Storage storage;
     private final Ui ui;
     private final State previousState;
+    private final String previousCommand;
 
     /**
      * Constructs a {@code State} with the specified tasks, UI, storage,
@@ -24,7 +25,7 @@ public class State {
      * @param ui            The user interface component for displaying information.
      * @param previousState The previous state of the application, or {@code null} if none.
      */
-    public State(TaskContainer tasks, Storage storage, Ui ui, State previousState) {
+    public State(TaskContainer tasks, Storage storage, Ui ui, State previousState, String previousCommand) {
         assert tasks != null : "Task container should not be null";
         assert storage != null : "Storage should not be null";
         assert ui != null : "UI should not be null";
@@ -33,6 +34,7 @@ public class State {
         this.ui = ui;
         this.storage = storage;
         this.previousState = previousState;
+        this.previousCommand = previousCommand;
     }
 
     /**
@@ -69,5 +71,14 @@ public class State {
      */
     public State getPreviousState() {
         return previousState;
+    }
+
+    /**
+     * Returns the previous command that led to this state.
+     *
+     * @return The previous command, or {@code null} if this is the initial state.
+     */
+    public String getPreviousCommand() {
+        return previousCommand;
     }
 }

@@ -24,13 +24,17 @@ public class UnmarkCommand implements Command {
 
     private final int taskIndex;
 
+    /** The raw input string from the user. */
+    private final String rawInput;
+
     /**
      * Constructs an {@code UnmarkCommand} with the specified task index.
      *
      * @param taskIndex the index of the task to be marked as not done
      */
-    private UnmarkCommand(int taskIndex) {
+    private UnmarkCommand(int taskIndex, String rawInput) {
         this.taskIndex = taskIndex;
+        this.rawInput = rawInput;
     }
 
     /**
@@ -54,7 +58,7 @@ public class UnmarkCommand implements Command {
                     throw new ParseCommandException(String.format(
                             "Invalid index [%d]. Task index should be a positive integer.", index));
                 }
-                return new UnmarkCommand(index);
+                return new UnmarkCommand(index, input);
             } catch (NumberFormatException e) {
                 throw new ParseCommandException(String.format(
                         "Unable to parse [%s] as integer. Task index should be a positive integer.",
@@ -95,6 +99,6 @@ public class UnmarkCommand implements Command {
             ui.showError(e.getMessage());
         }
 
-        return new State(tasks, storage, ui, state);
+        return new State(tasks, storage, ui, state, this.rawInput);
     }
 }
