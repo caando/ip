@@ -18,6 +18,9 @@ public class ByeCommand implements Command {
      * @return a new instance of {@code ByeCommand}
      */
     public static Command parse(String input) {
+        assert input != null : "input must not be null";
+        assert input.startsWith("bye") : "Input must start with 'bye'";
+
         return new ByeCommand();
     }
 
@@ -31,6 +34,8 @@ public class ByeCommand implements Command {
      */
     @Override
     public void execute(TaskContainer tasks, Storage storage, Ui ui) {
+        assert ui != null : "Ui must not be null";
+
         ui.close();
     }
 }

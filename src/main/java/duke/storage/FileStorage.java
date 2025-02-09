@@ -47,6 +47,9 @@ public class FileStorage implements Storage {
      */
     @Override
     public void save(TaskContainer tasks, Ui ui) throws WriteStorageException {
+        assert ui != null : "Ui must not be null";
+        assert tasks != null : "Tasks must not be null";
+
         try {
             if (!file.exists()) {
                 file.getParentFile().mkdirs();
@@ -85,6 +88,9 @@ public class FileStorage implements Storage {
      */
     @Override
     public void load(TaskContainer taskContainer, Ui ui) throws ReadStorageException {
+        assert ui != null : "Ui must not be null";
+        assert taskContainer != null : "TaskContainer must not be null";
+
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
             ArrayList<String> errors = new ArrayList<>();

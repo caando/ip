@@ -27,6 +27,8 @@ public class AddTodoCommand implements Command {
      * @param taskDescription the description of the task
      */
     public AddTodoCommand(String taskDescription) {
+        assert taskDescription != null : "Task description must not be null";
+
         this.taskDescription = taskDescription;
     }
 
@@ -39,6 +41,8 @@ public class AddTodoCommand implements Command {
      * @throws ParseCommandException if the input is invalid or cannot be parsed
      */
     public static Command parse(String input) throws ParseCommandException {
+        assert input != null : "input must not be null";
+
         Pattern pattern = Pattern.compile(COMMAND_REGEX);
         Matcher matcher = pattern.matcher(input);
 
@@ -72,6 +76,10 @@ public class AddTodoCommand implements Command {
      */
     @Override
     public void execute(TaskContainer tasks, Storage storage, Ui ui) {
+        assert tasks != null : "Tasks must not be null";
+        assert storage != null : "Storage must not be null";
+        assert ui != null : "Ui must not be null";
+
         Todo todo = new Todo(taskDescription);
         tasks.add(todo);
         ui.showOutput("Got it. I've added this task:", todo.toString(),
