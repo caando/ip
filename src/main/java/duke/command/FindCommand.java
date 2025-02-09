@@ -1,8 +1,12 @@
 package duke.command;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.StreamSupport;
 
 import duke.exception.ParseCommandException;
 import duke.storage.Storage;
@@ -78,18 +82,16 @@ public class FindCommand implements Command {
         assert tasks != null : "Tasks must not be null";
         assert ui != null : "Ui must not be null";
 
-        ArrayList<Task> filteredTasks = new ArrayList<>();
-        tasks.list((index, task) -> {
-            if (task.getDescription().contains(keyword)) {
-                filteredTasks.add(task);
-            }
-        });
+        List<Task> filteredTasks = StreamSupport.stream(tasks.spliterator(), false).filter(
+            task -> task.getDescription().contains(keyword)
+        ).collect(Collectors.toList());
+
         ArrayList<String> output = new ArrayList<>();
         output.add("Here are the matching tasks in your list:");
-        for (int i = 0; i < filteredTasks.size(); i++) {
-            Task task = filteredTasks.get(i);
-            output.add(String.format("%d. %s", i + 1, task.toString()));
-        }
+
+        output.addAll(IntStream.range(0, filteredTasks.size())
+                .mapToObj(i -> String.format("%d. %s", i + 1, filteredTasks.get(i).toString()))
+                .collect(Collectors.toList()));
         ui.showOutput(output);
     }
 }
