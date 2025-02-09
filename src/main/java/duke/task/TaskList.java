@@ -87,6 +87,21 @@ public class TaskList implements TaskContainer {
     }
 
     /**
+     * Creates a copy of the task list.
+     *
+     * @return A new TaskList containing the same tasks as this task list.
+     */
+    @Override
+    public TaskContainer copy() {
+        TaskList copy = new TaskList();
+        for (Task task : tasks) {
+            copy.add(task);
+        }
+        assert copy.size() == tasks.size();
+        return copy;
+    }
+
+    /**
      * Returns an iterator over the tasks in this task list.
      * <p>
      * The iterator provides sequential access to the tasks, starting from the first task

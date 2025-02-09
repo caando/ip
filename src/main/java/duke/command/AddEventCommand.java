@@ -5,6 +5,7 @@ import java.time.format.DateTimeParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import duke.State;
 import duke.Utils;
 import duke.exception.ParseCommandException;
 import duke.exception.WriteStorageException;
@@ -26,6 +27,9 @@ public class AddEventCommand implements Command {
     private final LocalDate from;
     private final LocalDate to;
 
+    /** The raw input string from the user. */
+    private final String rawInput;
+
     /**
      * Creates an {@code AddEventCommand} with the specified task description
      * and time period.
@@ -34,7 +38,7 @@ public class AddEventCommand implements Command {
      * @param from the starting date of the event
      * @param to the ending date of the event
      */
-    public AddEventCommand(String taskDescription, LocalDate from, LocalDate to) {
+    public AddEventCommand(String taskDescription, LocalDate from, LocalDate to, String rawInput) {
         assert taskDescription != null : "Task description must not be null";
         assert from != null : "From date must not be null";
         assert to != null : "To date must not be null";
@@ -42,6 +46,7 @@ public class AddEventCommand implements Command {
         this.taskDescription = taskDescription;
         this.from = from;
         this.to = to;
+        this.rawInput = rawInput;
     }
 
     /**
@@ -90,7 +95,7 @@ public class AddEventCommand implements Command {
                 throw new ParseCommandException(String.format("Unable to parse [%s] to date.", toDateString));
             }
 
-            return new AddEventCommand(description, fromDate, toDate);
+            return new AddEventCommand(description, fromDate, toDate, input);
         } else {
             throw new ParseCommandException(String.format("Unable to parse [%s] to event command.", input));
         }
@@ -127,12 +132,16 @@ public class AddEventCommand implements Command {
      * Executes the {@code AddEventCommand} by creating a new {@code Event}
      * task, adding it to the task list, and displaying the result to the user.
      *
-     * @param tasks the task container to which the task is added
-     * @param storage the storage used for persisting tasks
-     * @param ui the user interface for displaying outputs
+     * @param state The current application state containing tasks, storage, and UI.
+     *
+     * @return A new {@link State} object reflecting the updated task list
+     *         and retaining the previous state information.
      */
     @Override
-    public void execute(TaskContainer tasks, Storage storage, Ui ui) {
+    public State execute(State state) {
+        TaskContainer tasks = state.getTasks().copy();
+        Storage storage = state.getStorage();
+        Ui ui = state.getUi();
         assert tasks != null : "Tasks must not be null";
         assert storage != null : "Storage must not be null";
         assert ui != null : "Ui must not be null";
@@ -147,5 +156,7 @@ public class AddEventCommand implements Command {
         } catch (WriteStorageException e) {
             ui.showError(e.getMessage());
         }
+
+        return new State(tasks, storage, ui, state, this.rawInput);
     }
 }

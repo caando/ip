@@ -62,4 +62,11 @@ public interface TaskContainer extends Iterable<Task> {
      * @return The number of tasks in the container.
      */
     public int size();
+
+    /**
+     * Returns a copy of the task container.
+     *
+     * @return A copy of the task container.
+     */
+    public TaskContainer copy();
 }

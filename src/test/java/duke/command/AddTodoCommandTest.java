@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import duke.State;
 import duke.exception.ParseCommandException;
 import duke.storage.Storage;
 import duke.task.TaskContainer;
@@ -61,11 +62,15 @@ public class AddTodoCommandTest {
         String input = "todo Read a book";
         AddTodoCommand command = (AddTodoCommand) AddTodoCommand.parse(input);
 
-        // Act
+        // Mocking the dependencies
         TaskContainer taskContainer = Mockito.mock(TaskContainer.class);
         Storage storage = Mockito.mock(Storage.class);
         Ui ui = Mockito.mock(Ui.class);
-        command.execute(taskContainer, storage, ui);
+        State state = new State(taskContainer, storage, ui, null, null);
+        Mockito.when(taskContainer.copy()).thenReturn(taskContainer);
+
+        // Act
+        command.execute(state);
 
         // Assert
         Mockito.verify(taskContainer).add(Mockito.any(Todo.class));

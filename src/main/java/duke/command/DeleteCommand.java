@@ -3,6 +3,7 @@ package duke.command;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import duke.State;
 import duke.exception.ParseCommandException;
 import duke.exception.TaskNotFoundException;
 import duke.exception.WriteStorageException;
@@ -23,13 +24,17 @@ public class DeleteCommand implements Command {
     /** The index of the task to be deleted (1-based). */
     private final int taskIndex;
 
+    /** The raw input string from the user. */
+    private final String rawInput;
+
     /**
      * Constructs a {@code DeleteCommand} with the specified task index.
      *
      * @param taskIndex the 1-based index of the task to delete
      */
-    public DeleteCommand(int taskIndex) {
+    public DeleteCommand(int taskIndex, String rawInput) {
         this.taskIndex = taskIndex;
+        this.rawInput = rawInput;
     }
 
     /**
@@ -54,7 +59,7 @@ public class DeleteCommand implements Command {
                     throw new ParseCommandException(String.format(
                             "Delete index [%d] should be a positive integer", index));
                 }
-                return new DeleteCommand(index);
+                return new DeleteCommand(index, input);
             } catch (NumberFormatException e) {
                 throw new ParseCommandException(String.format("Unable to parse [%s] as integer.", indexString));
             }
@@ -75,13 +80,19 @@ public class DeleteCommand implements Command {
     /**
      * Executes the delete command by removing the task from the task list,
      * updating storage, and displaying the relevant output to the user.
+     * If the specified task does not exist, an error message is shown.
      *
-     * @param tasks the task container from which the task will be removed
-     * @param storage the storage handler to persist the updated task list
-     * @param ui the user interface to display output and error messages
+     * @param state The current application state containing tasks, storage, and UI.
+     *
+     * @return A new {@link State} object reflecting the updated task list
+     *         and retaining the previous state information.
      */
     @Override
-    public void execute(TaskContainer tasks, Storage storage, Ui ui) {
+    public State execute(State state) {
+        TaskContainer tasks = state.getTasks().copy();
+        Storage storage = state.getStorage();
+        Ui ui = state.getUi();
+
         assert tasks != null : "Tasks must not be null";
         assert storage != null : "Storage must not be null";
         assert ui != null : "Ui must not be null";
@@ -103,5 +114,7 @@ public class DeleteCommand implements Command {
         } catch (WriteStorageException e) {
             ui.showError(e.getMessage());
         }
+
+        return new State(tasks, storage, ui, state, this.rawInput);
     }
 }

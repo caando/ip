@@ -5,8 +5,6 @@ import duke.exception.ParseCommandException;
 import duke.exception.ReadStorageException;
 import duke.parser.Parser;
 import duke.storage.FileStorage;
-import duke.storage.Storage;
-import duke.task.TaskContainer;
 import duke.task.TaskList;
 import duke.ui.Cli;
 import duke.ui.Ui;
@@ -20,9 +18,7 @@ import duke.ui.Ui;
  */
 public class Duke {
 
-    private final Storage storage;
-    private final TaskContainer tasks;
-    private final Ui ui;
+    private State state;
 
     /**
      * Constructs a new instance of Duke with the specified storage, task list, and user interface.
@@ -32,13 +28,11 @@ public class Duke {
      * @param ui The user interface component to interact with the user.
      */
     public Duke(Ui ui) {
-        this.storage = new FileStorage("./data/duke.txt");
-        this.tasks = new TaskList();
-        this.ui = ui;
+        this.state = new State(new TaskList(), new FileStorage("./data/duke.txt"), ui, null, null);
 
         ui.start();
         try {
-            storage.load(tasks, ui);
+            this.state.getStorage().load(this.state.getTasks(), ui);
         } catch (ReadStorageException e) {
             ui.showError(e.getMessage());
         }
@@ -55,9 +49,9 @@ public class Duke {
     public void process(String input) {
         try {
             Command command = Parser.parseCommand(input);
-            command.execute(tasks, storage, ui);
+            this.state = command.execute(this.state);
         } catch (ParseCommandException e) {
-            ui.showError(e.getMessage());
+            this.state.getUi().showError(e.getMessage());
         }
     }
 

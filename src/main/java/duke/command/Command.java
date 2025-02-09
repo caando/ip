@@ -1,8 +1,6 @@
 package duke.command;
 
-import duke.storage.Storage;
-import duke.task.TaskContainer;
-import duke.ui.Ui;
+import duke.State;
 
 /**
  * Represents a command that can be executed by the Duke application.
@@ -29,7 +27,7 @@ public interface Command {
         /** Command to find task description. */
         FIND,
 
-        /** Command to list all tasks. */
+        /** Command to list all tasks in the current task container. */
         LIST,
 
         /** Command to mark a task as completed. */
@@ -38,16 +36,20 @@ public interface Command {
         /** Command to add a todo task. */
         TODO,
 
+        /** Command to undo the previous mutable command. */
+        UNDO,
+
         /** Command to unmark a completed task. */
         UNMARK
     }
 
     /**
-     * Executes the command using the given task list, storage, and user interface.
+     * Executes the command using the provided application state.
+     * The execution may modify tasks, update storage, and display output to the user.
      *
-     * @param taskList the container holding the current tasks
-     * @param storage the storage handler for reading and writing tasks
-     * @param ui the user interface for displaying outputs to the user
+     * @param state The current application state, containing tasks, storage, and UI.
+     *
+     * @return The updated {@code State} after executing the command.
      */
-    public void execute(TaskContainer taskList, Storage storage, Ui ui);
+    public State execute(State state);
 }

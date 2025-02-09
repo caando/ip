@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import duke.State;
 import duke.exception.ParseCommandException;
 import duke.exception.TaskNotFoundException;
 import duke.exception.WriteStorageException;
@@ -18,12 +19,14 @@ class DeleteCommandTest {
     private TaskContainer taskContainer;
     private Storage storage;
     private Ui ui;
+    private State state;
 
     @BeforeEach
     void setUp() {
         taskContainer = Mockito.mock(TaskContainer.class);
         storage = Mockito.mock(Storage.class);
         ui = Mockito.mock(Ui.class);
+        state = new State(taskContainer, storage, ui, null, null);
     }
 
     // Test parse() for valid input
@@ -69,9 +72,10 @@ class DeleteCommandTest {
         Mockito.when(taskContainer.remove(2)).thenReturn(task);
         Mockito.when(task.toString()).thenReturn("Task 3");
         Mockito.when(taskContainer.size()).thenReturn(5).thenReturn(4);
+        Mockito.when(taskContainer.copy()).thenReturn(taskContainer);
 
-        DeleteCommand command = new DeleteCommand(3);
-        command.execute(taskContainer, storage, ui);
+        DeleteCommand command = new DeleteCommand(3, "delete 3");
+        command.execute(state);
 
         Mockito.verify(taskContainer).remove(2); // Ensure task was removed at correct index
         Mockito.verify(ui).showOutput(
@@ -85,9 +89,10 @@ class DeleteCommandTest {
     @Test
     void testExecute_taskNotFound_showsError() throws TaskNotFoundException, WriteStorageException {
         Mockito.when(taskContainer.remove(2)).thenThrow(new TaskNotFoundException("Task not found"));
+        Mockito.when(taskContainer.copy()).thenReturn(taskContainer);
 
-        DeleteCommand command = new DeleteCommand(3);
-        command.execute(taskContainer, storage, ui);
+        DeleteCommand command = new DeleteCommand(3, "delete 3");
+        command.execute(state);
 
         Mockito.verify(ui).showError("Task not found");
         Mockito.verify(storage).save(taskContainer, ui);
@@ -100,9 +105,10 @@ class DeleteCommandTest {
         Mockito.when(taskContainer.remove(2)).thenReturn(task);
         Mockito.when(taskContainer.size()).thenReturn(5).thenReturn(4);
         Mockito.doThrow(new WriteStorageException("Storage error")).when(storage).save(taskContainer, ui);
+        Mockito.when(taskContainer.copy()).thenReturn(taskContainer);
 
-        DeleteCommand command = new DeleteCommand(3);
-        command.execute(taskContainer, storage, ui);
+        DeleteCommand command = new DeleteCommand(3, "delete 3");
+        command.execute(state);
 
         Mockito.verify(ui).showError("Storage error");
     }

@@ -5,6 +5,7 @@ import java.time.format.DateTimeParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import duke.State;
 import duke.Utils;
 import duke.exception.ParseCommandException;
 import duke.exception.WriteStorageException;
@@ -26,18 +27,22 @@ public class AddDeadlineCommand implements Command {
     private final String taskDescription;
     private final LocalDate date;
 
+    /** The raw input string from the user. */
+    private final String rawInput;
+
     /**
      * Creates an {@code AddDeadlineCommand} with the specified task description and date.
      *
      * @param taskDescription the description of the task
      * @param date the deadline date for the task
      */
-    public AddDeadlineCommand(String taskDescription, LocalDate date) {
+    public AddDeadlineCommand(String taskDescription, LocalDate date, String rawInput) {
         assert taskDescription != null : "Task description must not be null";
         assert date != null : "Date must not be null";
 
         this.taskDescription = taskDescription;
         this.date = date;
+        this.rawInput = rawInput;
     }
 
     /**
@@ -68,7 +73,7 @@ public class AddDeadlineCommand implements Command {
 
             try {
                 LocalDate date = Utils.parseDate(dateString);
-                return new AddDeadlineCommand(description, date);
+                return new AddDeadlineCommand(description, date, input);
             } catch (DateTimeParseException e) {
                 throw new ParseCommandException(String.format(
                         "Unable to parse [%s] as date for deadline command.", dateString));
@@ -100,12 +105,16 @@ public class AddDeadlineCommand implements Command {
      * Executes the {@code AddDeadlineCommand} by creating a new {@code Deadline} task,
      * adding it to the task list, and displaying the result to the user.
      *
-     * @param tasks the task container to which the task is added
-     * @param storage the storage used for persisting tasks
-     * @param ui the user interface for displaying outputs
+     * @param state The current application state containing tasks, storage, and UI.
+     *
+     * @return A new {@link State} object reflecting the updated task list
+     *         and retaining the previous state information.
      */
     @Override
-    public void execute(TaskContainer tasks, Storage storage, Ui ui) {
+    public State execute(State state) {
+        TaskContainer tasks = state.getTasks().copy();
+        Storage storage = state.getStorage();
+        Ui ui = state.getUi();
         assert tasks != null : "Tasks must not be null";
         assert storage != null : "Storage must not be null";
         assert ui != null : "Ui must not be null";
@@ -120,5 +129,7 @@ public class AddDeadlineCommand implements Command {
         } catch (WriteStorageException e) {
             ui.showError(e.getMessage());
         }
+
+        return new State(tasks, storage, ui, state, this.rawInput);
     }
 }
