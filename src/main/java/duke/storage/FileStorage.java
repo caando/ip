@@ -56,14 +56,14 @@ public class FileStorage implements Storage {
             BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 
             ArrayList<String> errors = new ArrayList<>();
-            tasks.list((index, task) -> {
+            for (Task task : tasks) {
                 try {
                     writer.write(task.toPsvString());
                     writer.write('\n');
                 } catch (IOException e) {
                     errors.add(String.format("Error writing task to PSV [%s]", e.getMessage()));
                 }
-            });
+            }
             writer.flush();
             writer.close();
             if (!errors.isEmpty()) {
