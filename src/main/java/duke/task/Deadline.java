@@ -9,6 +9,7 @@ import duke.exception.ParseTaskException;
 
 /**
  * Represents a Deadline task in the task management system.
+ * <p>
  * A Deadline task has a description and a specific deadline time.
  * The task can be parsed from a string representation in PSV (Pipe-Separated Values) format
  * and can also be converted to such a format.
@@ -30,6 +31,7 @@ public class Deadline extends Task {
 
     /**
      * Creates a Deadline task from a PSV string.
+     * <p>
      * The PSV string is expected to have the format: "TaskType | StatusIcon | Description | Time".
      *
      * @param input The PSV string representing the deadline task.
@@ -73,6 +75,7 @@ public class Deadline extends Task {
 
     /**
      * Returns the icon representing the task type.
+     * <p>
      * For Deadline tasks, the icon is always "D".
      *
      * @return The task type icon as a string.
@@ -84,6 +87,7 @@ public class Deadline extends Task {
 
     /**
      * Converts this Deadline task to a PSV string.
+     * <p>
      * The format of the PSV string is: "TaskType | StatusIcon | Description | Time".
      *
      * @return A PSV string representing this Deadline task.
@@ -96,6 +100,7 @@ public class Deadline extends Task {
 
     /**
      * Returns a string representation of the Deadline task.
+     * <p>
      * The string representation includes the task type icon, the status icon, the description,
      * and the deadline time.
      *

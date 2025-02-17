@@ -56,15 +56,15 @@ public class FindCommand implements Command {
         Pattern pattern = Pattern.compile(COMMAND_REGEX);
         Matcher matcher = pattern.matcher(input);
 
-        if (matcher.matches()) {
-            String keyword = matcher.group(1).trim();
-            if (keyword.isEmpty()) {
-                throw new ParseCommandException("Find command requires a keyword.");
-            }
-            return new FindCommand(keyword);
-        } else {
+        if (!matcher.matches()) {
             throw new ParseCommandException(String.format("Unable to parse [%s] to find command.", input));
         }
+
+        String keyword = matcher.group(1).trim();
+        if (keyword.isEmpty()) {
+            throw new ParseCommandException("Find command requires a keyword.");
+        }
+        return new FindCommand(keyword);
     }
 
     /**

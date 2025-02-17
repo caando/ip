@@ -35,6 +35,7 @@ public class AddDeadlineCommand implements Command {
      *
      * @param taskDescription the description of the task
      * @param date the deadline date for the task
+     * @param rawInput the raw input string from the user
      */
     public AddDeadlineCommand(String taskDescription, LocalDate date, String rawInput) {
         assert taskDescription != null : "Task description must not be null";
@@ -59,27 +60,27 @@ public class AddDeadlineCommand implements Command {
         Pattern pattern = Pattern.compile(COMMAND_REGEX);
         Matcher matcher = pattern.matcher(input);
 
-        if (matcher.matches()) {
-            String description = matcher.group(1).trim();
-            String dateString = matcher.group(2).trim();
-
-            if (description.isEmpty()) {
-                throw new ParseCommandException("Deadline command requires a description.");
-            }
-
-            if (dateString.isEmpty()) {
-                throw new ParseCommandException("Deadline command requires [/by] argument.");
-            }
-
-            try {
-                LocalDate date = Utils.parseDate(dateString);
-                return new AddDeadlineCommand(description, date, input);
-            } catch (DateTimeParseException e) {
-                throw new ParseCommandException(String.format(
-                        "Unable to parse [%s] as date for deadline command.", dateString));
-            }
-        } else {
+        if (!matcher.matches()) {
             throw new ParseCommandException(String.format("Unable to parse [%s] to deadline command.", input));
+        }
+
+        String description = matcher.group(1).trim();
+        String dateString = matcher.group(2).trim();
+
+        if (description.isEmpty()) {
+            throw new ParseCommandException("Deadline command requires a description.");
+        }
+
+        if (dateString.isEmpty()) {
+            throw new ParseCommandException("Deadline command requires [/by] argument.");
+        }
+
+        try {
+            LocalDate date = Utils.parseDate(dateString);
+            return new AddDeadlineCommand(description, date, input);
+        } catch (DateTimeParseException e) {
+            throw new ParseCommandException(String.format(
+                    "Unable to parse [%s] as date for deadline command.", dateString));
         }
     }
 
@@ -102,8 +103,8 @@ public class AddDeadlineCommand implements Command {
     }
 
     /**
-     * Executes the {@code AddDeadlineCommand} by creating a new {@code Deadline} task,
-     * adding it to the task list, and displaying the result to the user.
+     * Executes the {@code AddDeadlineCommand}.
+     * Creates a new {@code Deadline} task, adds it to the task list, and displays the result to the user.
      *
      * @param state The current application state containing tasks, storage, and UI.
      *

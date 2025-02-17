@@ -5,6 +5,7 @@ import duke.exception.ParseTaskException;
 
 /**
  * Represents a Todo task in the task management system.
+ * <p>
  * A Todo task is a basic task that has a description and a completion status.
  * The task can be parsed from a string representation in PSV (Pipe-Separated Values) format
  * and can also be converted to such a format.
@@ -22,6 +23,7 @@ public class Todo extends Task {
 
     /**
      * Creates a Todo task from a PSV string.
+     * <p>
      * The PSV string is expected to have the format: "TaskType | StatusIcon | Description".
      *
      * @param input The PSV string representing the task.
@@ -55,6 +57,7 @@ public class Todo extends Task {
 
     /**
      * Converts this Todo task to a PSV string.
+     * <p>
      * The format of the PSV string is: "TaskType | StatusIcon | Description".
      *
      * @return A PSV string representing this Todo task.
@@ -66,6 +69,7 @@ public class Todo extends Task {
 
     /**
      * Returns the icon representing the task type.
+     * <p>
      * For Todo tasks, the icon is always "T".
      *
      * @return The task type icon as a string.
@@ -77,6 +81,7 @@ public class Todo extends Task {
 
     /**
      * Returns a string representation of the Todo task.
+     * <p>
      * The string representation includes the task type icon, the status icon, and the description.
      *
      * @return A string representation of the Todo task.

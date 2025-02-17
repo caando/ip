@@ -13,6 +13,7 @@ import duke.ui.Ui;
 
 /**
  * Represents a command to add a todo task.
+ * <p>
  * This command parses user input, creates a {@code Todo} task, and adds it to the task container.
  */
 public class AddTodoCommand implements Command {
@@ -29,6 +30,7 @@ public class AddTodoCommand implements Command {
      * Creates an {@code AddTodoCommand} with the specified task description.
      *
      * @param taskDescription the description of the task
+     * @param rawInput the raw input string from the user
      */
     public AddTodoCommand(String taskDescription, String rawInput) {
         assert taskDescription != null : "Task description must not be null";
@@ -39,6 +41,7 @@ public class AddTodoCommand implements Command {
 
     /**
      * Parses the input string to create an {@code AddTodoCommand}.
+     * <p>
      * The input must follow the format: {@code "todo <description>"}.
      *
      * @param input the user input string
@@ -51,15 +54,15 @@ public class AddTodoCommand implements Command {
         Pattern pattern = Pattern.compile(COMMAND_REGEX);
         Matcher matcher = pattern.matcher(input);
 
-        if (matcher.matches()) {
-            String description = matcher.group(1).trim();
-            if (description.isEmpty()) {
-                throw new ParseCommandException("Todo command requires a description.");
-            }
-            return new AddTodoCommand(description, input);
-        } else {
+        if (!matcher.matches()) {
             throw new ParseCommandException(String.format("Unable to parse [%s] to todo command.", input));
         }
+
+        String description = matcher.group(1).trim();
+        if (description.isEmpty()) {
+            throw new ParseCommandException("Todo command requires a description.");
+        }
+        return new AddTodoCommand(description, input);
     }
 
     /**
@@ -72,8 +75,9 @@ public class AddTodoCommand implements Command {
     }
 
     /**
-     * Executes the {@code AddTodoCommand} by creating a new {@code Todo} task,
-     * adding it to the task list, and displaying the result to the user.
+     * Executes the {@code AddTodoCommand}.
+     * <p>
+     * Creats a new {@code Todo} task, adds it to the task list, and displays the result to the user.
      *
      * @param state The current application state containing tasks, storage, and UI.
      *

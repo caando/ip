@@ -14,6 +14,7 @@ import duke.ui.Ui;
 
 /**
  * Represents a command to delete a task from the task list.
+ * <p>
  * The user must specify a valid positive integer index of the task to be deleted.
  */
 public class DeleteCommand implements Command {
@@ -31,6 +32,7 @@ public class DeleteCommand implements Command {
      * Constructs a {@code DeleteCommand} with the specified task index.
      *
      * @param taskIndex the 1-based index of the task to delete
+     * @param rawInput the raw input string from the user
      */
     public DeleteCommand(int taskIndex, String rawInput) {
         this.taskIndex = taskIndex;
@@ -51,39 +53,40 @@ public class DeleteCommand implements Command {
         Pattern pattern = Pattern.compile(COMMAND_REGEX);
         Matcher matcher = pattern.matcher(input);
 
-        if (matcher.matches()) {
-            String indexString = matcher.group(1);
-            try {
-                int index = Integer.parseInt(indexString);
-                if (index < 1) {
-                    throw new ParseCommandException(String.format(
-                            "Delete index [%d] should be a positive integer", index));
-                }
-                return new DeleteCommand(index, input);
-            } catch (NumberFormatException e) {
-                throw new ParseCommandException(String.format("Unable to parse [%s] as integer.", indexString));
-            }
-        } else {
+        if (!matcher.matches()) {
             throw new ParseCommandException("Delete command requires an integer index.");
         }
+
+        String indexString = matcher.group(1);
+        try {
+            int index = Integer.parseInt(indexString);
+            if (index < 1) {
+                throw new ParseCommandException(String.format(
+                        "Delete index [%d] should be a positive integer", index));
+            }
+            return new DeleteCommand(index, input);
+        } catch (NumberFormatException e) {
+            throw new ParseCommandException(String.format("Unable to parse [%s] as integer.", indexString));
+        }
+
     }
 
     /**
      * Returns the index of the task.
      *
-     * @return the task idnex
+     * @return the task index
      */
     public int getTaskIndex() {
         return taskIndex;
     }
 
     /**
-     * Executes the delete command by removing the task from the task list,
-     * updating storage, and displaying the relevant output to the user.
+     * Executes the delete command.
+     * <p>
+     * Removes the task from the task list, updates storage, and displays the relevant output to the user.
      * If the specified task does not exist, an error message is shown.
      *
      * @param state The current application state containing tasks, storage, and UI.
-     *
      * @return A new {@link State} object reflecting the updated task list
      *         and retaining the previous state information.
      */

@@ -8,6 +8,7 @@ import duke.exception.TaskNotFoundException;
 
 /**
  * Represents a container for managing a list of tasks.
+ * <p>
  * This class provides methods to add, list, retrieve, and remove tasks in the container.
  */
 public class TaskList implements TaskContainer {
@@ -16,6 +17,7 @@ public class TaskList implements TaskContainer {
 
     /**
      * Constructs an empty TaskList.
+     * <p>
      * Initializes the internal list of tasks as an empty ArrayList.
      */
     public TaskList() {
@@ -106,7 +108,6 @@ public class TaskList implements TaskContainer {
      * <p>
      * The iterator provides sequential access to the tasks, starting from the first task
      * to the last task in the list.
-     * </p>
      *
      * @return An {@link Iterator} over the tasks in this task list.
      */

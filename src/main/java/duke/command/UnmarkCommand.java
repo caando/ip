@@ -14,6 +14,7 @@ import duke.ui.Ui;
 
 /**
  * Represents a command to mark a task as not done.
+ * <p>
  * The command takes the task index, retrieves the task from the container,
  * and marks it as not done.
  */
@@ -39,6 +40,7 @@ public class UnmarkCommand implements Command {
 
     /**
      * Parses the user input to create a new {@code UnmarkCommand}.
+     * <p>
      * The input should contain the `unmark` keyword followed by a positive integer index,
      * representing the task to mark as not done.
      *
@@ -52,28 +54,29 @@ public class UnmarkCommand implements Command {
         Pattern pattern = Pattern.compile(COMMAND_REGEX);
         Matcher matcher = pattern.matcher(input);
 
-        if (matcher.matches()) {
-            String indexString = matcher.group(1);
-            try {
-                int index = Integer.parseInt(indexString);
-                if (index <= 0) {
-                    throw new ParseCommandException(String.format(
-                            "Invalid index [%d]. Task index should be a positive integer.", index));
-                }
-                return new UnmarkCommand(index, input);
-            } catch (NumberFormatException e) {
-                throw new ParseCommandException(String.format(
-                        "Unable to parse [%s] as integer. Task index should be a positive integer.",
-                        indexString));
-            }
-        } else {
+        if (!matcher.matches()) {
             throw new ParseCommandException("Unmark command requires an integer index.");
+        }
+
+        String indexString = matcher.group(1);
+        try {
+            int index = Integer.parseInt(indexString);
+            if (index <= 0) {
+                throw new ParseCommandException(String.format(
+                        "Invalid index [%d]. Task index should be a positive integer.", index));
+            }
+            return new UnmarkCommand(index, input);
+        } catch (NumberFormatException e) {
+            throw new ParseCommandException(String.format(
+                    "Unable to parse [%s] as integer. Task index should be a positive integer.",
+                    indexString));
         }
     }
 
     /**
-     * Executes the unmark command by retrieving the task from the task container
-     * using the specified index and marking it as not done.
+     * Executes the unmark command.
+     * <p>
+     * Retrieving the task from the task container with the specified index and marking it as not done.
      * The task is then saved, and appropriate messages are shown via the user interface.
      *
      * @param state The current application state containing tasks, storage, and UI.

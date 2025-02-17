@@ -37,6 +37,7 @@ public class AddEventCommand implements Command {
      * @param taskDescription the description of the task
      * @param from the starting date of the event
      * @param to the ending date of the event
+     * @param rawInput the raw input string from the user
      */
     public AddEventCommand(String taskDescription, LocalDate from, LocalDate to, String rawInput) {
         assert taskDescription != null : "Task description must not be null";
@@ -50,8 +51,9 @@ public class AddEventCommand implements Command {
     }
 
     /**
-     * Parses the input string to create an {@code AddEventCommand}. The input
-     * must follow the format:
+     * Parses the input string to create an {@code AddEventCommand}.
+     * <p>
+     * The input must follow the format:
      * {@code "event <description> /from <start_date> /to <end_date>"}.
      *
      * @param input the user input string
@@ -64,41 +66,41 @@ public class AddEventCommand implements Command {
         Pattern pattern = Pattern.compile(COMMAND_REGEX);
         Matcher matcher = pattern.matcher(input);
 
-        if (matcher.matches()) {
-            String description = matcher.group(1).trim();
-            String fromDateString = matcher.group(2).trim();
-            String toDateString = matcher.group(3).trim();
-
-            if (description.isEmpty()) {
-                throw new ParseCommandException("Event command requires a description.");
-            }
-
-            if (fromDateString.isEmpty()) {
-                throw new ParseCommandException("Event command requires [/from] argument.");
-            }
-
-            if (toDateString.isEmpty()) {
-                throw new ParseCommandException("Event command requires [/to] argument.");
-            }
-
-            LocalDate fromDate;
-            try {
-                fromDate = Utils.parseDate(fromDateString);
-            } catch (DateTimeParseException e) {
-                throw new ParseCommandException(String.format("Unable to parse [%s] to date.", fromDateString));
-            }
-
-            LocalDate toDate;
-            try {
-                toDate = Utils.parseDate(toDateString);
-            } catch (DateTimeParseException e) {
-                throw new ParseCommandException(String.format("Unable to parse [%s] to date.", toDateString));
-            }
-
-            return new AddEventCommand(description, fromDate, toDate, input);
-        } else {
+        if (!matcher.matches()) {
             throw new ParseCommandException(String.format("Unable to parse [%s] to event command.", input));
         }
+
+        String description = matcher.group(1).trim();
+        String fromDateString = matcher.group(2).trim();
+        String toDateString = matcher.group(3).trim();
+
+        if (description.isEmpty()) {
+            throw new ParseCommandException("Event command requires a description.");
+        }
+
+        if (fromDateString.isEmpty()) {
+            throw new ParseCommandException("Event command requires [/from] argument.");
+        }
+
+        if (toDateString.isEmpty()) {
+            throw new ParseCommandException("Event command requires [/to] argument.");
+        }
+
+        LocalDate fromDate;
+        try {
+            fromDate = Utils.parseDate(fromDateString);
+        } catch (DateTimeParseException e) {
+            throw new ParseCommandException(String.format("Unable to parse [%s] to date.", fromDateString));
+        }
+
+        LocalDate toDate;
+        try {
+            toDate = Utils.parseDate(toDateString);
+        } catch (DateTimeParseException e) {
+            throw new ParseCommandException(String.format("Unable to parse [%s] to date.", toDateString));
+        }
+
+        return new AddEventCommand(description, fromDate, toDate, input);
     }
 
     /**

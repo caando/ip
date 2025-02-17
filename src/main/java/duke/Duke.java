@@ -23,8 +23,6 @@ public class Duke {
     /**
      * Constructs a new instance of Duke with the specified storage, task list, and user interface.
      *
-     * @param storage The storage component to use for loading and saving tasks.
-     * @param tasks The task list component to manage tasks.
      * @param ui The user interface component to interact with the user.
      */
     public Duke(Ui ui) {

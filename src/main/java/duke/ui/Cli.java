@@ -9,9 +9,10 @@ import java.util.Scanner;
 
 /**
  * Represents a Command Line Interface (CLI) for the application.
+ * <p>
  * This class interacts with the user through the terminal/command line.
  * It handles taking user input and displaying output or error messages.
- *
+ * <p>
  * The CLI prompts the user, processes input, and displays task-related outputs
  * or errors. It also provides methods to display formatted messages and a
  * method to close the interface.
@@ -24,8 +25,12 @@ public class Cli implements Ui {
 
 
     /**
-     * Constructs a new instance of the CLI, initializes the scanner for input,
-     * and displays a welcome message to the user.
+     * Constructs a new instance of the CLI.
+     * <p>
+     * Initializes the scanner for input, and displays a welcome message to the user.
+     *
+     * @param inputStream The input stream to read user input from.
+     * @param printStream The print stream to display output to the user.
      */
     public Cli(InputStream inputStream, PrintStream printStream) {
         scanner = new Scanner(inputStream);
@@ -50,8 +55,9 @@ public class Cli implements Ui {
     }
 
     /**
-     * Reads a line of input from the user, trims any surrounding whitespace,
-     * and returns the input string.
+     * Reads a line of input from the user.
+     * <p>
+     * Trims any surrounding whitespace, and returns the input string.
      *
      * @return The trimmed input string from the user.
      */
@@ -63,6 +69,7 @@ public class Cli implements Ui {
 
     /**
      * Displays a list of strings as output in the terminal, each on a new line.
+     * <p>
      * A separator line is added at the end for formatting.
      *
      * @param lines The list of lines to be displayed.
@@ -77,6 +84,7 @@ public class Cli implements Ui {
 
     /**
      * Displays one or more strings as output in the terminal.
+     * <p>
      * Each string is displayed on a new line with a separator line at the end.
      *
      * @param lines The strings to be displayed.
@@ -87,8 +95,9 @@ public class Cli implements Ui {
     }
 
     /**
-     * Displays a list of error messages, each prefixed with "OOPS!!!",
-     * with a separator line at the end.
+     * Displays a list of error messages.
+     * <p>
+     * Messages are prefixed with "OOPS!!!", with a separator line at the end.
      *
      * @param lines The list of error messages to be displayed.
      */
@@ -101,8 +110,9 @@ public class Cli implements Ui {
     }
 
     /**
-     * Displays one or more error messages, each prefixed with "OOPS!!!",
-     * with a separator line at the end.
+     * Displays one or more error messages.
+     * <p>
+     * Messages are prefixed with "OOPS!!!", with a separator line at the end.
      *
      * @param lines The error messages to be displayed.
      */
@@ -113,6 +123,7 @@ public class Cli implements Ui {
 
     /**
      * Displays a greeting message to the user when the program starts.
+     * <p>
      * The greeting provides a welcome message and asks the user for input.
      */
     @Override

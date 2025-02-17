@@ -6,12 +6,14 @@ import java.time.format.DateTimeParseException;
 
 /**
  * Utility class for handling date parsing and formatting.
+ * <p>
  * Provides methods to parse a string into a {@link LocalDate} and format a {@link LocalDate} into a string.
  */
 public class Utils {
 
     /**
      * Parses a string into a {@link LocalDate}. The method tries to parse the date string in multiple formats.
+     * <p>
      * The first attempt is to parse it using the default {@link LocalDate} format, and if that fails, it tries the
      * "MMM d yyyy" format (e.g., "Jan 1 2022").
      *

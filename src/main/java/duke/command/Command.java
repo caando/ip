@@ -4,6 +4,7 @@ import duke.State;
 
 /**
  * Represents a command that can be executed by the Duke application.
+ * <p>
  * Commands are responsible for manipulating tasks, interacting with storage, and producing user outputs.
  */
 public interface Command {
@@ -45,6 +46,7 @@ public interface Command {
 
     /**
      * Executes the command using the provided application state.
+     * <p>
      * The execution may modify tasks, update storage, and display output to the user.
      *
      * @param state The current application state, containing tasks, storage, and UI.

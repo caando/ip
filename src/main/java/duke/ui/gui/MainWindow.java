@@ -82,7 +82,6 @@ public class MainWindow extends AnchorPane {
      * <p>
      * Displays the user's message in the dialog container, passes the input
      * to the consumer, and clears the input field.
-     * </p>
      */
     @FXML
     private void handleUserInput() {
