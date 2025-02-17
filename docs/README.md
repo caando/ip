@@ -1,4 +1,4 @@
-# Meeseeks User Guide
+# Meeseeks Tasks User Guide
 
 ![Demo Image](Demo.png)
 
