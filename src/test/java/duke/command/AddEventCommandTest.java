@@ -111,9 +111,9 @@ public class AddEventCommandTest {
 
         // Assert
         Mockito.verify(taskContainer).add(ArgumentMatchers.any(Event.class));
-        Mockito.verify(ui).showOutput(ArgumentMatchers.eq("Got it. I've added this task:"),
+        Mockito.verify(ui).showOutput(ArgumentMatchers.eq("Oooooooh! I've added this event:"),
                 ArgumentMatchers.eq("[E][_] Conference (from: Feb 1 2025 to: Feb 3 2025)"),
-                ArgumentMatchers.anyString());
+                ArgumentMatchers.eq("Now you have 0 tasks in the list! Don't forget to show up!"));
     }
 
     @Test

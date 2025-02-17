@@ -74,9 +74,9 @@ public class AddTodoCommandTest {
 
         // Assert
         Mockito.verify(taskContainer).add(Mockito.any(Todo.class));
-        Mockito.verify(ui).showOutput(Mockito.eq("Got it. I've added this task:"),
+        Mockito.verify(ui).showOutput(Mockito.eq("Ooooh! Look at that! I've added this task:"),
                 Mockito.eq("[T][_] Read a book"),
-                Mockito.anyString());
+                Mockito.eq("Now you have 0 tasks in the list! Let's get it done fast!"));
     }
 
     @Test
