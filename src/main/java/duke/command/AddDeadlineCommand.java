@@ -60,27 +60,27 @@ public class AddDeadlineCommand implements Command {
         Pattern pattern = Pattern.compile(COMMAND_REGEX);
         Matcher matcher = pattern.matcher(input);
 
-        if (matcher.matches()) {
-            String description = matcher.group(1).trim();
-            String dateString = matcher.group(2).trim();
-
-            if (description.isEmpty()) {
-                throw new ParseCommandException("Deadline command requires a description.");
-            }
-
-            if (dateString.isEmpty()) {
-                throw new ParseCommandException("Deadline command requires [/by] argument.");
-            }
-
-            try {
-                LocalDate date = Utils.parseDate(dateString);
-                return new AddDeadlineCommand(description, date, input);
-            } catch (DateTimeParseException e) {
-                throw new ParseCommandException(String.format(
-                        "Unable to parse [%s] as date for deadline command.", dateString));
-            }
-        } else {
+        if (!matcher.matches()) {
             throw new ParseCommandException(String.format("Unable to parse [%s] to deadline command.", input));
+        }
+
+        String description = matcher.group(1).trim();
+        String dateString = matcher.group(2).trim();
+
+        if (description.isEmpty()) {
+            throw new ParseCommandException("Deadline command requires a description.");
+        }
+
+        if (dateString.isEmpty()) {
+            throw new ParseCommandException("Deadline command requires [/by] argument.");
+        }
+
+        try {
+            LocalDate date = Utils.parseDate(dateString);
+            return new AddDeadlineCommand(description, date, input);
+        } catch (DateTimeParseException e) {
+            throw new ParseCommandException(String.format(
+                    "Unable to parse [%s] as date for deadline command.", dateString));
         }
     }
 

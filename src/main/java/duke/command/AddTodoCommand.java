@@ -54,15 +54,15 @@ public class AddTodoCommand implements Command {
         Pattern pattern = Pattern.compile(COMMAND_REGEX);
         Matcher matcher = pattern.matcher(input);
 
-        if (matcher.matches()) {
-            String description = matcher.group(1).trim();
-            if (description.isEmpty()) {
-                throw new ParseCommandException("Todo command requires a description.");
-            }
-            return new AddTodoCommand(description, input);
-        } else {
+        if (!matcher.matches()) {
             throw new ParseCommandException(String.format("Unable to parse [%s] to todo command.", input));
         }
+
+        String description = matcher.group(1).trim();
+        if (description.isEmpty()) {
+            throw new ParseCommandException("Todo command requires a description.");
+        }
+        return new AddTodoCommand(description, input);
     }
 
     /**

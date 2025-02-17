@@ -53,22 +53,22 @@ public class MarkCommand implements Command {
         Pattern pattern = Pattern.compile(COMMAND_REGEX);
         Matcher matcher = pattern.matcher(input);
 
-        if (matcher.matches()) {
-            String indexString = matcher.group(1);
-            try {
-                int index = Integer.parseInt(indexString);
-                if (index <= 0) {
-                    throw new ParseCommandException(String.format(
-                            "Invalid index [%d]. Task index should be a positive integer.", index));
-                }
-                return new MarkCommand(index, input);
-            } catch (NumberFormatException e) {
-                throw new ParseCommandException(String.format(
-                        "Unable to parse [%s] as integer. Task index should be a positive integer.",
-                        indexString));
-            }
-        } else {
+        if (!matcher.matches()) {
             throw new ParseCommandException("Mark command requires an integer index.");
+        }
+
+        String indexString = matcher.group(1);
+        try {
+            int index = Integer.parseInt(indexString);
+            if (index <= 0) {
+                throw new ParseCommandException(String.format(
+                        "Invalid index [%d]. Task index should be a positive integer.", index));
+            }
+            return new MarkCommand(index, input);
+        } catch (NumberFormatException e) {
+            throw new ParseCommandException(String.format(
+                    "Unable to parse [%s] as integer. Task index should be a positive integer.",
+                    indexString));
         }
     }
 
