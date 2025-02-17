@@ -7,6 +7,7 @@ import duke.ui.Ui;
 
 /**
  * Represents the contract for any storage system used to persist task data.
+ * <p>
  * This interface defines methods for saving and loading tasks from a storage medium.
  * Implementations of this interface are responsible for handling the persistence of tasks
  * in a way that can be retrieved and updated.

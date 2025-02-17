@@ -9,6 +9,7 @@ package duke.exception;
  */
 public class InvalidStatusIconException extends Exception {
 
+    /** The invalid status icon **/
     private final String statusIcon;
 
     /**

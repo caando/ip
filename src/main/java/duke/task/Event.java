@@ -33,6 +33,7 @@ public class Event extends Task {
 
     /**
      * Creates an Event task from a PSV string.
+     * <p>
      * The PSV string is expected to have the format: "TaskType | StatusIcon | Description | FromTime | ToTime".
      *
      * @param input The PSV string representing the event task.
@@ -85,6 +86,7 @@ public class Event extends Task {
 
     /**
      * Returns the icon representing the task type.
+     * <p>
      * For Event tasks, the icon is always "E".
      *
      * @return The task type icon as a string.
@@ -96,6 +98,7 @@ public class Event extends Task {
 
     /**
      * Converts this Event task to a PSV string.
+     * <p>
      * The format of the PSV string is: "TaskType | StatusIcon | Description | FromTime | ToTime".
      *
      * @return A PSV string representing this Event task.
@@ -108,6 +111,7 @@ public class Event extends Task {
 
     /**
      * Returns a string representation of the Event task.
+     * <p>
      * The string representation includes the task type icon, the status icon, the description,
      * the start time, and the end time of the event.
      *

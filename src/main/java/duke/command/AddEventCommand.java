@@ -37,6 +37,7 @@ public class AddEventCommand implements Command {
      * @param taskDescription the description of the task
      * @param from the starting date of the event
      * @param to the ending date of the event
+     * @param rawInput the raw input string from the user
      */
     public AddEventCommand(String taskDescription, LocalDate from, LocalDate to, String rawInput) {
         assert taskDescription != null : "Task description must not be null";
@@ -50,8 +51,9 @@ public class AddEventCommand implements Command {
     }
 
     /**
-     * Parses the input string to create an {@code AddEventCommand}. The input
-     * must follow the format:
+     * Parses the input string to create an {@code AddEventCommand}.
+     * <p>
+     * The input must follow the format:
      * {@code "event <description> /from <start_date> /to <end_date>"}.
      *
      * @param input the user input string

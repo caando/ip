@@ -15,6 +15,7 @@ import duke.exception.ParseCommandException;
 
 /**
  * A utility class responsible for parsing user input into corresponding {@link Command} objects.
+ * <p>
  * The input string is parsed to identify the type of command, which is then mapped to a specific
  * command implementation.
  */
@@ -22,6 +23,7 @@ public class Parser {
 
     /**
      * Parses the given input string into a corresponding {@link Command} object.
+     * <p>
      * The method splits the input string to identify the command type, and based on that, delegates the parsing to
      * the appropriate command class. If the command is unknown or invalid, a {@link ParseCommandException} is thrown.
      *

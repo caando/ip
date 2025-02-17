@@ -17,6 +17,7 @@ import duke.ui.Ui;
 
 /**
  * A storage implementation that handles saving and loading tasks to/from a file.
+ * <p>
  * The tasks are stored in a file in the PSV (Pipe-Separated Values) format.
  * This class is responsible for reading from and writing to the storage file.
  */
@@ -26,6 +27,7 @@ public class FileStorage implements Storage {
 
     /**
      * Constructs a {@code FileStorage} object with the specified file name.
+     * <p>
      * The file will be used to save and load the task list.
      *
      * @param filename the name of the file where tasks will be stored
@@ -36,8 +38,8 @@ public class FileStorage implements Storage {
 
     /**
      * Saves the tasks in the given task container to the storage file.
+     * <p>
      * If the file does not exist, it will be created along with its parent directories.
-     *
      * Each task is written to the file in PSV format (Pipe-Separated Values).
      * Any errors encountered while writing the tasks are collected and displayed to the user.
      *
@@ -80,6 +82,7 @@ public class FileStorage implements Storage {
 
     /**
      * Loads the tasks from the storage file into the given task container.
+     * <p>
      * If any errors are encountered while parsing the tasks, they are displayed to the user.
      *
      * @param taskContainer the container where tasks will be added

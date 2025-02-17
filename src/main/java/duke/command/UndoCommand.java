@@ -4,6 +4,7 @@ import duke.State;
 
 /**
  * Represents a command to undo the last executed command in the Duke application.
+ * <p>
  * If there is a previous state available, it reverts to that state;
  * otherwise, it informs the user that no undo is possible.
  */
@@ -11,6 +12,7 @@ public class UndoCommand implements Command {
 
     /**
      * Parses the input and returns a new instance of {@code UndoCommand}.
+     * <p>
      * This method does not inspect the input since the undo operation
      * does not require any arguments.
      *
@@ -23,6 +25,7 @@ public class UndoCommand implements Command {
 
     /**
      * Executes the undo command by reverting to the previous state if it exists.
+     * <p>
      * Displays an appropriate message to the user based on the success or failure of the operation.
      *
      * @param state The current application state containing tasks, storage, and UI.

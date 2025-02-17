@@ -14,6 +14,7 @@ import duke.ui.Ui;
 
 /**
  * Represents a command to delete a task from the task list.
+ * <p>
  * The user must specify a valid positive integer index of the task to be deleted.
  */
 public class DeleteCommand implements Command {
@@ -31,6 +32,7 @@ public class DeleteCommand implements Command {
      * Constructs a {@code DeleteCommand} with the specified task index.
      *
      * @param taskIndex the 1-based index of the task to delete
+     * @param rawInput the raw input string from the user
      */
     public DeleteCommand(int taskIndex, String rawInput) {
         this.taskIndex = taskIndex;

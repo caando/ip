@@ -24,6 +24,7 @@ public class State {
      * @param storage       The storage system responsible for reading and writing tasks.
      * @param ui            The user interface component for displaying information.
      * @param previousState The previous state of the application, or {@code null} if none.
+     * @param previousCommand The previous command that led to this state, or {@code null} if none.
      */
     public State(TaskContainer tasks, Storage storage, Ui ui, State previousState, String previousCommand) {
         assert tasks != null : "Task container should not be null";

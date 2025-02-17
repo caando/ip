@@ -5,12 +5,14 @@ import duke.ui.Ui;
 
 /**
  * Represents a command to exit the application.
+ * <p>
  * This command is triggered by the user input "bye".
  */
 public class ByeCommand implements Command {
 
     /**
      * Parses the input string to create a {@code ByeCommand}.
+     * <p>
      * The input is expected to be simply "bye".
      *
      * @param input the user input string
@@ -25,6 +27,7 @@ public class ByeCommand implements Command {
 
     /**
      * Executes the {@code ByeCommand} by closing the user interface.
+     * <p>
      * This command does not modify the task list or storage.
      *
      * @param state The current application state containing tasks, storage, and UI.

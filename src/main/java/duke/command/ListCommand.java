@@ -11,12 +11,14 @@ import duke.ui.Ui;
 
 /**
  * Represents a command to list all the tasks in the task container.
+ * <p>
  * The command retrieves all tasks and formats them for display to the user.
  */
 public class ListCommand implements Command {
 
     /**
      * Parses the user input to create a new {@code ListCommand}.
+     * <p>
      * Since the list command does not require additional parameters, it directly returns a new {@code ListCommand}.
      *
      * @param input the user input string
@@ -32,6 +34,7 @@ public class ListCommand implements Command {
 
     /**
      * Executes the list command by retrieving all tasks in the task container and displaying them to the user.
+     * <p>
      * The tasks are formatted as a numbered list, and the output is shown via the user interface.
      *
      * @param state The current application state containing tasks, storage, and UI.

@@ -5,6 +5,7 @@ import duke.exception.ParseTaskException;
 
 /**
  * Represents an abstract task in the task management system.
+ * <p>
  * A task has a description, a completion status, and a task type (Deadline, Event, or Todo).
  * Subclasses of this class represent specific types of tasks such as Deadline, Event, and Todo.
  */
@@ -12,22 +13,35 @@ public abstract class Task {
 
     /**
      * Enum representing the possible types of tasks.
+     * <p>
      * D = Deadline, E = Event, T = Todo.
      */
     public enum Type {
-        D, // Deadline
-        E, // Event
-        T // Todo
+        /**  Deadline **/
+        D,
+
+        /** Event **/
+        E,
+
+        /** Todo **/
+        T
     }
 
-    public static final String DONE_ICON = "X"; // Icon representing a completed task
-    public static final String NOT_DONE_ICON = "_"; // Icon representing an incomplete task
+    /** Icon to represent task is done **/
+    public static final String DONE_ICON = "X";
 
-    protected String description; // Description of the task
+    /** Icon to represent task is not done **/
+    public static final String NOT_DONE_ICON = "_";
+
+    /** Description of the task **/
+    protected String description;
+
+    /** Completion status of the task **/
     protected boolean isDone; // Completion status of the task
 
     /**
      * Constructs a new Task with the given description.
+     * <p>
      * By default, the task is marked as not done.
      *
      * @param description The description of the task.
@@ -39,6 +53,7 @@ public abstract class Task {
 
     /**
      * Returns the status icon of the task.
+     * <p>
      * The icon is "X" if the task is done, otherwise it is "_".
      *
      * @return The status icon of the task.
@@ -63,6 +78,8 @@ public abstract class Task {
 
     /**
      * Gets the description of the task.
+     *
+     * @return The description of the task.
      */
     public String getDescription() {
         return description;
@@ -70,6 +87,7 @@ public abstract class Task {
 
     /**
      * Sets the completion status of the task based on the given status icon.
+     * <p>
      * Valid status icons are:
      * <ul>
      * <li>"_" for not done tasks</li>
@@ -91,6 +109,7 @@ public abstract class Task {
 
     /**
      * Converts the task to a PSV (Pipe-Separated Values) string representation.
+     * <p>
      * The exact format depends on the specific task subclass (e.g., Deadline, Event, Todo).
      *
      * @return A PSV string representing the task.
@@ -99,6 +118,7 @@ public abstract class Task {
 
     /**
      * Creates a Task from a PSV string representation.
+     * <p>
      * The input string should have the format: "TaskType | StatusIcon | Description".
      * The task type is inferred from the first part of the string.
      *
@@ -128,6 +148,7 @@ public abstract class Task {
 
     /**
      * Returns the task icon representing the type of the task.
+     * <p>
      * Each subclass (e.g., Deadline, Event, Todo) will provide its own implementation.
      *
      * @return The task type icon as a string.
@@ -136,6 +157,7 @@ public abstract class Task {
 
     /**
      * Returns a string representation of the task.
+     * <p>
      * Each subclass (e.g., Deadline, Event, Todo) will provide its own implementation of this method.
      *
      * @return A string representation of the task.
