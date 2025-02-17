@@ -36,6 +36,7 @@ public class MainWindow extends AnchorPane {
 
     private final Image userImage = new Image(this.getClass().getResourceAsStream("/images/User.png"));
     private final Image dukeImage = new Image(this.getClass().getResourceAsStream("/images/Meeseeks.png"));
+    private final Image errorImage = new Image(this.getClass().getResourceAsStream("/images/RedMeeseeks.png"));
 
     /**
      * Initializes the MainWindow by binding the scroll pane's vertical scroll value
@@ -65,6 +66,17 @@ public class MainWindow extends AnchorPane {
     public void showDukeMessage(String output) {
         dialogContainer.getChildren().addAll(
                 DialogBox.getDukeDialog(output, dukeImage)
+        );
+    }
+
+    /**
+     * Displays an error message as a dialog box in the GUI.
+     *
+     * @param output the message text to display
+     */
+    public void showErrorMessage(String output) {
+        dialogContainer.getChildren().addAll(
+                DialogBox.getDukeDialog(output, errorImage)
         );
     }
 
