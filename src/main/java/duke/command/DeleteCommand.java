@@ -74,7 +74,7 @@ public class DeleteCommand implements Command {
     /**
      * Returns the index of the task.
      *
-     * @return the task idnex
+     * @return the task index
      */
     public int getTaskIndex() {
         return taskIndex;
