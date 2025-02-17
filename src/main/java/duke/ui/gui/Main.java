@@ -39,6 +39,7 @@ public class Main extends Application {
             stage.setScene(scene);
             stage.setMinHeight(MIN_SCREEN_WIDTH);
             stage.setMinWidth(MIN_SCREEN_HEIGHT);
+            stage.setTitle("Meeseeks Tasks");
 
             // Set up the adapter for GUI communication and initialize the Duke instance
             GuiAdaptor guiAdaptor = new GuiAdaptor(fxmlLoader.<MainWindow>getController(), () -> stage.close());
