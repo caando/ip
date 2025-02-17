@@ -81,12 +81,12 @@ public class DeleteCommand implements Command {
     }
 
     /**
-     * Executes the delete command by removing the task from the task list,
-     * updating storage, and displaying the relevant output to the user.
+     * Executes the delete command.
+     * <p>
+     * Removes the task from the task list, updates storage, and displays the relevant output to the user.
      * If the specified task does not exist, an error message is shown.
      *
      * @param state The current application state containing tasks, storage, and UI.
-     *
      * @return A new {@link State} object reflecting the updated task list
      *         and retaining the previous state information.
      */
