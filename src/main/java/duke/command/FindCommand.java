@@ -90,11 +90,13 @@ public class FindCommand implements Command {
         ).collect(Collectors.toList());
 
         ArrayList<String> output = new ArrayList<>();
-        output.add("Here are the matching tasks in your list:");
+        output.add(String.format("Here you go! Tasks matching \"%s\":", keyword));
 
         output.addAll(IntStream.range(0, filteredTasks.size())
                 .mapToObj(i -> String.format("%d. %s", i + 1, filteredTasks.get(i).toString()))
                 .collect(Collectors.toList()));
+        output.add("Now go finish it!");
+
         ui.showOutput(output);
 
         return state;

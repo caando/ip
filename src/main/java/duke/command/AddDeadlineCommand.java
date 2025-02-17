@@ -122,8 +122,8 @@ public class AddDeadlineCommand implements Command {
 
         Deadline deadline = new Deadline(taskDescription, date);
         tasks.add(deadline);
-        ui.showOutput("Got it. I've added this task:", deadline.toString(),
-                "Now you have " + tasks.size() + " tasks in the list.");
+        ui.showOutput("Wheee! I've added this task:", deadline.toString(),
+                "Now you have " + tasks.size() + " tasks in the list! Hurry up and finish it!");
 
         try {
             storage.save(tasks, ui);

@@ -38,7 +38,8 @@ public class UndoCommand implements Command {
             return state;
         } else {
             assert state.getPreviousCommand() != null : "Previous command should not be null";
-            state.getUi().showOutput(String.format("Undoing previous command: [%s]", state.getPreviousCommand()));
+            state.getUi().showOutput(String.format("Rewinding time! Undoing previous command: [%s]",
+                    state.getPreviousCommand()), "You're welcome!");
             return state.getPreviousState();
         }
     }

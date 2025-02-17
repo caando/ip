@@ -95,7 +95,7 @@ public class MarkCommand implements Command {
         try {
             Task task = tasks.get(taskIndex - 1);
             task.markAsDone();
-            ui.showOutput("Nice! I've marked this task as done:", task.toString());
+            ui.showOutput("YESSS! I've marked this task as done:", task.toString(), "Good job! Now do the rest!");
         } catch (TaskNotFoundException e) {
             ui.showError(e.getMessage());
         }
