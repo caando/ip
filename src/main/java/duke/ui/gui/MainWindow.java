@@ -76,4 +76,19 @@ public class MainWindow extends AnchorPane {
     public void setInputConsumer(Consumer<String> inputConsumer) {
         this.inputConsumer = inputConsumer;
     }
+
+    /**
+     * Handles user input when the send button is pressed or the Enter key is triggered.
+     * <p>
+     * Displays the user's message in the dialog container, passes the input
+     * to the consumer, and clears the input field.
+     * </p>
+     */
+    @FXML
+    private void handleUserInput() {
+        String input = userInput.getText();
+        showUserMessage(input);
+        inputConsumer.accept(input);
+        userInput.clear();
+    }
 }
