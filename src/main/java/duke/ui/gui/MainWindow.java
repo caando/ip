@@ -76,7 +76,7 @@ public class MainWindow extends AnchorPane {
      */
     public void showErrorMessage(String output) {
         dialogContainer.getChildren().addAll(
-                DialogBox.getDukeDialog(output, errorImage)
+                DialogBox.getErrorDialog(output, errorImage)
         );
     }
 
