@@ -18,6 +18,9 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
 
+    static final int MIN_SCREEN_WIDTH = 220;
+    static final int MIN_SCREEN_HEIGHT = 417;
+
     /**
      * Starts the JavaFX application by setting up the main stage and scene,
      * loading the FXML layout, and injecting dependencies.
@@ -34,6 +37,8 @@ public class Main extends Application {
             // Create and set the scene on the primary stage
             Scene scene = new Scene(ap);
             stage.setScene(scene);
+            stage.setMinHeight(MIN_SCREEN_WIDTH);
+            stage.setMinWidth(MIN_SCREEN_HEIGHT);
 
             // Set up the adapter for GUI communication and initialize the Duke instance
             GuiAdaptor guiAdaptor = new GuiAdaptor(fxmlLoader.<MainWindow>getController(), () -> stage.close());
