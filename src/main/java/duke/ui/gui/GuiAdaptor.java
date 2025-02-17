@@ -57,7 +57,7 @@ public class GuiAdaptor implements Ui {
      */
     @Override
     public void showError(List<String> lines) {
-        mainWindow.showDukeMessage("OOPS!!!\n" + lines.stream().collect(
+        mainWindow.showErrorMessage("OOPS!!!\n" + lines.stream().collect(
                 StringBuilder::new, (sb, line) -> sb.append(line).append("\n"), StringBuilder::append).toString());
     }
 

@@ -63,6 +63,16 @@ public class DialogBox extends HBox {
     }
 
     /**
+     * Sets the color of the dialog box.
+     *
+     * @param color the color to set
+     */
+    private void setColor(String color) {
+        String existingStyle = dialog.getStyle();
+        dialog.setStyle(String.format("%s -fx-background-color: %s;", existingStyle, color));
+    }
+
+    /**
      * Creates a dialog box for user input.
      *
      * @param text the user's input text
@@ -70,7 +80,9 @@ public class DialogBox extends HBox {
      * @return a DialogBox containing the user's dialog
      */
     public static DialogBox getUserDialog(String text, Image img) {
-        return new DialogBox(text, img);
+        var db = new DialogBox(text, img);
+        db.setColor("#D6F6D5");
+        return db;
     }
 
     /**
@@ -83,6 +95,21 @@ public class DialogBox extends HBox {
     public static DialogBox getDukeDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();
+        db.setColor("#E8F0FE");
+        return db;
+    }
+
+    /**
+     * Create a dialog box for an error message, with the layout flipped.
+     *
+     * @param text The message to display
+     * @param img  The image to display
+     * @return a flipped DialogBox containing Error message
+     */
+    public static DialogBox getErrorDialog(String text, Image img) {
+        var db = new DialogBox(text, img);
+        db.flip();
+        db.setColor("#FFEDED");
         return db;
     }
 }
