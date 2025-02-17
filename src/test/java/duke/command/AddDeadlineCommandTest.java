@@ -106,8 +106,9 @@ public class AddDeadlineCommandTest {
 
         // Assert
         Mockito.verify(taskContainer).add(ArgumentMatchers.any(Deadline.class));
-        Mockito.verify(ui).showOutput(ArgumentMatchers.eq("Got it. I've added this task:"),
-                ArgumentMatchers.eq("[D][_] Finish homework (by: Feb 1 2025)"), ArgumentMatchers.anyString());
+        Mockito.verify(ui).showOutput(ArgumentMatchers.eq("Wheee! I've added this task:"),
+                ArgumentMatchers.eq("[D][_] Finish homework (by: Feb 1 2025)"),
+                ArgumentMatchers.eq("Now you have 0 tasks in the list! Hurry up and finish it!"));
     }
 
     @Test

@@ -97,7 +97,8 @@ public class UnmarkCommand implements Command {
         try {
             Task task = tasks.get(taskIndex - 1);
             task.markAsNotDone();
-            ui.showOutput("Nice! I've marked this task as not done yet:", task.toString());
+            ui.showOutput("Awww man! Okay, I've marked this task as not done yet:", task.toString(),
+                    "Better get back to work!\n");
         } catch (TaskNotFoundException e) {
             ui.showError(e.getMessage());
         }

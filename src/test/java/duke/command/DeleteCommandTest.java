@@ -79,9 +79,9 @@ class DeleteCommandTest {
 
         Mockito.verify(taskContainer).remove(2); // Ensure task was removed at correct index
         Mockito.verify(ui).showOutput(
-                "Noted. I've removed this task:",
+                "POOF! I’ve removed this task:",
                 "Task 3",
-                "Now you have 4 tasks in the list.");
+                "Now you have 4 tasks in the list! Less work for you!");
         Mockito.verify(storage).save(taskContainer, ui);
     }
 

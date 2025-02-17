@@ -106,8 +106,8 @@ public class DeleteCommand implements Command {
             int currentSize = tasks.size();
             assert currentSize == previousSize - 1 : "Task should have been removed from the list.";
 
-            ui.showOutput("Noted. I've removed this task:", task.toString(),
-                    "Now you have " + tasks.size() + " tasks in the list.");
+            ui.showOutput("POOF! I’ve removed this task:", task.toString(),
+                    "Now you have " + tasks.size() + " tasks in the list! Less work for you!");
         } catch (TaskNotFoundException e) {
             ui.showError(e.getMessage());
         }

@@ -96,8 +96,8 @@ public class AddTodoCommand implements Command {
 
         Todo todo = new Todo(taskDescription);
         tasks.add(todo);
-        ui.showOutput("Got it. I've added this task:", todo.toString(),
-                "Now you have " + tasks.size() + " tasks in the list.");
+        ui.showOutput("Ooooh! Look at that! I've added this task:", todo.toString(),
+                "Now you have " + tasks.size() + " tasks in the list! Let's get it done fast!");
 
         try {
             storage.save(tasks, ui);
