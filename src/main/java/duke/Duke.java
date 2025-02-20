@@ -18,6 +18,8 @@ import duke.ui.Ui;
  */
 public class Duke {
 
+    private static final String STORAGE_PATH = "./data/duke.txt";
+
     private State state;
 
     /**
@@ -26,13 +28,13 @@ public class Duke {
      * @param ui The user interface component to interact with the user.
      */
     public Duke(Ui ui) {
-        this.state = new State(new TaskList(), new FileStorage("./data/duke.txt"), ui, null, null);
+        this.state = new State(new TaskList(), new FileStorage(STORAGE_PATH), ui, null, null);
 
         ui.start();
         try {
             this.state.getStorage().load(this.state.getTasks(), ui);
         } catch (ReadStorageException e) {
-            ui.showError(e.getMessage());
+            ui.showOutput(String.format("No storage file found at %s, created new storage file.", STORAGE_PATH));
         }
     }
 
