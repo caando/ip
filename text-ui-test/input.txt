@@ -15,4 +15,8 @@ list
 mark 2
 unmark 2
 delete 10
+undo
+mark 2
+undo
+list
 bye

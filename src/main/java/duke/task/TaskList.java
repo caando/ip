@@ -97,7 +97,7 @@ public class TaskList implements TaskContainer {
     public TaskContainer copy() {
         TaskList copy = new TaskList();
         for (Task task : tasks) {
-            copy.add(task);
+            copy.add(task.copy());
         }
         assert copy.size() == tasks.size();
         return copy;
