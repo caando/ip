@@ -22,6 +22,15 @@ public class Todo extends Task {
     }
 
     /**
+     * Constructs a new Todo task from the given Todo task.
+     *
+     * @param todo The Todo task to be copied.
+     */
+    public Todo(Todo todo) {
+        super(todo);
+    }
+
+    /**
      * Creates a Todo task from a PSV string.
      * <p>
      * The PSV string is expected to have the format: "TaskType | StatusIcon | Description".
@@ -89,5 +98,15 @@ public class Todo extends Task {
     @Override
     public String toString() {
         return String.format("[%s][%s] %s", getTaskIcon(), getStatusIcon(), description);
+    }
+
+    /**
+     * Returns a copy of this Todo task.
+     *
+     * @return A new Task object with the same properties as this task.
+     */
+    @Override
+    public Todo copy() {
+        return new Todo(this);
     }
 }

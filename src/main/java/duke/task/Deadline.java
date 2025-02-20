@@ -30,6 +30,16 @@ public class Deadline extends Task {
     }
 
     /**
+     * Constructs a new deadline from the given deadline.
+     *
+     * @param deadline The deadline to be copied.
+     */
+    public Deadline(Deadline deadline) {
+        super(deadline);
+        this.time = deadline.time;
+    }
+
+    /**
      * Creates a Deadline task from a PSV string.
      * <p>
      * The PSV string is expected to have the format: "TaskType | StatusIcon | Description | Time".
@@ -110,5 +120,15 @@ public class Deadline extends Task {
     public String toString() {
         return String.format("[%s][%s] %s (by: %s)", getTaskIcon(), getStatusIcon(), this.description,
                 Utils.dateToString(this.time));
+    }
+
+    /**
+     * Creates a copy of the deadline.
+     *
+     * @return A new Deadline object with the same properties as this deadline.
+     */
+    @Override
+    public Deadline copy() {
+        return new Deadline(this);
     }
 }

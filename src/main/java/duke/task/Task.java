@@ -52,6 +52,16 @@ public abstract class Task {
     }
 
     /**
+     * Constructs a new task from the given task.
+     *
+     * @param task The task to be copied.
+     */
+    public Task(Task task) {
+        this.description = task.description;
+        this.isDone = task.isDone;
+    }
+
+    /**
      * Returns the status icon of the task.
      * <p>
      * The icon is "X" if the task is done, otherwise it is "_".
@@ -164,4 +174,11 @@ public abstract class Task {
      */
     @Override
     public abstract String toString();
+
+    /**
+     * Creates a copy of the task.
+     *
+     * @return A new Task object with the same properties as this task.
+     */
+    public abstract Task copy();
 }

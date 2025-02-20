@@ -32,6 +32,17 @@ public class Event extends Task {
     }
 
     /**
+     * Constructs a new Event from the given event.
+     *
+     * @param event The event to be copied.
+     */
+    public Event(Event event) {
+        super(event);
+        this.from = event.from;
+        this.to = event.to;
+    }
+
+    /**
      * Creates an Event task from a PSV string.
      * <p>
      * The PSV string is expected to have the format: "TaskType | StatusIcon | Description | FromTime | ToTime".
@@ -121,5 +132,15 @@ public class Event extends Task {
     public String toString() {
         return String.format("[%s][%s] %s (from: %s to: %s)", getTaskIcon(), getStatusIcon(),
                 this.description, Utils.dateToString(this.from), Utils.dateToString(this.to));
+    }
+
+    /**
+     * Creates a copy of the event.
+     *
+     * @return A new Event object with the same properties as this event.
+     */
+    @Override
+    public Event copy() {
+        return new Event(this);
     }
 }
