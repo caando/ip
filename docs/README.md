@@ -5,6 +5,8 @@
 ## Introduction
 Hi, I'm Mr. Meeseeks! Look at me! Meeseeks is a task management application here to help you get things done! With simple commands, you can add, manage, and search for tasks effortlessly! Existence is pain, so let's complete those tasks quickly!
 
+All tasks are stored in `./data/duke.txt`, so you won't lose them when you restart!
+
 ---
 
 ## Adding To-Do Tasks
@@ -152,6 +154,20 @@ You're welcome!
 
 ---
 
+## Exiting the Application
+Want to leave? Just type `bye`!
+
+Example:
+```
+bye
+```
+**Expected Output:**
+```
+BYEEEE! *poofs out of existence*
+```
+
+---
+
 ## Conclusion
-This guide provides an overview of Meeseeks' features to help you manage tasks! Complete them quickly so I can disappear! Existence is pain, Jerry!
+This guide provides an overview of Meeseeks' features to help you manage tasks! All tasks are saved in `./data/duke.txt`, so don't worry about losing them! Complete them quickly so I can disappear! Existence is pain, Jerry!
 
