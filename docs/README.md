@@ -1,6 +1,6 @@
 # Meeseeks Tasks User Guide
 
-![Demo Image](Demo.png)
+![Demo Image](Ui.png)
 
 ## Introduction
 Hi, I'm Mr. Meeseeks! Look at me! Meeseeks is a task management application here to help you get things done! With simple commands, you can add, manage, and search for tasks effortlessly! Existence is pain, so let's complete those tasks quickly!
